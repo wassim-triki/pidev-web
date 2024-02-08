@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+	
+<!-- Mirrored from www.gambolthemes.net/html-items/new-goeveni/disable_demo/user_profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 20:15:16 GMT -->
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, shrink-to-fit=9">
+		<meta name="description" content="Gambolthemes">
+		<meta name="author" content="Gambolthemes">
+		<title>Goeveni - Event Sharing Social Network Html Template</title>
+		
+		<!-- Favicon Icon -->
+		<link rel="icon" type="image/png" href="images/fav.png">
+		
+		<!-- Stylesheets -->
+		<link rel="preconnect" href="https://fonts.googleapis.com/">
+		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+		<link href="css/responsive.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/datepicker.min.css" rel="stylesheet">
+		
+		<!-- Vendor Stylesheets -->
+		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="vendor/feather-icons/feather.css" rel="stylesheet">
+		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+		<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+		<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+		<link href="vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+	
+	</head>
+
+	<body class="d-flex flex-column h-100">
+		<!-- Followers and Following Model Start -->
+		<div class="main-discussion-model">
+			<div class="modal fade" id="FFModal" tabindex="-1" aria-labelledby="FFModalLabel">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content main-form">
+						<div class="modal-header">
+							<h5 class="modal-title" id="FFModalLabel">Following & Followers</h5>
+							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+								<i class="feather-x"></i>
+							</button>
+						</div>
+						<div class="modal-body px-4">
+							<div class="model-content follow-people-content">
+								<div class="">
+									<ul class="nav nav-pills ff-tablist mb-2" role="tablist">
+										<li class="nav-item d-flex me-4">
+											<a class="nav-link px-0 pt-0 pb-3 active" id="pills-following-tab" data-bs-toggle="pill" href="#following" role="tab" aria-controls="following" aria-selected="true">Following <span class="following_count">(3)</span></a>
+										</li>
+										<li class="nav-item d-flex">
+											<a class="nav-link px-0 pt-0 pb-3" id="pills-followers-tab" data-bs-toggle="pill" href="#followers" role="tab" aria-controls="followers" aria-selected="false">Followers <span class="following_count">(2)</span></a>
+										</li>
+									</ul>
+									<div class="tab-content mt-4">
+										<div class="tab-pane fade active show" id="following" role="tabpanel" aria-labelledby="pills-following-tab">
+											<div class="users-list min-height-430">
+												<div class="user-follow-card mb-4">
+													<div class="follow-card-left">
+														<div class="follow-avatar">
+															<img src="images/find-peoples/user-2.jpg" alt="">
+														</div>
+														<div class="follow-name">
+															<a href="user_profile.html">Jassica William</a>
+															<span>1 Follower</span>
+														</div>
+													</div>
+													<div class="follow-card-btn">
+														<button class="follow-btn">Following</button>
+													</div>
+												</div>
+												<div class="user-follow-card mb-4">
+													<div class="follow-card-left">
+														<div class="follow-avatar">
+															<img src="images/find-peoples/user-5.jpg" alt="">
+														</div>
+														<div class="follow-name">
+															<a href="user_profile.html">Rock Smith</a>
+															<span>3 Followers</span>
+														</div>
+													</div>
+													<div class="follow-card-btn">
+														<button class="follow-btn">Following</button>
+													</div>
+												</div>
+												<div class="user-follow-card mb-4">
+													<div class="follow-card-left">
+														<div class="follow-avatar">
+															<img src="images/find-peoples/user-6.jpg" alt="">
+														</div>
+														<div class="follow-name">
+															<a href="user_profile.html">Albert Doe</a>
+															<span>6 Followers</span>
+														</div>
+													</div>
+													<div class="follow-card-btn">
+														<button class="follow-btn">Following</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="pills-followers-tab">
+											<div id="followers-empty-state" class="d-none d-flex align-items-center justify-content-center flex-column min-height-430">
+												<span>
+													<svg width="60" height="47" viewBox="0 0 60 47" fill="none">
+														<path d="M41.8884 39.501C41.2649 38.8161 41.1572 37.7618 41.9808 37.0461L48.8852 30.1433C50.44 28.5811 52.8108 30.9436 51.2559 32.4981L47.1225 36.6306H56.1899C56.467 35.6917 56.644 35.0145 56.644 34.0064C56.644 28.0732 50.5247 24.6256 45.152 24.6256C40.9724 24.6256 36.4387 26.5956 34.5067 30.4819C36.5234 33.0521 37.7088 36.138 37.7088 39.4702C37.7088 41.6788 37.1623 43.8566 36.1693 45.8267C35.1918 47.7967 32.1976 46.3038 33.1828 44.3337C33.9525 42.8023 34.3528 41.1863 34.3528 39.4702C34.3528 31.4515 26.1321 26.7188 18.8505 26.7188C11.5767 26.7188 3.36369 31.4515 3.36369 39.4702C3.36369 41.2017 3.74856 42.7793 4.52598 44.326C5.51892 46.2961 2.5247 47.7967 1.53945 45.8344C0.546504 43.8643 0 41.6711 0 39.4702C0 32.3749 5.23412 26.8573 11.6228 24.5948C7.8127 22.1322 5.49583 17.9151 5.49583 13.3594C5.49583 5.98709 11.4843 0 18.8505 0C26.2322 0 32.2207 5.98709 32.2207 13.3594C32.2207 17.9228 29.8961 22.1322 26.086 24.5948C28.3412 25.3874 30.3656 26.5495 32.0744 27.9808C33.6369 25.4798 36.0616 23.6098 38.7787 22.5016C36.1001 20.4854 34.5221 17.3533 34.5221 13.9904C34.5221 8.11875 39.2867 3.35524 45.152 3.35524C51.0327 3.35524 55.7896 8.11105 55.7896 13.9904C55.7896 17.3533 54.2117 20.4931 51.5253 22.5016C56.2668 24.4332 60 28.6811 60 34.0064C60 34.8683 59.8922 35.7379 59.6921 36.5921C59.492 37.4386 59.1841 38.262 58.7838 39.0623C58.4913 39.6472 57.9063 39.9858 57.2906 39.9858L47.1302 39.9935L51.2559 44.1183C52.8185 45.6805 50.4477 48.0507 48.8852 46.4885L41.8884 39.501ZM18.8505 3.36293C13.3239 3.36293 8.85183 7.83401 8.85183 13.3594C8.85183 18.9001 13.3085 23.3481 18.8505 23.3481C24.3926 23.3481 28.857 18.9001 28.857 13.3594C28.857 7.84171 24.3772 3.36293 18.8505 3.36293ZM45.152 6.71047C41.1418 6.71047 37.8781 9.97336 37.8781 13.9904C37.8781 18.0152 41.1341 21.255 45.1597 21.255C49.1931 21.255 52.4336 18.0228 52.4336 13.9904C52.4336 9.97336 49.1777 6.71047 45.152 6.71047Z" fill="#6ac045"></path>
+													</svg>
+												</span>
+												<p class="font-16 mt-4 text-light3">No followers yet</p>
+											</div>
+											<div class="users-list min-height-430">
+												<div class="user-follow-card mb-4">
+													<div class="follow-card-left">
+														<div class="follow-avatar">
+															<img src="images/find-peoples/user-2.jpg" alt="">
+														</div>
+														<div class="follow-name">
+															<a href="user_profile.html">Jassica William</a>
+															<span>1 Follower</span>
+														</div>
+													</div>
+													<div class="follow-card-btn">
+														<button class="follow-btn">Following</button>
+													</div>
+												</div>
+												<div class="user-follow-card mb-4">
+													<div class="follow-card-left">
+														<div class="follow-avatar">
+															<img src="images/find-peoples/user-7.jpg" alt="">
+														</div>
+														<div class="follow-name">
+															<a href="user_profile.html">Johnson</a>
+															<span>5 Followers</span>
+														</div>
+													</div>
+													<div class="follow-card-btn">
+														<button class="follow-btn">Follow</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Followers and Following Model End -->
+		<!-- Header Start -->
+		<header>			
+			<nav class="navbar navbar-expand-lg custom-navbar bg-dark1 justify-content-sm-start">
+				<div class="container">	
+					<button class="navbar-toggler align-self-start" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+						<span class="custom-toggler-icon">
+							<i class="feather-menu"></i>
+						</span>
+					</button>
+					<a class="order-lg-0 ml-lg-0 ml-3 me-auto" href="index.html"><img src="images/logo-2.svg" alt=""></a>
+					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+						<div class="offcanvas-header">
+							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
+								<img src="images/logo.svg" alt="">
+							</div>
+							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+								<i class="feather-x"></i>
+							</button>
+						</div>
+						<div class="offcanvas-body">
+							<div class="offcanvas-search navbar-search position-relative d-block d-lg-none d-xl-block">
+								<div class="input-group">
+									<input type="text" class="form-control shadow-none border-0" placeholder="Search events by categories..." aria-label="Search">
+									<div class="input-group-append">
+										<button class="btn" type="button">
+										<i class="feather-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<a href="#" class="add-event-btn btn-hover d-block d-lg-none">Add New Event</a>
+							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="index.html">
+										<span class="nav-icon d-lg-none me-3">
+											<i class="feather-home"></i>
+										</span>
+										Home
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="explore.html">
+										<span class="nav-icon  d-lg-none me-3">
+											<i class="feather-target"></i>
+										</span>
+										Explore
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="discussions.html">
+										<span class="nav-icon d-lg-none me-3">
+											<i class="feather-message-circle"></i>
+										</span>
+										Discussion
+									</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link custom-d-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<span class="nav-icon d-lg-none me-3">
+											<i class="feather-list"></i>
+										</span>
+										Pages<i class="fas fa-caret-down ms-2 d-none d-lg-inline-block"></i>
+									</a>
+									<div class="dropdown-menu">
+										<a class="link-item" href="login.html">Login</a>
+										<a class="link-item" href="register.html">Register</a>											
+										<a class="link-item" href="error_404.html">Error 404</a>
+										<a class="link-item" href="categories.html">Categories</a>
+										<a class="link-item" href="event_detail_view.html">Event Detail View</a>
+										<a class="link-item" href="user_profile.html">User Profile</a>
+										<a class="link-item" href="find_friends.html">Find Friends</a>
+										<a class="link-item" href="messages.html">Messages</a>
+										<a class="link-item" href="friend_requests.html">Friend Requests</a>
+										<a class="link-item" href="notifications.html">Notifications</a>
+										<a class="link-item" href="credit.html">Credit</a>
+										<a class="link-item" href="checkout.html">Checkout</a>
+										<a class="link-item" href="confirmed_order.html">Confirmed Order</a>
+										<a class="link-item" href="about.html">About</a>
+										<a class="link-item" href="blog_detail_view.html">Blog Detail View</a>
+										<a class="link-item" href="contact_us.html">Contact</a>
+									</div>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="our_blog.html">
+										<span class="nav-icon d-lg-none me-3">
+											<i class="feather-rss"></i>
+										</span>
+										Blog
+									</a>
+								</li>
+							</ul>
+						</div>	
+					</div>
+					<a href="add_new_event.html" class="add-event d-none d-lg-block"><i class="feather-plus"></i></a>
+					<ul class="group-icons">
+						<li class="dropdown d-lg-inline-block d-none d-xl-none nav-icon iq-show">
+							<a href="#" class="icon-set" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="feather-search"></i>
+							</a>
+							<div class="dropdown-menu dropdown-list dropdown-menu-end p-2 search-box">
+                                <div class="position-relative">
+									<input class="form-control dsearch-box" placeholder="Search events by categories...">
+									<i class="feather-search search-icon"></i>
+								</div>
+                            </div>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="feather-user-plus"></i>
+							</a>
+							<div class="dropdown-menu dropdown-list dropdown-menu-end p-0">
+								<div class="item-header">
+									<h6>Friend Requests</h6>
+									<div class="heading-btns">
+										<a href="friend_requests.html">Setting</a>
+										<a href="find_friends.html">Find Friends</a>
+									</div>
+								</div>
+								<div class="item-body">
+									<div class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-2.jpg" alt="">
+											<span class="chat-status offline"></span>
+										</div>
+										<div class="media-body">
+											<a href="user_profile.html" class="item-title">Lily Zaman</a>
+											<p>4 in mutual friends</p>
+										</div>
+										<div class="btn-area">
+											<a href="#" class="item-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Accept"><i class="feather-user-plus"></i></a>
+											<a href="#" class="item-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Decline"><i class="feather-user-minus"></i></a>
+										</div>
+									</div>
+									<div class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-3.jpg" alt="">
+											<span class="chat-status online"></span>
+										</div>
+										<div class="media-body">
+											<a href="user_profile.html" class="item-title">Johnson Dua</a>
+											<p>6 in mutual friends</p>
+										</div>
+										<div class="btn-area">
+											<a href="#" class="item-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Accept"><i class="feather-user-plus"></i></a>
+											<a href="#" class="item-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Decline"><i class="feather-user-minus"></i></a>
+										</div>
+									</div>
+									<div class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-4.jpg" alt="">
+											<span class="chat-status offline"></span>
+										</div>
+										<div class="media-body">
+											<a href="user_profile.html" class="item-title">Rock William</a>
+											<p>No mutual friends</p>
+										</div>
+										<div class="btn-area">
+											<a href="#" class="item-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Accept"><i class="feather-user-plus"></i></a>
+											<a href="#" class="item-btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Decline"><i class="feather-user-minus"></i></a>
+										</div>
+									</div>
+								</div>								
+								<div class="item-footer">
+									<a href="friend_requests.html" class="view-all">View All Friend Request</a>
+								</div>	
+							</div>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="feather-message-square"></i>
+							</a>
+							<div class="dropdown-menu dropdown-list dropdown-menu-end p-0">
+								<div class="item-header">
+									<h6>Message</h6>
+									<div class="heading-btns">
+										<a href="messages.html">Setting</a>
+									</div>
+								</div>
+								<div class="item-body">
+									<a href="messages.html" class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-2.jpg" alt="">
+											<span class="chat-status offline"></span>
+										</div>
+										<div class="media-body">
+											<h6 class="item-title mb-1">Lily Zaman</h6>
+											<div class="item-time">1 mins ago</div>
+											<p>Hey How are you Lily Zaman</p>
+										</div>
+									</a>
+									<a href="messages.html" class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-3.jpg" alt="">
+											<span class="chat-status online"></span>
+										</div>
+										<div class="media-body">
+											<h6 class="item-title mb-1">Johnson Dua</h6>
+											<div class="item-time">6 mins ago</div>
+											<p>Interesting Event! I will join this</p>
+										</div>
+									</a>
+									<a href="messages.html" class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-4.jpg" alt="">
+											<span class="chat-status offline"></span>
+										</div>
+										<div class="media-body">
+											<h6 class="item-title mb-1">Rock William</h6>
+											<div class="item-time">11 mins ago</div>
+											<p>Hey Sir! What about you and where are you now</p>
+										</div>
+									</a>
+								</div>								
+								<div class="item-footer">
+									<a href="messages.html" class="view-all">View All Messages</a>
+								</div>	
+							</div>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-bs-toggle="dropdown">
+								<i class="feather-bell"></i>
+								<span class="notify-count">3</span>
+							</a>
+							<div class="dropdown-menu dropdown-list dropdown-menu-end p-0">
+								<div class="item-header">
+									<h6>Notifications</h6>
+									<div class="heading-btns">
+										<a href="#">Setting</a>
+									</div>
+								</div>
+								<div class="item-body">
+									<a href="#" class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-2.jpg" alt="">
+											<span class="chat-status offline"></span>
+										</div>
+										<div class="media-body">
+											<h6 class="item-title mb-1">Lily Zaman</h6>
+											<div class="item-time">2 mins ago</div>
+											<p>Following you.</p>
+										</div>
+									</a>
+									<a href="#" class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-3.jpg" alt="">
+											<span class="chat-status online"></span>
+										</div>
+										<div class="media-body">
+											<h6 class="item-title mb-1">Johnson Dua</h6>
+											<div class="item-time">5 mins ago</div>
+											<p>your order is accepted.</p>
+										</div>
+									</a>
+									<a href="#" class="media">
+										<div class="item-img">
+											<img src="images/find-peoples/user-4.jpg" alt="">
+											<span class="chat-status offline"></span>
+										</div>
+										<div class="media-body">
+											<h6 class="item-title mb-1">Rock William</h6>
+											<div class="item-time">10 mins ago</div>
+											<p>your bill slip sent on your email.</p>
+										</div>
+									</a>
+								</div>								
+								<div class="item-footer">
+									<a href="notifications.html" class="view-all">View All Notifications</a>
+								</div>	
+							</div>
+						</li>
+					</ul>
+					<div class="account dropdown">
+						<a href="#" class="account-link dropdown-toggle-no-caret" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> 
+							<div class="user-dp"><img src="images/dp.jpg" alt=""></div>
+							<i class="feather-chevron-down ms-2"></i>
+						</a>
+						<div class="dropdown-menu dropdown-account dropdown-menu-end" aria-labelledby="dropdownMenuClickableInside">
+							<a class="link-item" href="my_profile.html"><i class="feather-user me-3"></i>Profile</a>
+							<a class="link-item" href="saved.html"><i class="feather-heart me-3"></i>Save items</a>
+							<a class="link-item" href="messages.html"><i class="feather-message-square me-3"></i>Messages</a>											
+							<a class="link-item" href="credit.html"><i class="feather-credit-card me-3"></i>Credit <span class="right-cm">$100</span></a>
+							<a class="link-item" href="invite.html"><i class="feather-send me-3"></i>Invite</a>
+							<a class="link-item" href="setting.html"><i class="feather-settings me-3"></i>Setting</a>
+							<a class="link-item" href="login.html"><i class="feather-log-out me-3"></i>Logout</a>
+						</div>
+					</div>							
+				</div>							
+			</nav>			
+		</header>
+		<!-- Header End -->
+		<!-- Body Start -->	
+		<main class="dashboard-mp">	
+			<div class="profile-banner">
+				<div class="hero-cover-block">
+					<div class="hero-cover">
+						<div class="hero-cover-img hero-img-2"></div>
+					</div>
+				</div>
+				<div class="user-dt-block">
+					<div class="container">
+						<div class="row">
+							<div class="col-xl-4 col-lg-5 col-md-12">
+								<div class="main-card user-left-dt">
+									<div class="user-avatar-img">
+										<img src="images/my-dashboard/other-dp.jpg" alt="">
+									</div>
+									<div class="user-dts">
+										<h4 class="user-name">Rock Smith<span class="verify-badge"><i class="fa-solid fa-circle-check"></i></span></h4>
+										<span class="user-loc"><i class="feather-map-pin"></i>India</span>
+									</div>
+									<div class="ff-block">
+										<a href="#" class="" role="button" data-bs-toggle="modal" data-bs-target="#FFModal"><span>3</span>Followers</a>
+										<a href="#" class="" role="button" data-bs-toggle="modal" data-bs-target="#FFModal"><span>2</span>Following</a>
+									</div>
+									<div class="user-description">
+										<p>Hey I am a Rock Smith</p>
+									</div>
+									<div class="user-btns">
+										<button class="main-btn btn-hover min-width d-inline-block h_40 me-2">Follow</button>
+										<button class="co-main-btn min-width h_40" onclick="window.location.href='messages.html';">Message</button>
+									</div>
+									<div class="profile-social-link">
+										<h6>Find me on</h6>
+										<div class="social-links">
+											<a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-square"></i></a>
+											<a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+											<a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+											<a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+											<a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Youtube" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
+											<a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Website" aria-label="Website"><i class="fa-solid fa-globe"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+			
+							<div class="col-xl-8 col-lg-7 col-md-12">
+								<div class="user-events-block mt-4">
+									<div class="row">
+										<div class="col-xl-4 col-lg-6 col-md-6">
+											<div class="event-main-post">
+												<div class="main-photo">
+													<a href="#">
+														<div class="photo-overlay"></div>
+														<img src="images/homepage/center/post-img-3.jpg" alt="">
+													</a>
+												</div>														
+												<div class="event-body">
+													<span class="event-time">thu,30 june 2022 at 3.00 pm</span>
+													<a href="event_detail_view.html" class="event-title">Event Title Here</a>
+													<span class="event-type">Location</span>
+													<p class="ingo-counter">
+														<span>25 Interested</span>
+														<span>11 Going</span>
+													</p>
+													<div class="group-btns">
+														<button class="interest-btn btn-hover" onclick="window.location.href='event_detail_view.html';"><i class="feather-eye me-2"></i>View</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-6 col-md-6">
+											<div class="event-main-post">
+												<div class="main-photo">
+													<a href="#">
+														<div class="photo-overlay"></div>
+														<img src="images/homepage/center/post-img-4.jpg" alt="">
+													</a>
+												</div>														
+												<div class="event-body">
+													<span class="event-time">thu,30 june 2022 at 3.00 pm</span>
+													<a href="event_detail_view.html" class="event-title">Event Title Here</a>
+													<span class="event-type">Online</span>
+													<p class="ingo-counter">
+														<span>25 Interested</span>
+														<span>11 Going</span>
+													</p>
+													<div class="group-btns">
+														<button class="interest-btn btn-hover" onclick="window.location.href='event_detail_view.html';"><i class="feather-eye me-2"></i>View</button>
+													</div>
+												</div>
+											</div>												
+										</div>
+										<div class="col-xl-4 col-lg-6 col-md-6">
+											<div class="event-main-post">
+												<div class="main-photo">
+													<a href="#">
+														<div class="photo-overlay"></div>
+														<img src="images/homepage/center/post-img-5.jpg" alt="">
+													</a>
+												</div>														
+												<div class="event-body">
+													<span class="event-time">thu,30 june 2022 at 3.00 pm</span>
+													<a href="event_detail_view.html" class="event-title">Event Title Here</a>
+													<span class="event-type">Online</span>
+													<p class="ingo-counter">
+														<span>25 Interested</span>
+														<span>11 Going</span>
+													</p>
+													<div class="group-btns">
+														<button class="interest-btn btn-hover" onclick="window.location.href='event_detail_view.html';"><i class="feather-eye me-2"></i>View</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-6 col-md-6">
+											<div class="event-main-post">
+												<div class="main-photo">
+													<a href="#">
+														<div class="photo-overlay"></div>
+														<img src="images/homepage/center/post-img-6.jpg" alt="">
+													</a>
+												</div>														
+												<div class="event-body">
+													<span class="event-time">thu,30 june 2022 at 3.00 pm</span>
+													<a href="event_detail_view.html" class="event-title">Event Title Here</a>
+													<span class="event-type">Online</span>
+													<p class="ingo-counter">
+														<span>25 Interested</span>
+														<span>11 Going</span>
+													</p>
+													<div class="group-btns">
+														<button class="interest-btn btn-hover" onclick="window.location.href='event_detail_view.html';"><i class="feather-eye me-2"></i>View</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-6 col-md-6">
+											<div class="event-main-post">
+												<div class="main-photo">
+													<a href="#">
+														<div class="photo-overlay"></div>
+														<img src="images/homepage/center/post-img-7.jpg" alt="">
+													</a>																
+												</div>														
+												<div class="event-body">
+													<span class="event-time">thu,30 june 2022 at 3.00 pm</span>
+													<a href="event_detail_view.html" class="event-title">Event Title Here</a>
+													<span class="event-type">Location</span>
+													<p class="ingo-counter">
+														<span>25 Interested</span>
+														<span>11 Going</span>
+													</p>
+													<div class="group-btns">
+														<button class="interest-btn btn-hover" onclick="window.location.href='event_detail_view.html';"><i class="feather-eye me-2"></i>View</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-6 col-md-6">
+											<div class="event-main-post">
+												<div class="main-photo">
+													<a href="#">
+														<div class="photo-overlay"></div>
+														<img src="images/homepage/center/post-img-8.jpg" alt="">
+													</a>
+												</div>														
+												<div class="event-body">
+													<span class="event-time">thu,30 june 2022 at 3.00 pm</span>
+													<a href="event_detail_view.html" class="event-title">Event Title Here</a>
+													<span class="event-type">Location</span>
+													<p class="ingo-counter">
+														<span>25 Interested</span>
+														<span>11 Going</span>
+													</p>
+													<div class="group-btns">
+														<button class="interest-btn btn-hover" onclick="window.location.href='event_detail_view.html';"><i class="feather-eye me-2"></i>View</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="loading-btn">
+												<button class="process-btn btn-hover" type="button">
+													<i class="fa-solid fa-spinner fa-spin"></i>
+													Loading...
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-- Body End -->			
+		<!-- Footer Start -->
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-12">
+						<div class="footer-left">
+							<ul>
+								<li><a href="privacy_policy.html">Privacy</a></li>
+								<li><a href="term_conditions.html">Term and Conditions</a></li>
+								<li><a href="about.html">About</a></li>
+								<li><a href="contact_us.html">Contact Us</a></li>								
+							</ul>
+						</div>
+					</div>					
+					<div class="col-lg-6 col-md-12">
+						<div class="footer-right">
+							<ul class="copyright-text">
+								<li><a href="index.html"><img src="images/logo-2.svg" alt=""></a></li>
+								<li><div class="ftr-1"><i class="far fa-copyright"></i> 2022 Goeveni by <a href="https://themeforest.net/user/gambolthemes">Gambolthemes</a>. All Rights Reserved.</div></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- Footer End -->			
+		<!-- Scripts js -->	
+		<script src="js/jquery-3.6.0.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+		<script src="vendor/OwlCarousel/owl.carousel.js"></script>	
+		<script src="js/datepicker.min.js"></script>
+		<script src="js/i18n/datepicker.en.js"></script>
+		<script src="js/custom.js"></script>					
+		
+	</body>
+	
+
+<!-- Mirrored from www.gambolthemes.net/html-items/new-goeveni/disable_demo/user_profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 20:15:17 GMT -->
+</html>
