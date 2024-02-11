@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,6 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, enumType: GenderEnum::class)]
     private ?GenderEnum $gender = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateOfBirth = null;
 
     public function getId(): ?string
     {
@@ -190,6 +194,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGender(?GenderEnum $gender): self
     {
         $this->gender = $gender;
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): static
+    {
+        $this->dateOfBirth = $dateOfBirth;
+
         return $this;
     }
 
