@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -46,6 +48,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $reputation = null;
+
+    #[ORM\OneToMany(mappedBy: 'userWon', targetEntity: Vocher::class)]
+    private Collection $vochers;
+
+    public function __construct()
+    {
+        $this->vochers = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -205,6 +218,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateOfBirth(\DateTimeInterface $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getReputation(): ?int
+    {
+        return $this->reputation;
+    }
+
+    public function setReputation(?int $reputation): static
+    {
+        $this->reputation = $reputation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vocher>
+     */
+    public function getVochers(): Collection
+    {
+        return $this->vochers;
+    }
+
+    public function addVocher(Vocher $vocher): static
+    {
+        if (!$this->vochers->contains($vocher)) {
+            $this->vochers->add($vocher);
+            $vocher->setUserWon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVocher(Vocher $vocher): static
+    {
+        if ($this->vochers->removeElement($vocher)) {
+            // set the owning side to null (unless already changed)
+            if ($vocher->getUserWon() === $this) {
+                $vocher->setUserWon(null);
+            }
+        }
 
         return $this;
     }
