@@ -27,8 +27,9 @@ class Post
     #[ORM\Column(length: 255,enumType:PostTypeEnum::class)]
     private ?PostTypeEnum $type = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $album = [];
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageUrl = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $place = null;
@@ -86,15 +87,14 @@ class Post
         return $this;
     }
 
-    public function getAlbum(): array
+    public function getImageUrl(): ?string
     {
-        return $this->album;
+        return $this->imageUrl;
     }
 
-    public function setAlbum(array $album): static
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->album = $album;
-
+        $this->imageUrl = $imageUrl;
         return $this;
     }
 

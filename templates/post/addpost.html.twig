@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+%} {% block main %}
+<form>
+{{ form_start(f) }}	
+
+<main class="goeveni-mp">	
+			<div class="main-section">
+				<div class="container">
+					<div class="row justify-content-md-center">
+						<div class="col-xl-6 col-lg-10 col-md-12">
+							<div class="main-card p-4">
+								<div class="add-event-cover-image">
+									<div class="upload-cover">
+										<div class="cover-img-btn">
+                                            {{ form_label(f.album, 'Enter Image', {'label_attr': {'class': 'feather-image me-3'}}) }}
+                                            {{ form_widget(f.album, {'attr': {'class': 'form-input', 'placeholder': 'Titre'}}) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="add-event-tabs">
+								
+    {{ form_widget(f.type, {'attr': {'id': 'post_type'}}) }}
+
+    <button type="button" class="btn btn-primary" onclick="setType('Lost')">Lost</button>
+
+    <button type="button" class="btn btn-primary" onclick="setType('Found')">Found</button>
+
+    <script>
+        function setType(type) {
+            document.getElementById('post_type').value = type;
+        }
+    </script>
+								<div class="tab-content" id="mainTabContent">
+									<div class="tab-pane fade active show" id="online" role="tabpanel" aria-labelledby="online-tab">
+										<div class="event-type-dt main-form mt-4">
+											<div class="tab-content" id="subTabContent">
+												<div class="tab-pane fade active show" id="general" role="tabpanel" aria-labelledby="general-tab">
+													<div class="form-group mt-4">
+														{{ form_label(f.titre, 'Enter Titre', {'label_attr': {'class': 'form-label'}}) }}
+                                                        {{ form_widget(f.titre, {'attr': {'class': 'form-input', 'placeholder': 'Titre'}}) }}
+													</div>									
+													<div class="form-group mt-4">
+														{{ form_label(f.description, 'Enter Description', {'label_attr': {'class': 'form-label'}}) }}
+                                                        {{ form_widget(f.description, {'attr': {'class': 'form-textarea', 'placeholder': 'Description'}}) }}
+													</div>
+                                                    <div class="form-group mt-4">
+														{{ form_label(f.date, 'Enter Date', {'label_attr': {'class': 'form-label'}}) }}
+                                                        {{ form_widget(f.date, {'attr': {'class': 'search-form-input datepicker-here', 'placeholder': 'Date'}}) }}
+													</div>
+                                                    <div class="form-group mt-4">
+														{{ form_label(f.place, 'Enter Place', {'label_attr': {'class': 'form-label'}}) }}
+                                                        {{ form_widget(f.place, {'attr': {'class': 'form-input', 'placeholder': 'Place'}}) }}
+													</div>
+													<button class="main-btn btn-hover h-40 w-100 mt-37 mb-3" type="submit">Create Event</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>					
+				</div>
+			</div>
+		</main>
+</form>
+
+
+
+
+{% endblock %}
