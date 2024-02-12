@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Enum\GenderEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -24,39 +24,35 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
             ->add('address', TextType::class, [
-                'required' => false, // Depending on your application's requirements
+//                'required' => false,
             ])
             ->add('phone', TextType::class, [
-                'required' => false, // Depending on your application's requirements
+//                'required' => false,
             ])
             ->add('photo', FileType::class, [
                 'label' => 'Profile Photo (Image file)',
-                'mapped' => false, // This field is not mapped to any entity property
-                'required' => false,
+                'mapped' => false,
+//                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/gif',
-                        ],
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
                         'mimeTypesMessage' => 'Please upload a valid image file',
                     ])
                 ],
             ])
             ->add('gender', ChoiceType::class, [
                 'choices' => GenderEnum::cases(),
-                'choice_label' => function(?GenderEnum $gender) {
-                    return $gender ? $gender->name : '';
-                },
+                'choice_label' => function(?GenderEnum $gender) { return $gender ? $gender->name : ''; },
                 'placeholder' => 'Choose your gender',
-                'expanded' => false, // This is what changes the field from radio buttons to a dropdown
+                'expanded' => false,
                 'multiple' => false,
+//                'required' => true,
             ])
-            ->add('dateOfBirth', DateType::class, [
-                'widget' => 'single_text',
-                // 'format' => 'yyyy-MM-dd', // Uncomment if you want to specify the format
+            // Add the submit button here
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'login-btn'],
+                'label' => 'Register Now',
             ]);
     }
 
@@ -64,6 +60,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['Default', 'registration'], // Include 'registration' group
         ]);
     }
 }

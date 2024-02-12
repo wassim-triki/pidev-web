@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -24,28 +27,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Password is required", groups: ["registration"])]
+    #[Assert\Length(
+        min: 6,
+        max: 4096, // You can set the max to a high number to not limit password length
+        minMessage: "Your password must be at least {{ limit }} characters long",
+        groups: ["registration"]
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\Email(message: "The email '{{ value }}' is not a valid email.")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^\d{8}$/',
+        message: "Phone number must be exactly 8 digits",
+        groups: ["registration"],
+    )]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    #[Assert\NotBlank(message: "Username is required")]
+    #[Assert\Length(
+        min: 4,
+        max: 50,
+        minMessage: "Username must be at least {{ limit }} characters long",
+        maxMessage: "Username cannot be longer than {{ limit }} characters"
+    )]
+    private ?string $username;
 
     #[ORM\Column(length: 255, enumType: GenderEnum::class)]
+    #[Assert\NotNull(message: "Please select a gender.")]
     private ?GenderEnum $gender = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateOfBirth = null;
 
     public function getId(): ?string
     {
@@ -75,6 +97,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return (string) $this->id;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+        return $this;
     }
 
     /**
@@ -179,12 +207,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
 
-        return $this;
-    }
 
     public function getGender(): ?GenderEnum
     {
@@ -194,18 +217,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGender(?GenderEnum $gender): self
     {
         $this->gender = $gender;
-        return $this;
-    }
-
-    public function getDateOfBirth(): ?\DateTimeInterface
-    {
-        return $this->dateOfBirth;
-    }
-
-    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): static
-    {
-        $this->dateOfBirth = $dateOfBirth;
-
         return $this;
     }
 

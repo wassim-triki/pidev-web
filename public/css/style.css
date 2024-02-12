@@ -10096,3 +10096,10 @@ display: block;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.07);
 }
 
+.form-error {
+	background-color: #0f5132 !important;
+	color: #ff0000; /* Red color for error messages */
+	font-style: italic;
+	margin-top: 5px;
+	font-size: 0.9em;
+}
