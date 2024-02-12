@@ -1,21 +1,42 @@
 {% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
 %} {% block main %}
-{%for i in post %}
-<div class="col-md-3">
-    <div class="event-main-post">
-    <center>
-        <div class="event-body">
-            <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
-            <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
-            <span class="event-type">{{ i.description }}</span>
-            <p class="ingo-counter">
-                <span style="color: red;">{{ i.gettype() }}</span>
-                <span>{{ i.place }}</span>
-            </p>
-            <img src="{{ i.ImageUrl }}" alt="Event image" class="event-image" width="300" height="300">
+<div class="row">
+    {%for i in post %}
+    <div class="col-md-3">
+        <div class="event-main-post">
+
+        <center>
+            <div class="event-body">
+                <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
+                <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
+                <span class="event-type">{{ i.description }}</span>
+                <p class="ingo-counter">
+                    <span style="color: red;">{{ i.gettype() }}</span>
+                    <span>{{ i.place }}</span>
+                </p>
+                <img src="{{ i.ImageUrl }}" alt="Event image" class="event-image" width="300" height="300">
+            </div>
+            <div class="row">
+        <div class="col">
+            <form action="{{ path('editpost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir moddifier ce poste?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
+                <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </form>
         </div>
-    </center>
+        <div class="col">
+            <form action="{{ path('deletepost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
+                <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
+        </div>
+        </div>
+        </center>
+        </div>
     </div>
+    {% endfor %}
 </div>
-{% endfor %}
 {% endblock %}
