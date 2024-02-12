@@ -12,18 +12,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\String\Slugger\SluggerInterface; // Add this line
+use Symfony\Component\HttpFoundation\File\Exception\FileException; // Optional, if you want to catch file-specific exceptions
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response // Add SluggerInterface
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -31,10 +33,30 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
+            $photoFile = $form->get('photo')->getData(); // Assuming 'photo' is the field name in your form
+
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // Use the slugger to create a safe filename
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    $user->setPhoto($newFilename); // Assuming you store just the filename; adjust if storing paths
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // redirect to some route after the registration
+            // Redirect to some route after the registration
             return $this->redirectToRoute('app_home');
         }
 
@@ -43,4 +65,3 @@ class RegistrationController extends AbstractController
         ]);
     }
 }
-
