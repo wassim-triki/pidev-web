@@ -75,9 +75,8 @@ class Post
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
+    public function getType(): ?string {
+        return $this->type?->value;
     }
 
     public function setType(string $type): static

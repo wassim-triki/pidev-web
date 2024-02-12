@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+%} {% block main %}
+{%for i in post %}
+<div class="col-md-3">
+    <div class="event-main-post">
+    <center>
+        <div class="event-body">
+            <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
+            <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
+            <span class="event-type">{{ i.description }}</span>
+            <p class="ingo-counter">
+                <span style="color: red;">{{ i.gettype() }}</span>
+                <span>{{ i.place }}</span>
+            </p>
+            <img src="{{ i.ImageUrl }}" alt="Event image" class="event-image" width="300" height="300">
+        </div>
+    </center>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

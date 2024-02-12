@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Service\CloudinaryService;
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\PostRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,16 @@ class PostController extends AbstractController
             'controller_name' => 'PostController',
         ]);
     }
+
+    #[Route('/showpost', name: 'showpost')]
+    public function showbook(PostRepository $postRepository): Response
+    {
+        $post = $postRepository->findAll();
+        return $this->render('post/showpost.html.twig', [
+            'post' => $post
+        ]);
+    }
+
     #[Route('/addpost', name: 'addpost')]
     public function addpost(ManagerRegistry $managerRegistry, Request $req, CloudinaryService $cloudinaryService): Response
     {
