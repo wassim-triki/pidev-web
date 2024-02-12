@@ -1,4 +1,86 @@
 {% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
 %} {% block main %}
-   {{ form(registrationForm) }}
+   <main class="register-mp">
+      <div class="main-section">
+         <div class="container">
+            <div class="row justify-content-md-center">
+               <div class="col-md-10">
+                  <div class="login-register-bg">
+                     <div class="row no-gutters">
+                        <div class="col-lg-6">
+                           <div class="lg-left">
+                              <div class="lg-logo">
+                                 <a href="index.html"><img src="images/login-register/logo.svg" alt=""></a>
+                              </div>
+                              <div class="lr-text">
+                                 <h2>Register Now</h2>
+                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum blandit felis a hendrerit.</p>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-lg-6">
+                           <div class="lr-right">
+                              <h4>Sign Up to Goeveni</h4>
+                              <div class="login-register-form">
+{#                                 <form>#}
+{#                                    <div class="form-group">#}
+{#                                       <input class="form-input h_50" type="text" placeholder="Full Name">#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                       <input class="form-input h_50" type="email" placeholder="Email Address">#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                       <input class="form-input h_50" type="password" placeholder="Password">#}
+{#                                    </div>#}
+{#                                    <div class="rgstr-dt-txt">#}
+{#                                       By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookie Policy</a>. You may receive Email notifications from us and can opt out at any time.#}
+{#                                    </div>#}
+{#                                    <button class="login-btn" type="submit">Register Now</button>#}
+{#                                    <div class="login-link">If you have an account? <a href="login.html">Login Now</a></div>#}
+{#                                 </form>#}
+                                 {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal'}}) }}
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.username, {'attr': {'class': 'form-input h_50', 'placeholder': 'Username'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-input h_50', 'placeholder': 'Email Address'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.password, {'attr': {'class': 'form-input h_50', 'placeholder': 'Password'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.address, {'attr': {'class': 'form-input h_50', 'placeholder': 'Address'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-input h_50', 'placeholder': 'Phone'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="registrationForm_photo" class="form-label">Profile Photo</label>
+                                    {{ form_widget(registrationForm.photo, {'attr': {'class': 'form-control-file'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    <label>Gender</label>
+                                    {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-control'}}) }}
+                                 </div>
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.dateOfBirth, {'attr': {'class': 'form-input h_50', 'placeholder': 'Date of Birth'}}) }}
+                                 </div>
+                                 <div class="rgstr-dt-txt">
+                                    By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive Email notifications from us and can opt out at any time.
+                                 </div>
+                                 <button class="login-btn" type="submit">Register Now</button>
+                                 <div class="login-link">If you have an account? <a href="login.html">Login Now</a></div>
+                                 {{ form_end(registrationForm) }}
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+      </div>
+   </main>
 {% endblock %}

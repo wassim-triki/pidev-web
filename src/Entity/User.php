@@ -160,22 +160,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->phone;
     }
 
-    public function setContact(?string $phone): static
+    public function setPhone(?string $phone): self
     {
-        $this->photo = $phone;
+        $this->phone = $phone; // Correctly assigning to $this->phone
 
         return $this;
     }
+
 
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): static
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
-
         return $this;
     }
 
