@@ -10,10 +10,12 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
+                                {% if isOwnProfile %}
                                 <div class="cover-img-btn">
                                     <input type="file" id="cover-img">
                                     <label for="cover-img"><i class="feather-image me-2"></i>Change Image</label>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -25,15 +27,21 @@
                         <div class="col-xl-4 col-lg-5 col-md-12">
                             <div class="main-card user-left-dt">
                                 <div class="user-avatar-img">
-                                    <img src="images/my-dashboard/my-dp.jpg" alt="">
+                                    {% if user.photo %}
+                                        <img class="user-photo" src="{{ asset('uploads/' ~ user.photo) }}" alt="{{ user.username }}">
+                                    {% else %}
+                                        <img class="user-photo" src="{{ asset('images/default-user.png') }}" alt="Default User">
+                                    {% endif %}
+                                    {% if isOwnProfile %}
                                     <div class="avatar-img-btn">
                                         <input type="file" id="avatar-img">
                                         <label for="avatar-img"><i class="feather-camera"></i></label>
                                     </div>
+                                    {% endif %}
                                 </div>
                                 <div class="user-dts">
-                                    <h4 class="user-name">John Doe<span class="verify-badge"><i class="fa-solid fa-circle-check"></i></span></h4>
-                                    <span class="user-loc"><i class="feather-map-pin"></i>India</span>
+                                    <h4 class="user-name">{{ user.username }}<span class="verify-badge"><i class="fa-solid fa-circle-check"></i></span></h4>
+                                    <span class="user-loc"><i class="feather-map-pin"></i>{{ user.address }}</span>
                                 </div>
                                 <div class="ff-block">
                                     <a href="#" class="" role="button" data-bs-toggle="modal" data-bs-target="#FFModal"><span>3</span>Followers</a>
@@ -42,9 +50,11 @@
                                 <div class="user-description">
                                     <p>Hey I am a John Doe</p>
                                 </div>
+                                {% if isOwnProfile %}
                                 <div class="user-btns">
                                     <a href="setting.html" class="co-main-btn co-btn-width min-width d-inline-block h_40"><i class="feather-settings me-2"></i>Profile Setting</a>
                                 </div>
+                                {% endif %}
                                 <div class="profile-social-link">
                                     <h6>Find me on</h6>
                                     <div class="social-links">
