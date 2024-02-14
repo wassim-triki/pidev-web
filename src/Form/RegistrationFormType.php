@@ -43,11 +43,12 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('gender', ChoiceType::class, [
                 'choices' => GenderEnum::cases(),
-                'choice_label' => function(?GenderEnum $gender) { return $gender ? $gender->name : ''; },
+                'choice_label' => function(?GenderEnum $gender) {
+                    return $gender ? ucwords(strtolower(str_replace('_', ' ', $gender->value))) : '';
+                },
                 'placeholder' => 'Choose your gender',
                 'expanded' => false,
                 'multiple' => false,
-//                'required' => true,
             ])
             // Add the submit button here
             ->add('submit', SubmitType::class, [
