@@ -40,17 +40,6 @@ class AccountInformationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('photo', FileType::class, [
-                'label' => 'Profile Photo (Image file)',
-                'mapped' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
-                        'mimeTypesMessage' => 'Please upload a valid image file',
-                    ]),
-                ],
-            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Save Changes',
                 'attr' => ['class' => 'setting-save-btn'],
