@@ -26,7 +26,7 @@ class UserController extends AbstractController
     #[Route('/settings', name: 'user_settings')]
     public function userSettings(Request $request): Response
     {
-        $tab = $request->query->get('tab', 'social');
+        $tab = $request->query->get('tab', 'account');
 
         return $this->render('user/settings.html.twig', [
             'selectedTab' => $tab,

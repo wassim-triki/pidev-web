@@ -9,16 +9,19 @@
                             <div class="setting-tabs">
                                 <ul class="nav nav-pills nav-fill p-2 setting-tab" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link {% if selectedTab == 'social' %}active{% endif %}" data-tab="social" href="#social-setting" role="tab" aria-controls="social-setting"><i class="feather-share-2 me-3"></i>Social Network</a>
+                                        <a class="nav-link {% if selectedTab == 'account' %}active{% endif %}" data-tab="account" role="tab" aria-controls="account-setting"><i class="feather-user me-3"></i>Account Information</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {% if selectedTab == 'email' %}active{% endif %}" data-tab="email" href="#email-setting" role="tab" aria-controls="email-setting"><i class="feather-mail me-3"></i>Change Email</a>
+                                        <a class="nav-link {% if selectedTab == 'social' %}active{% endif %}" data-tab="social"  role="tab" aria-controls="social-setting"><i class="feather-share-2 me-3"></i>Social Network</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {% if selectedTab == 'password' %}active{% endif %}" data-tab="password" href="#password-setting" role="tab" aria-controls="password-setting"><i class="feather-lock me-3"></i>Change Password</a>
+                                        <a class="nav-link {% if selectedTab == 'email' %}active{% endif %}" data-tab="email"  role="tab" aria-controls="email-setting"><i class="feather-mail me-3"></i>Change Email</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {% if selectedTab == 'delete' %}active{% endif %}" data-tab="delete" href="#delete-setting" role="tab" aria-controls="delete-setting"><i class="feather-trash-2 me-3"></i>Deactivate Account</a>
+                                        <a class="nav-link {% if selectedTab == 'password' %}active{% endif %}" data-tab="password" role="tab" aria-controls="password-setting"><i class="feather-lock me-3"></i>Change Password</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if selectedTab == 'delete' %}active{% endif %}" data-tab="delete" role="tab" aria-controls="delete-setting"><i class="feather-trash-2 me-3"></i>Deactivate Account</a>
                                     </li>
                                 </ul>
                             </div>
