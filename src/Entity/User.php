@@ -56,6 +56,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    private ?string $emailVerificationToken = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isEmailVerified = false;
+
+    public function getEmailVerificationToken(): ?string
+    {
+        return $this->emailVerificationToken;
+    }
+
+    public function setEmailVerificationToken(?string $emailVerificationToken): void
+    {
+        $this->emailVerificationToken = $emailVerificationToken;
+    }
+
+    public function isEmailVerified(): bool
+    {
+        return $this->isEmailVerified;
+    }
+
+    public function setIsEmailVerified(bool $isEmailVerified): void
+    {
+        $this->isEmailVerified = $isEmailVerified;
+    }
+
+
+
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Username is required")]
     #[Assert\Length(

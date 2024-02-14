@@ -6,11 +6,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface; // Add this line
 use Symfony\Component\HttpFoundation\File\Exception\FileException; // Optional, if you want to catch file-specific exceptions
@@ -18,7 +23,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException; // Optional, 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response // Add SluggerInterface
+    public function register(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer,UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response // Add SluggerInterface
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -32,6 +37,25 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+
+            $verificationToken = bin2hex(random_bytes(32));
+            $user->setEmailVerificationToken($verificationToken);
+
+            $verificationUrl = $this->generateUrl('app_verify_email', ['token' => $verificationToken], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $email = (new Email())
+                ->from('no-reply@al9ani.com')
+                ->to($user->getEmail())
+                ->subject('Email Verification')
+                ->html("Please click on the following link to verify your email: <a href='$verificationUrl'>$verificationUrl</a>");
+
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                // Log or handle the error as needed
+                $this->addFlash('error', 'Failed to send email: ' . $e->getMessage());
+            }
+
 
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
             $photoFile = $form->get('photo')->getData(); // Assuming 'photo' is the field name in your form
@@ -57,13 +81,36 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // After successful registration
-            $this->addFlash('registered_email', $user->getEmail());
+            $this->addFlash('registered_email', "Verification link sent to ".$user->getEmail());
             // Redirect to some route after the registration
-            return $this->redirectToRoute('app_login');
+//            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_register');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
+
+
+    // src/Controller/RegistrationController.php
+
+    #[Route('/verify-email/{token}', name: 'app_verify_email')]
+    public function verifyEmail(string $token, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findOneBy(['emailVerificationToken' => $token]);
+
+        if (!$user) {
+            throw $this->createNotFoundException('This verification token is invalid.');
+        }
+
+        $user->setIsEmailVerified(true);
+        $user->setEmailVerificationToken(null);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Your email has been verified.');
+
+        return $this->redirectToRoute('app_login');
+    }
+
 }

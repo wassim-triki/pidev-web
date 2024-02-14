@@ -106,11 +106,22 @@
                                              {{ error.message }}
                                           </div>
                                        {% endfor %}
+
                                     </div>
                                  </div>
                                  <div class="rgstr-dt-txt">
                                     By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive Email notifications from us and can opt out at any time.
                                  </div>
+                                 {% for flash_message in app.flashes('error') %}
+                                    <div class="alert mt-2 p-2 alert-danger small">
+                                       {{ flash_message }}
+                                    </div>
+                                 {% endfor %}
+                                 {% for flash_message in app.flashes('registered_email') %}
+                                    <div class="alert mt-2 p-2 alert-success small">
+                                       {{ flash_message }}
+                                    </div>
+                                 {% endfor %}
                                  {{ form_widget(registrationForm) }}
                                  <div class="login-link mt-1">If you have an account? <a href="login.html">Login Now</a></div>
                                  {{ form_end(registrationForm) }}
