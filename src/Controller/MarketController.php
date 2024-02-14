@@ -27,14 +27,14 @@ class MarketController extends AbstractController
         ]);
     }
 
-    #[Route('/showmarket', name: 'market_show', methods: ['GET'])]
+    #[Route('/market/showmarket', name: 'market_show', methods: ['GET'])]
     public function show(Market $market): Response
     {
-        $market = $this->managerRegistry->getRepository(Market::class)->find($market);
+        $market = $this->managerRegistry->getRepository(Market::class)->findAll($market);
         return $this->render('market/show.html.twig', ['market' => $market,]);
     }
 
-    #[Route('/newmarket', name: 'market_new', methods: ['GET', 'POST'])]
+    #[Route('/market/newmarket', name: 'market_new', methods: ['GET', 'POST'])]
     public function newMarket(Request $request): Response
     {
         $market = new Market();
@@ -49,7 +49,7 @@ class MarketController extends AbstractController
             return $this->redirectToRoute('market_index');
         }
 
-        return $this->render('market/new.html.twig', [
+        return $this->render('market/newMarket.html.twig', [
             'market' => $market,
             'form' => $form->createView(),
         ]);

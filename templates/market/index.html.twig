@@ -1,1 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Hello Market!{% endblock
+    %} {% block main %}
+    <div class="row">
+        {%for i in markets %}
+        <div class="col-md-3">
+            <div class="event-main-post">
+    
+            <center>
+                <div class="event-body">
+                    <a href="event_detail_view.html" class="event-title">{{ i.name }}</a>
+                    <span class="event-type">{{ i.address }}</span>
+                    <p class="ingo-counter">
+                        <span style="color: red;">{{ i.getName() }}</span>
+                        <span>{{ i.name }}</span>
+                    </p>
+                </div>
+                <div class="row">
+            <div class="col">
+                
+            </div>
+            </div>
+            </center>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}

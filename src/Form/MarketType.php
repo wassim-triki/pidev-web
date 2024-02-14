@@ -15,11 +15,9 @@ class MarketType extends AbstractType
         $builder
             ->add('name', TextType::class,[
                     'label' => 'Market Name',
-                    'required' => true
                 ])
             ->add('address', TextType::class,[
                     'label' => 'Market Address',
-                    'required' => true
                 ])
             ->add('save', SubmitType::class, ['label' => 'Create Market']);
     }
