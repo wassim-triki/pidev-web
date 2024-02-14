@@ -24,13 +24,13 @@
                               <div class="login-register-form">
 {#                                 <form>#}
 {#                                    <div class="form-group">#}
-{#                                       <input class="form-input h_50" type="text" placeholder="Full Name">#}
+{#                                       <input class="form-input h_40" type="text" placeholder="Full Name">#}
 {#                                    </div>#}
 {#                                    <div class="form-group">#}
-{#                                       <input class="form-input h_50" type="email" placeholder="Email Address">#}
+{#                                       <input class="form-input h_40" type="email" placeholder="Email Address">#}
 {#                                    </div>#}
 {#                                    <div class="form-group">#}
-{#                                       <input class="form-input h_50" type="password" placeholder="Password">#}
+{#                                       <input class="form-input h_40" type="password" placeholder="Password">#}
 {#                                    </div>#}
 {#                                    <div class="rgstr-dt-txt">#}
 {#                                       By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookie Policy</a>. You may receive Email notifications from us and can opt out at any time.#}
@@ -57,48 +57,67 @@
 
                                  </div>
                                  <div class="form-group">
-                                    {{ form_widget(registrationForm.username, {'attr': {'class': 'form-input h_50', 'placeholder': 'Username'}}) }}
+                                    {{ form_widget(registrationForm.username, {'attr': {'class': 'form-input h_40', 'placeholder': 'Username'}}) }}
                                     <div class="d-flex justify-content-start font-weight-light  text-danger" >
-                                       {{ form_errors(registrationForm.username) }}
+                                       {% for error in registrationForm.username.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
                                     </div>
                                  </div>
-                                 <div class="form-group">
-                                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-input h_50', 'placeholder': 'Email Address'}}) }}
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-input h_40', 'placeholder': 'Email Address'}}) }}
                                     <div class="d-flex justify-content-start font-weight-light  text-danger" >
-                                       {{ form_errors(registrationForm.email) }}
+                                       {% for error in registrationForm.email.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+
+                                    </div>
+                                 </div>
+                                 <div class="form-group mt-2">
+
+                                    {{ form_widget(registrationForm.password, {'attr': {'class': 'form-input h_40', 'placeholder': 'Password'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.password.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
 
                                     </div>
                                  </div>
                                  <div class="form-group">
-
-                                    {{ form_widget(registrationForm.password, {'attr': {'class': 'form-input h_50', 'placeholder': 'Password'}}) }}
+                                    {{ form_widget(registrationForm.address, {'attr': {'class': 'form-input h_40', 'placeholder': 'Address'}}) }}
+                                 </div>
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-input h_40', 'placeholder': 'Phone'}}) }}
                                     <div class="d-flex justify-content-start font-weight-light  text-danger" >
-                                       {{ form_errors(registrationForm.password) }}
-
+                                       {% for error in registrationForm.phone.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
                                     </div>
                                  </div>
-                                 <div class="form-group">
-                                    {{ form_widget(registrationForm.address, {'attr': {'class': 'form-input h_50', 'placeholder': 'Address'}}) }}
-                                    {{ form_errors(registrationForm.address) }}
-                                 </div>
-                                 <div class="form-group">
-                                    {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-input h_50', 'placeholder': 'Phone'}}) }}
-                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
-                                       {{ form_errors(registrationForm.phone) }}
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
+                                 <div class="form-group mt-2">
 {#                             <label>Gender</label>#}
-                                    {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-control form-input'}}) }}
                                     <div class="d-flex justify-content-start font-weight-light  text-danger" >
-                                       {{ form_errors(registrationForm.gender) }}
+                                       {% for error in registrationForm.gender.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
                                     </div>
                                  </div>
                                  <div class="rgstr-dt-txt">
                                     By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive Email notifications from us and can opt out at any time.
                                  </div>
                                  {{ form_widget(registrationForm) }}
-                                 <div class="login-link">If you have an account? <a href="login.html">Login Now</a></div>
+                                 <div class="login-link mt-1">If you have an account? <a href="login.html">Login Now</a></div>
                                  {{ form_end(registrationForm) }}
 
                               </div>
