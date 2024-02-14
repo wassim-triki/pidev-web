@@ -1,3 +1,27 @@
+<style>
+    .btn-reg{
+        border-radius: 5px;
+        background-color: #ff7555 !important;
+    }
+
+    .button{
+        color: #ffffff !important;
+        border: 0;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        padding: 10px 12px!important;
+    }
+
+    .btn-login:hover{
+        color: #ff7555 !important;
+        transition: color ease-in-out 0.1s;
+    }
+    .btn-reg:hover{
+        color: white !important;
+    }
+</style>
+
 <header>
     <nav
             class="navbar navbar-expand-lg custom-navbar bg-dark1 justify-content-sm-start"
@@ -408,6 +432,7 @@
                 </li>
             </ul>
             <div class="account dropdown">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a
                         href="#"
                         class="account-link dropdown-toggle-no-caret"
@@ -442,10 +467,12 @@
                     <a class="link-item" href="setting.html"
                     ><i class="feather-settings me-3"></i>Setting</a
                     >
-                    <a class="link-item" href="login.html"
-                    ><i class="feather-log-out me-3"></i>Logout</a
-                    >
+                    <a class="link-item" href="{{ path('app_logout') }}"><i class="feather-log-out me-3"></i>Logout</a>
                 </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="button btn-login">Login</a>
+                    <a href="{{ path('app_register') }}" class="button btn-reg">Register</a>
+                {% endif %}
             </div>
         </div>
     </nav>
