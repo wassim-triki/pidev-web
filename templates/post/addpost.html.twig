@@ -16,40 +16,43 @@
                         <div class="mb-3">
                             {{ form_label(f.titre) }}
                             {{ form_widget(f.titre, {'attr': {'class': 'form-control'}}) }}
+							<div style="color: red;">{{ form_errors(f.titre) }}</div>
+							
                         </div>
                         
                         {# Render the description field #}
                         <div class="mb-3">
                             {{ form_label(f.description) }}
                             {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
+							<div style="color: red;">{{ form_errors(f.description) }}</div>
                         </div>
                         
                         {# Render the date field #}
                         <div class="mb-3">
                             {{ form_label(f.date) }}
                             {{ form_widget(f.date, {'attr': {'class': 'form-control'}}) }}
+							<div style="color: red;">{{ form_errors(f.date) }}</div>
                         </div>
                         
                         {# Render the place field #}
                         <div class="mb-3">
                             {{ form_label(f.place) }}
                             {{ form_widget(f.place, {'attr': {'class': 'form-control'}}) }}
+							<div style="color: red;">{{ form_errors(f.place) }}</div>
                         </div>
                         
                         {# Render the type field as radio buttons #}
-                        <div class="mb-3">
-                            <fieldset class="form-group">
-                                {{ form_label(f.type) }}
-                                <div class="d-flex">
-                                    {{ form_widget(f.type) }}
-                                </div>
-                            </fieldset>
+						<div class="mb-3">
+                            {{ form_label(f.type) }}
+                            {{ form_widget(f.type, {'attr': {'class': 'form-control'}}) }}
+							<div style="color: red;">{{ form_errors(f.type) }}</div>
                         </div>
-                        
+						
                         {# Render the image upload field #}
                         <div class="mb-3">
                             {{ form_label(f.imageUrl) }}
                             {{ form_widget(f.imageUrl, {'attr': {'class': 'form-control'}}) }}
+							<div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
                         </div>
                         
                         {# Render the submit button #}
