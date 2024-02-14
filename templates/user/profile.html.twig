@@ -1,0 +1,617 @@
+{% extends 'base.html.twig' %} {% block title %}Register{% endblock
+%} {% block main %}
+    <main class="dashboard-mp">
+        <div class="profile-banner">
+            <div class="hero-cover-block">
+                <div class="hero-cover">
+                    <div class="hero-cover-img hero-img-1"></div>
+                </div>
+                <div class="upload-profile-cover">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="cover-img-btn">
+                                    <input type="file" id="cover-img">
+                                    <label for="cover-img"><i class="feather-image me-2"></i>Change Image</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-dt-block">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-12">
+                            <div class="main-card user-left-dt">
+                                <div class="user-avatar-img">
+                                    <img src="images/my-dashboard/my-dp.jpg" alt="">
+                                    <div class="avatar-img-btn">
+                                        <input type="file" id="avatar-img">
+                                        <label for="avatar-img"><i class="feather-camera"></i></label>
+                                    </div>
+                                </div>
+                                <div class="user-dts">
+                                    <h4 class="user-name">John Doe<span class="verify-badge"><i class="fa-solid fa-circle-check"></i></span></h4>
+                                    <span class="user-loc"><i class="feather-map-pin"></i>India</span>
+                                </div>
+                                <div class="ff-block">
+                                    <a href="#" class="" role="button" data-bs-toggle="modal" data-bs-target="#FFModal"><span>3</span>Followers</a>
+                                    <a href="#" class="" role="button" data-bs-toggle="modal" data-bs-target="#FFModal"><span>2</span>Following</a>
+                                </div>
+                                <div class="user-description">
+                                    <p>Hey I am a John Doe</p>
+                                </div>
+                                <div class="user-btns">
+                                    <a href="setting.html" class="co-main-btn co-btn-width min-width d-inline-block h_40"><i class="feather-settings me-2"></i>Profile Setting</a>
+                                </div>
+                                <div class="profile-social-link">
+                                    <h6>Find me on</h6>
+                                    <div class="social-links">
+                                        <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-square"></i></a>
+                                        <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                        <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                        <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Youtube" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
+                                        <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Website" aria-label="Website"><i class="fa-solid fa-globe"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8 col-lg-7 col-md-12">
+                            <div class="dash-tabs-block mt-4">
+                                <ul class="nav nav-pills nav-fill p-2 dash-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true"><i class="feather-grid"></i>Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="about-tab" data-bs-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false"><i class="feather-info"></i>About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="discussion-tab" data-bs-toggle="tab" href="#discussion" role="tab" aria-controls="discussion" aria-selected="false"><i class="feather-message-circle"></i>Discussions</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="events-tab" data-bs-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false"><i class="feather-calendar"></i>Events</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                    <div class="main-card pb-2 px-2">
+                                        <div class="row g-2">
+                                            <div class="col-lg-6 col-xl-3 col-md-6 col-12">
+                                                <div class="dash-step">
+                                                    <i class="feather-calendar"></i>
+                                                    <h6 class="dash-step-title">Events</h6>
+                                                    <span class="count-1">3</span>
+                                                    <span class="count-2">+1 last 30 days</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xl-3 col-md-6 col-12">
+                                                <div class="dash-step">
+                                                    <i class="feather-users"></i>
+                                                    <h6 class="dash-step-title">People Reached</h6>
+                                                    <span class="count-1">55</span>
+                                                    <span class="count-2">+50 last 30 days</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xl-3 col-md-6 col-12">
+                                                <div class="dash-step">
+                                                    <i class="feather-star"></i>
+                                                    <h6 class="dash-step-title">Response</h6>
+                                                    <span class="count-1">18</span>
+                                                    <span class="count-2">+15 last 30 days</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xl-3 col-md-6 col-12">
+                                                <div class="dash-step">
+                                                    <i class="feather-tag"></i>
+                                                    <h6 class="dash-step-title">Ticket Click</h6>
+                                                    <span class="count-1">12</span>
+                                                    <span class="count-2">+10 last 30 days</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="main-card mt-4 mb-0">
+                                        <div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4">
+                                            <h4>Events</h4>
+                                            <a href="add_new_event.html" class="main-btn btn-hover h_40 ms-auto">Create</a>
+                                        </div>
+                                        <div class="events-dash-options main-form">
+                                            <div class="row g-2">
+                                                <div class="col-lg-4 col-md-4 col-12">
+                                                    <div class="event-search-dash">
+                                                        <div class="position-relative">
+                                                            <input class="form-input" type="text" placeholder="Search event">
+                                                            <span class="icon-158"><i class="feather-search"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4 col-12">
+                                                    <select class="selectpicker" data-width="100%">
+                                                        <option value="publish-event">Published Events</option>
+                                                        <option value="draft-event">Draft and Scheduled Events</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4 col-12">
+                                                    <select class="selectpicker" data-width="100%">
+                                                        <option value="event-date">Event Date</option>
+                                                        <option value="publish-date">Publish Date</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="all-dash-events">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img src="images/homepage/center/post-img-1.jpg" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                                            <a href="event_detail_view.html" class="event-title">Event Title Here</a>
+                                                            <div class="dash-counter-block">
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-lock me-2"></i>Budget Spent</span>
+                                                                    <span class="ms-auto">$100</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-users me-2"></i>Reach</span>
+                                                                    <span class="ms-auto">148</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-star me-2"></i>Responses</span>
+                                                                    <span class="ms-auto">122</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-tag me-2"></i>Ticket Clicks</span>
+                                                                    <span class="ms-auto">55</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="group-btns">
+                                                                <button class="interest-btn btn-hover w-100"><i class="feather-edit me-2"></i>Edit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img src="images/homepage/center/post-img-2.jpg" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                                            <a href="event_detail_view.html" class="event-title">Event Title Here</a>
+                                                            <div class="dash-counter-block">
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-lock me-2"></i>Budget Spent</span>
+                                                                    <span class="ms-auto">$100</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-users me-2"></i>Reach</span>
+                                                                    <span class="ms-auto">148</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-star me-2"></i>Responses</span>
+                                                                    <span class="ms-auto">122</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-tag me-2"></i>Ticket Clicks</span>
+                                                                    <span class="ms-auto">55</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="group-btns">
+                                                                <button class="interest-btn btn-hover w-100"><i class="feather-edit me-2"></i>Edit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img src="images/homepage/center/post-img-3.jpg" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                                            <a href="event_detail_view.html" class="event-title">Event Title Here</a>
+                                                            <div class="dash-counter-block">
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-lock me-2"></i>Budget Spent</span>
+                                                                    <span class="ms-auto">$100</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-users me-2"></i>Reach</span>
+                                                                    <span class="ms-auto">148</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-star me-2"></i>Responses</span>
+                                                                    <span class="ms-auto">122</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-tag me-2"></i>Ticket Clicks</span>
+                                                                    <span class="ms-auto">55</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="group-btns">
+                                                                <button class="interest-btn btn-hover w-100"><i class="feather-edit me-2"></i>Edit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="loading-btn mb-0">
+                                                        <button class="process-btn btn-hover" type="button">
+                                                            No More Events
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                    <div class="main-card mt-4 mb-0">
+                                        <div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4 border_bottom">
+                                            <h4>About</h4>
+                                            <a class="main-btn btn-hover h_40 ms-auto" data-bs-toggle="modal" href="#edit-profile-model" role="button">Edit</a>
+                                        </div>
+                                        <div class="about-details">
+                                            <div class="about-step">
+                                                <h5>Name</h5>
+                                                <span>John Doe</span>
+                                            </div>
+                                            <div class="about-step">
+                                                <h5>Tell us about yourself and let people know who you are</h5>
+                                                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tincidunt interdum nunc et auctor. Phasellus quis pharetra sapien. Integer ligula sem, sodales vitae varius in, varius eget augue.</p>
+                                            </div>
+                                            <div class="about-step">
+                                                <h5>Find me on</h5>
+                                                <div class="social-links">
+                                                    <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-square"></i></a>
+                                                    <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                                    <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                                    <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                                    <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Youtube" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
+                                                    <a href="#" class="social-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Website" aria-label="Website"><i class="fa-solid fa-globe"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="about-step">
+                                                <h5>Address</h5>
+                                                <p class="mb-0">00 Challis St, Newport, Victoria, 0000, Australia</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fde" id="discussion" role="tabpanel" aria-labelledby="discussion-tab">
+                                    <div class="main-card mt-4 mb-0">
+                                        <div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4 border_bottom">
+                                            <h4>All Discussions</h4>
+                                            <a class="main-btn btn-hover h_40 ms-auto" data-bs-toggle="modal" href="#add-discussion-model" role="button">Add Topic</a>
+                                        </div>
+                                        <div class="my-all-discussions">
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">5 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">3k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">5 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>ellentesque vitae metus at neque cursus finibus.</h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">6 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">6k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">10 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>Cras vel lorem gravida, ullamcorper mi sed.</h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">6 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">7k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">15 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>Obortis risus. Nunc egestas arcu sit amet blandit finibus.</h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">7 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">10k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">50 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>Quisque in purus ut velit facilisis consequat ac id eros. </h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">7 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">7.5k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">48 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>Pellentesque semper urna est, non egestas massa vestibulum a.</h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">8 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">8k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">60 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dis-item">
+                                                <div class="row no-gutters">
+                                                    <div class="col-xl-8 col-lg-12 col-md-12">
+                                                        <div class="dis-img-text">
+                                                            <img src="images/discussion/img-1.jpg" alt="">
+                                                            <a href="single_discussion_view.html"><h4>Nunc maximus mauris non tincidunt tincidunt.</h4></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-12 col-md-12">
+                                                        <ul class="dis-reviews">
+                                                            <li>
+                                                                <a href="#">9 h</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">8.2k views</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">52 replies</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+                                    <div class="main-card mt-4 mb-0">
+                                        <div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4">
+                                            <h4>Events</h4>
+                                            <a href="add_new_event.html" class="main-btn btn-hover h_40 ms-auto">Create</a>
+                                        </div>
+                                        <div class="events-dash-options main-form">
+                                            <div class="row g-2">
+                                                <div class="col-lg-4 col-md-4 col-12">
+                                                    <div class="event-search-dash">
+                                                        <div class="position-relative">
+                                                            <input class="form-input" type="text" placeholder="Search event">
+                                                            <span class="icon-158"><i class="feather-search"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4 col-12">
+                                                    <select class="selectpicker" data-width="100%">
+                                                        <option value="publish-event">Published Events</option>
+                                                        <option value="draft-event">Draft and Scheduled Events</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4 col-12">
+                                                    <select class="selectpicker" data-width="100%">
+                                                        <option value="event-date">Event Date</option>
+                                                        <option value="publish-date">Publish Date</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="all-dash-events">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img src="images/homepage/center/post-img-1.jpg" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                                            <a href="event_detail_view.html" class="event-title">Event Title Here</a>
+                                                            <div class="dash-counter-block">
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-lock me-2"></i>Budget Spent</span>
+                                                                    <span class="ms-auto">$100</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-users me-2"></i>Reach</span>
+                                                                    <span class="ms-auto">148</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-star me-2"></i>Responses</span>
+                                                                    <span class="ms-auto">122</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-tag me-2"></i>Ticket Clicks</span>
+                                                                    <span class="ms-auto">55</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="group-btns">
+                                                                <button class="interest-btn btn-hover w-100"><i class="feather-edit me-2"></i>Edit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img src="images/homepage/center/post-img-2.jpg" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                                            <a href="event_detail_view.html" class="event-title">Event Title Here</a>
+                                                            <div class="dash-counter-block">
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-lock me-2"></i>Budget Spent</span>
+                                                                    <span class="ms-auto">$100</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-users me-2"></i>Reach</span>
+                                                                    <span class="ms-auto">148</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-star me-2"></i>Responses</span>
+                                                                    <span class="ms-auto">122</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-tag me-2"></i>Ticket Clicks</span>
+                                                                    <span class="ms-auto">55</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="group-btns">
+                                                                <button class="interest-btn btn-hover w-100"><i class="feather-edit me-2"></i>Edit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img src="images/homepage/center/post-img-3.jpg" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                                            <a href="event_detail_view.html" class="event-title">Event Title Here</a>
+                                                            <div class="dash-counter-block">
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-lock me-2"></i>Budget Spent</span>
+                                                                    <span class="ms-auto">$100</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-users me-2"></i>Reach</span>
+                                                                    <span class="ms-auto">148</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-star me-2"></i>Responses</span>
+                                                                    <span class="ms-auto">122</span>
+                                                                </p>
+                                                                <p class="dash-event-counter">
+                                                                    <span class="h-color"><i class="feather-tag me-2"></i>Ticket Clicks</span>
+                                                                    <span class="ms-auto">55</span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="group-btns">
+                                                                <button class="interest-btn btn-hover w-100"><i class="feather-edit me-2"></i>Edit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="loading-btn mb-0">
+                                                        <button class="process-btn btn-hover" type="button">
+                                                            No More Events
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
