@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\AccountInformationFormType;
+use App\Form\EmailChangeFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +30,47 @@ class UserController extends AbstractController
     {
         $tab = $request->query->get('tab', 'account');
 
+        // Create and handle the form
+        $user = $this->getUser();
+        $accountForm = $this->createForm(AccountInformationFormType::class, $user);
+        $accountForm->handleRequest($request);
+
+        $emailChangeForm = $this->createForm(EmailChangeFormType::class);
+        $emailChangeForm->handleRequest($request);
+
+
+
+        if ($accountForm->isSubmitted() && $accountForm->isValid()) {
+            // Save the updated user information
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Account information updated successfully.');
+
+            return $this->redirectToRoute('user_settings');
+        }
+
+        if ($emailChangeForm->isSubmitted() && $emailChangeForm->isValid()) {
+            $oldEmail = $emailChangeForm->get('oldEmail')->getData();
+            $newEmail = $emailChangeForm->get('newEmail')->getData();
+
+            if ($oldEmail === $user->getEmail()) {
+                $user->setEmail($newEmail);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+                $this->addFlash('success', 'Email address updated successfully.');
+            } else {
+                $this->addFlash('error', 'Old email address does not match.');
+            }
+
+            return $this->redirectToRoute('user_settings', ['tab' => 'email']);
+        }
+
         return $this->render('user/settings.html.twig', [
             'selectedTab' => $tab,
+            'accountForm' => $accountForm->createView(),
+            'emailChangeForm' => $emailChangeForm->createView(),
         ]);
     }
 
