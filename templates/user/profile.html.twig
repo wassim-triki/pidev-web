@@ -26,18 +26,32 @@
                     <div class="row">
                         <div class="col-xl-4 col-lg-5 col-md-12">
                             <div class="main-card user-left-dt">
-                                <div class="user-avatar-img">
-                                    {% if user.photo %}
-                                        <img class="user-photo" src="{{ asset('uploads/' ~ user.photo) }}" alt="{{ user.username }}">
-                                    {% else %}
-                                        <img class="user-photo" src="{{ asset('images/default-user.png') }}" alt="Default User">
-                                    {% endif %}
-                                    {% if isOwnProfile %}
-                                    <div class="avatar-img-btn">
-                                        <input type="file" id="avatar-img">
-                                        <label for="avatar-img"><i class="feather-camera"></i></label>
+                                {% for flash_message in app.flashes('error') %}
+                                    <div class="alert mt-2 p-2 alert-danger small">
+                                        {{ flash_message }}
                                     </div>
+                                {% endfor %}
+                                {% for flash_message in app.flashes('success') %}
+                                    <div class="alert mt-2 p-2 alert-success small">
+                                        {{ flash_message }}
+                                    </div>
+                                {% endfor %}
+                                <div class="user-avatar-img">
+                                    <img class="user-photo" src="{{ asset(user.photo ? 'uploads/' ~ user.photo : 'images/default-user.png') }}" alt="{{ user.username }}">
+                                    {% if isOwnProfile %}
+                                        <div class="avatar-img-btn">
+                                            {{ form_start(profilePictureForm, {
+                                                'attr': {
+                                                    'id': 'profile-picture-form',
+                                                    'action': path('user_update_photo', {'username': user.username})
+                                                }
+                                            }) }}
+                                            {{ form_widget(profilePictureForm.photo, {'attr': {'id': 'avatar-img', 'onchange': 'submitProfilePictureForm()'}}) }}
+                                            <label for={{ profilePictureForm.photo.vars.id }}><i class="feather-camera"></i></label>
+                                            {{ form_end(profilePictureForm) }}
+                                        </div>
                                     {% endif %}
+
                                 </div>
                                 <div class="user-dts">
                                     <h4 class="user-name">{{ user.username }}<span class="verify-badge"><i class="fa-solid fa-circle-check"></i></span></h4>
@@ -625,4 +639,9 @@
             </div>
         </div>
     </main>
+    <script>
+        function submitProfilePictureForm() {
+            document.getElementById('profile-picture-form').submit();
+        }
+    </script>
 {% endblock %}

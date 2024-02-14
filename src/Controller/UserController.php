@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Form\AccountInformationFormType;
 use App\Form\EmailChangeFormType;
+use App\Form\ProfilePictureType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UserController extends AbstractController
 {
@@ -17,11 +20,15 @@ class UserController extends AbstractController
     {
         $user = $userRepository->findOneBy(['username'=>$username]);
 
+        // Create the profile picture form
+        $profilePictureForm = $this->createForm(ProfilePictureType::class);
+
         $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,
             'isOwnProfile' => $isOwnProfile,
+            'profilePictureForm' => $profilePictureForm->createView(),
         ]);
     }
 
@@ -73,6 +80,50 @@ class UserController extends AbstractController
             'emailChangeForm' => $emailChangeForm->createView(),
         ]);
     }
+
+
+    #[Route('/user/{username}/update-photo', name: 'user_update_photo', methods: ['POST'])]
+    public function updatePhoto(Request $request, string $username, UserRepository $userRepository, SluggerInterface $slugger): Response
+    {
+
+        $user = $userRepository->findOneBy(['username' => $username]);
+
+        if (!$user || $user !== $this->getUser()) {
+            $this->addFlash('error', 'Access denied.');
+            return $this->redirectToRoute('user_profile', ['username' => $username]);
+        }
+
+        $form = $this->createForm(ProfilePictureType::class);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
+            $photoFile = $form->get('photo')->getData();
+
+            if ($photoFile) {
+
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                try {
+                    $photoFile->move($this->getParameter('uploads_directory'), $newFilename);
+                    $user->setPhoto($newFilename);
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Profile photo updated successfully.');
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Error uploading photo.');
+                }
+            }
+        }
+
+        return $this->redirectToRoute('user_profile', ['username' => $username]);
+    }
+
+
 
 
 }
