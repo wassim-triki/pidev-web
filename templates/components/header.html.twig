@@ -4,6 +4,17 @@
         background-color: #ff7555 !important;
     }
 
+    .user-photo{
+        width: 100%;
+        height: 100%;
+    }
+    .user-photo-container{
+        width: 35px;
+        height: 35px;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
     .button{
         color: #ffffff !important;
         border: 0;
@@ -441,7 +452,14 @@
                         data-bs-auto-close="outside"
                         aria-expanded="false"
                 >
-                    <div class="user-dp"><img src="images/dp.jpg" alt="" /></div>
+                    <div class="user-photo-container">
+                        {% if app.user.photo %}
+                            <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User Photo">
+                        {% else %}
+                            <img class="user-photo" src="images/default-user.png" alt="Default User">
+                        {% endif %}
+                    </div>
+
                     <i class="feather-chevron-down ms-2"></i>
                 </a>
                 <div
