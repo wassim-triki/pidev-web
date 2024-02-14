@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Enum\GenderEnum;
+use App\Validator\Constraints\UniqueUsername;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -23,7 +24,11 @@ class AccountInformationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class)
+            ->add('username', TextType::class,[
+                'constraints'=>[
+                    new UniqueUsername()
+                ]
+            ])
             ->add('address', TextType::class, [
                 // Add any constraints if needed
             ])
