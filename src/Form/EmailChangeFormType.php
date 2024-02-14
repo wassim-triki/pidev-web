@@ -4,6 +4,7 @@
 
 namespace App\Form;
 
+use App\Validator\Constraints\UniqueEmail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,6 +27,7 @@ class EmailChangeFormType extends AbstractType
             ])
             ->add('newEmail', EmailType::class, [
                 'constraints' => [
+                    new UniqueEmail(),
                     new NotBlank([
                         'message' => 'Please enter your new email address',
                     ]),

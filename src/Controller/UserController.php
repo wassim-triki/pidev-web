@@ -61,7 +61,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash('success', 'Email address updated successfully.');
             } else {
-                $this->addFlash('error', 'Old email address does not match.');
+                $this->addFlash('matchError', 'Old email address does not match.');
             }
 
             return $this->redirectToRoute('user_settings', ['tab' => 'email']);

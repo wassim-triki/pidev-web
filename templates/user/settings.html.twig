@@ -118,8 +118,13 @@
                                         <div class="form-group">
                                             {{ form_label(emailChangeForm.oldEmail, 'Old Email Address*', {'label_attr': {'class': 'form-label'}}) }}
                                             {{ form_widget(emailChangeForm.oldEmail, {'attr': {'class': 'form-input', 'placeholder': 'Enter Old Email Address'}}) }}
-                                            {{ form_errors(emailChangeForm.oldEmail) }}
-                                            {% for flash_message in app.flashes('error') %}
+                                            {% for error in emailChangeForm.oldEmail.vars.errors %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ error.message }}
+                                                </div>
+                                            {% endfor %}
+
+                                            {% for flash_message in app.flashes('matchError') %}
                                                 <div class="alert mt-2 p-2 alert-danger small">
                                                     {{ flash_message }}
                                                 </div>
@@ -128,8 +133,18 @@
                                         <div class="form-group">
                                             {{ form_label(emailChangeForm.newEmail, 'New Email Address*', {'label_attr': {'class': 'form-label'}}) }}
                                             {{ form_widget(emailChangeForm.newEmail, {'attr': {'class': 'form-input', 'placeholder': 'Enter New Email Address'}}) }}
-                                            {{ form_errors(emailChangeForm.newEmail) }}
+                                                {% for error in emailChangeForm.newEmail.vars.errors %}
+                                                    <div class="alert mt-2 p-2 alert-danger small">
+                                                            {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
                                         </div>
+                                        {% for flash_message in app.flashes('success') %}
+                                            <div class="alert mt-2 p-2 alert-success small">
+                                                {{ flash_message }}
+                                            </div>
+                                        {% endfor %}
+
                                         {{ form_widget(emailChangeForm) }}
                                         {{ form_end(emailChangeForm) }}
                                     </div>
