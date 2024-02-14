@@ -52,13 +52,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $reputation = null;
 
-    #[ORM\OneToMany(mappedBy: 'userWon', targetEntity: Vocher::class)]
-    private Collection $vochers;
+    #[ORM\OneToMany(mappedBy: 'userWon', targetEntity: Voucher::class)]
+    private Collection $vouchers;
 
     public function __construct()
     {
-        $this->vochers = new ArrayCollection();
+        $this->vouchers = new ArrayCollection();
     }
+
+
 
     public function getId(): ?string
     {
@@ -235,33 +237,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Vocher>
+     * @return Collection<int, Voucher>
      */
-    public function getVochers(): Collection
+    public function getVouchers(): Collection
     {
-        return $this->vochers;
+        return $this->vouchers;
     }
 
-    public function addVocher(Vocher $vocher): static
+    public function addVoucher(Voucher $voucher): static
     {
-        if (!$this->vochers->contains($vocher)) {
-            $this->vochers->add($vocher);
-            $vocher->setUserWon($this);
+        if (!$this->vouchers->contains($voucher)) {
+            $this->vouchers->add($voucher);
+            $voucher->setUserWon($this);
         }
 
         return $this;
     }
 
-    public function removeVocher(Vocher $vocher): static
+    public function removeVoucher(Voucher $voucher): static
     {
-        if ($this->vochers->removeElement($vocher)) {
+        if ($this->vouchers->removeElement($voucher)) {
             // set the owning side to null (unless already changed)
-            if ($vocher->getUserWon() === $this) {
-                $vocher->setUserWon(null);
+            if ($voucher->getUserWon() === $this) {
+                $voucher->setUserWon(null);
             }
         }
 
         return $this;
     }
+
 
 }

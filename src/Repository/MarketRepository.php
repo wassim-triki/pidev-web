@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Magasin;
+use App\Entity\Market;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Magasin>
+ * @extends ServiceEntityRepository<Market>
  *
- * @method Magasin|null find($id, $lockMode = null, $lockVersion = null)
- * @method Magasin|null findOneBy(array $criteria, array $orderBy = null)
- * @method Magasin[]    findAll()
- * @method Magasin[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Market|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Market|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Market[]    findAll()
+ * @method Market[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MagasinRepository extends ServiceEntityRepository
+class MarketRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Magasin::class);
+        parent::__construct($registry, Market::class);
     }
 
 //    /**
-//     * @return Magasin[] Returns an array of Magasin objects
+//     * @return Market[] Returns an array of Market objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class MagasinRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Magasin
+//    public function findOneBySomeField($value): ?Market
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

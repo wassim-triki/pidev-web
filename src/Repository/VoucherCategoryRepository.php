@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\VocherCategory;
+use App\Entity\VoucherCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<VocherCategory>
+ * @extends ServiceEntityRepository<VoucherCategory>
  *
- * @method VocherCategory|null find($id, $lockMode = null, $lockVersion = null)
- * @method VocherCategory|null findOneBy(array $criteria, array $orderBy = null)
- * @method VocherCategory[]    findAll()
- * @method VocherCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method VoucherCategory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method VoucherCategory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method VoucherCategory[]    findAll()
+ * @method VoucherCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VocherCategoryRepository extends ServiceEntityRepository
+class VoucherCategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, VocherCategory::class);
+        parent::__construct($registry, VoucherCategory::class);
     }
 
 //    /**
-//     * @return VocherCategory[] Returns an array of VocherCategory objects
+//     * @return VoucherCategory[] Returns an array of VoucherCategory objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class VocherCategoryRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?VocherCategory
+//    public function findOneBySomeField($value): ?VoucherCategory
 //    {
 //        return $this->createQueryBuilder('v')
 //            ->andWhere('v.exampleField = :val')
