@@ -51,10 +51,11 @@
                                     <p>Hey I am a John Doe</p>
                                 </div>
                                 {% if isOwnProfile %}
-                                <div class="user-btns">
-                                    <a href="setting.html" class="co-main-btn co-btn-width min-width d-inline-block h_40"><i class="feather-settings me-2"></i>Profile Setting</a>
-                                </div>
+                                    <div class="user-btns">
+                                        <a href="{{ path('user_settings', {'tab': 'social'}) }}" class="co-main-btn co-btn-width min-width d-inline-block h_40"><i class="feather-settings me-2"></i>Profile Setting</a>
+                                    </div>
                                 {% endif %}
+
                                 <div class="profile-social-link">
                                     <h6>Find me on</h6>
                                     <div class="social-links">

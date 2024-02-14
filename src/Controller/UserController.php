@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,4 +22,16 @@ class UserController extends AbstractController
             'isOwnProfile' => $isOwnProfile,
         ]);
     }
+
+    #[Route('/settings', name: 'user_settings')]
+    public function userSettings(Request $request): Response
+    {
+        $tab = $request->query->get('tab', 'social');
+
+        return $this->render('user/settings.html.twig', [
+            'selectedTab' => $tab,
+        ]);
+    }
+
+
 }

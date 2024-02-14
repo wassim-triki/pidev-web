@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %} {% block title %}Profile{% endblock
+%} {% block main %}
+    <main class="discussion-mp">
+        <div class="main-section">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="main-card">
+                            <div class="setting-tabs">
+                                <ul class="nav nav-pills nav-fill p-2 setting-tab" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if selectedTab == 'social' %}active{% endif %}" data-tab="social" href="#social-setting" role="tab" aria-controls="social-setting"><i class="feather-share-2 me-3"></i>Social Network</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if selectedTab == 'email' %}active{% endif %}" data-tab="email" href="#email-setting" role="tab" aria-controls="email-setting"><i class="feather-mail me-3"></i>Change Email</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if selectedTab == 'password' %}active{% endif %}" data-tab="password" href="#password-setting" role="tab" aria-controls="password-setting"><i class="feather-lock me-3"></i>Change Password</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if selectedTab == 'delete' %}active{% endif %}" data-tab="delete" href="#delete-setting" role="tab" aria-controls="delete-setting"><i class="feather-trash-2 me-3"></i>Deactivate Account</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="social-setting" role="tabpanel" aria-labelledby="social-setting-tab">
+                                <div class="main-card">
+                                    <div class="categories-left-heading border_bottom">
+                                        <h3>Social Networks</h3>
+                                    </div>
+                                    <div class="setting-area">
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://facebook.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-1"><i class="fab fa-facebook-f"></i></div>
+                                        </div>
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://twitter.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-2"><i class="fab fa-twitter"></i></div>
+                                        </div>
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://googleplus.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-3"><i class="fab fa-google-plus-g"></i></div>
+                                        </div>
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://instagram.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-4"><i class="fab fa-instagram"></i></div>
+                                        </div>
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://pinterest.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-5"><i class="fab fa-pinterest-p"></i></div>
+                                        </div>
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://linkedin.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-6"><i class="fab fa-linkedin-in"></i></div>
+                                        </div>
+                                        <div class="form-group scl-icn">
+                                            <input class="form-input-s" type="text" placeholder="http://youtube.com/johndoe">
+                                            <div class="scl-icn1 scl-bg-7"><i class="fab fa-youtube"></i></div>
+                                        </div>
+
+                                        <div class="add-profile-btn">
+                                            <button class="setting-save-btn" type="submit">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="email-setting" role="tabpanel" aria-labelledby="email-setting-tab">
+                                <div class="main-card">
+                                    <div class="categories-left-heading border_bottom">
+                                        <h3>Email Setting</h3>
+                                    </div>
+                                    <div class="setting-area">
+                                        <div class="form-group">
+                                            <label class="form-label">Old Email Address*</label>
+                                            <input class="form-input" type="text" placeholder="Enter Old Email Address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">New Email Address*</label>
+                                            <input class="form-input" type="text" placeholder="Enter New Email Address">
+                                        </div>
+                                        <div class="add-profile-btn">
+                                            <button class="setting-save-btn" type="submit">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="password-setting" role="tabpanel" aria-labelledby="password-setting-tab">
+                                <div class="main-card">
+                                    <div class="categories-left-heading border_bottom">
+                                        <h3>Change Password</h3>
+                                    </div>
+                                    <div class="setting-area">
+                                        <div class="form-group">
+                                            <label class="form-label">Old Password*</label>
+                                            <input class="form-input" type="password" placeholder="Enter Old Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">New Password*</label>
+                                            <input class="form-input" type="password" placeholder="Enter New Password">
+                                        </div>
+                                        <div class="add-profile-btn">
+                                            <button class="setting-save-btn" type="submit">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="delete-setting" role="tabpanel" aria-labelledby="delete-setting-tab">
+                                <div class="main-card">
+                                    <div class="categories-left-heading border_bottom">
+                                        <h3>Deactivate Account</h3>
+                                    </div>
+                                    <div class="setting-area">
+                                        <div class="form-group">
+                                            <label class="form-label">Email*</label>
+                                            <input class="form-input" type="password" placeholder="Enter Email Address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Password*</label>
+                                            <input class="form-input" type="password" placeholder="Enter Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Description*</label>
+                                            <textarea class="form-textarea" placeholder="Description"></textarea>
+                                        </div>
+                                        <div class="add-profile-btn">
+                                            <button class="setting-save-btn" type="submit">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.querySelectorAll('.setting-tab a').forEach(tab => {
+            tab.addEventListener('click', function(event) {
+                event.preventDefault();
+                const selectedTab = this.getAttribute('data-tab');
+                window.history.pushState({}, '', '{{ path('user_settings') }}?tab=' + selectedTab);
+                document.querySelectorAll('.setting-tab a').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active', 'show'));
+                document.querySelector('#' + this.getAttribute('aria-controls')).classList.add('active', 'show');
+            });
+        });
+    </script>
+{% endblock %}
+
