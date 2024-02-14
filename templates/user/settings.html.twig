@@ -39,23 +39,36 @@
                                             <div class="form-group">
                                                 {{ form_label(accountForm.username) }}
                                                 {{ form_widget(accountForm.username, {'attr': {'class': 'form-input'}}) }}
-                                                {{ form_errors(accountForm.username) }}
+                                                {% for error in accountForm.username.vars.errors %}
+                                                    <div class="alert mt-2 p-2 alert-danger small">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
                                             </div>
                                             <div class="form-group">
                                                 {{ form_label(accountForm.address) }}
                                                 {{ form_widget(accountForm.address, {'attr': {'class': 'form-input'}}) }}
-                                                {{ form_errors(accountForm.address) }}
+
                                             </div>
                                             <div class="form-group">
                                                 {{ form_label(accountForm.phone) }}
                                                 {{ form_widget(accountForm.phone, {'attr': {'class': 'form-input'}}) }}
-                                                {{ form_errors(accountForm.phone) }}
+                                                {% for error in accountForm.phone.vars.errors %}
+                                                    <div class="alert mt-2 p-2 alert-danger small">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
                                             </div>
                                             <div class="form-group">
                                                 {{ form_label(accountForm.photo) }}
                                                 {{ form_widget(accountForm.photo, {'attr': {'class': 'form-input'}}) }}
                                                 {{ form_errors(accountForm.photo) }}
                                             </div>
+                                            {% for flash_message in app.flashes('success') %}
+                                                <div class="alert mt-2 p-2 alert-success small">
+                                                    {{ flash_message }}
+                                                </div>
+                                            {% endfor %}
                                             {{ form_widget(accountForm) }}
                                             {{ form_end(accountForm) }}
                                         </div>
