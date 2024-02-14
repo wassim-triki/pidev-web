@@ -46,11 +46,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Regex(
-        pattern: '/^\d{8}$/',
-        message: "Phone number must be exactly 8 digits",
+        pattern: '/^(\+216)?\d{8}$/',
+        message: "Phone number must be exactly 8 digits or in the format +216xxxxxxxx",
         groups: ["registration"],
     )]
     private ?string $phone = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
@@ -88,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->id;
+        return (string) $this->email;
     }
 
     /**
@@ -96,7 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->id;
+        return (string) $this->email;
     }
 
     public function setUsername(?string $username): self

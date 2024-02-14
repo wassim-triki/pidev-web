@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %} {% block title %}Login{% endblock
+%} {% block main %}
+    <main class="register-mp">
+        <div class="main-section">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-10">
+                        <div class="login-register-bg">
+                            <div class="row no-gutters">
+                                <div class="col-lg-6">
+                                    <div class="lg-left">
+                                        <div class="lg-logo">
+                                            <a href="index.html"><img src="images/login-register/logo.svg" alt=""></a>
+                                        </div>
+                                        <div class="lr-text">
+                                            <h2>Login Now</h2>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum blandit felis a hendrerit.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="lr-right">
+                                        <div class="social-logins">
+                                            <button class="social-f-btn"><i class="fab fa-facebook-f"></i>Continue with facebook</button>
+                                            <button class="social-g-btn"><i class="fab fa-google"></i>Continue with Google</button>
+                                        </div>
+                                        <div class="or">Or</div>
+                                        <div class="login-register-form">
+                                            {% if error %}
+                                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                            {% endif %}
+                                            <form action="{{ path('app_login') }}" method="post">
+                                                <div class="form-group">
+                                                    <input class="form-input h_50" type="email" name="_username" placeholder="Email Address" value="{{ last_username }}" required autofocus>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="form-input h_50" type="password" name="_password" placeholder="Password">
+                                                </div>
+                                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                                <button class="login-btn" type="submit">Login Now</button>
+                                            </form>
+                                            <a href="#" class="forgot-link">Forgot Password?</a>
+                                            <div class="regstr-link">Don’t have an account? <a href="{{ path('app_register') }}">Register Now</a></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+{% endblock %}
