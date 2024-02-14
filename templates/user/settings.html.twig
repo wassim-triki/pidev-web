@@ -21,7 +21,7 @@
                                         <a class="nav-link {% if selectedTab == 'password' %}active{% endif %}" data-tab="password" role="tab" aria-controls="password-setting"><i class="feather-lock me-3"></i>Change Password</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {% if selectedTab == 'delete' %}active{% endif %}" data-tab="delete" role="tab" aria-controls="delete-setting"><i class="feather-trash-2 me-3"></i>Deactivate Account</a>
+                                        <a class="nav-link {% if selectedTab == 'delete' %}active{% endif %}" data-tab="delete" role="tab" aria-controls="delete-setting"><i class="feather-trash-2 me-3"></i>Delete Account</a>
                                     </li>
                                 </ul>
                             </div>
@@ -174,29 +174,50 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="delete-setting" role="tabpanel" aria-labelledby="delete-setting-tab">
+                            <div class="tab-pane fade {{ selectedTab == 'delete' ? 'show active' : '' }}" id="delete-setting" role="tabpanel" aria-labelledby="delete-setting-tab">
                                 <div class="main-card">
                                     <div class="categories-left-heading border_bottom">
-                                        <h3>Deactivate Account</h3>
+                                        <h3>Delete Account</h3>
                                     </div>
                                     <div class="setting-area">
+                                        {{ form_start(deleteAccountForm, {
+                                            'attr': {'class': 'form', 'novalidate': 'novalidate'},
+                                            'action': path('user_delete_account'),
+                                            'method': 'POST'
+                                        }) }}
                                         <div class="form-group">
-                                            <label class="form-label">Email*</label>
-                                            <input class="form-input" type="password" placeholder="Enter Email Address">
+                                            {{ form_label(deleteAccountForm.email, 'Email*', {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(deleteAccountForm.email, {'attr': {'class': 'form-input', 'placeholder': 'Enter Email Address'}}) }}
+                                            {% for error in deleteAccountForm.email.vars.errors %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ error.message }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Password*</label>
-                                            <input class="form-input" type="password" placeholder="Enter Password">
+                                            {{ form_label(deleteAccountForm.password, 'Password*', {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(deleteAccountForm.password, {'attr': {'class': 'form-input', 'placeholder': 'Enter Password'}}) }}
+                                            {% for error in deleteAccountForm.password.vars.errors %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ error.message }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Description*</label>
-                                            <textarea class="form-textarea" placeholder="Description"></textarea>
-                                        </div>
-                                        <div class="add-profile-btn">
-                                            <button class="setting-save-btn" type="submit">Save Changes</button>
-                                        </div>
+                                        {% for flash_message in app.flashes('error') %}
+                                            <div class="alert mt-2 p-2 alert-danger small">
+                                                {{ flash_message }}
+                                            </div>
+                                        {% endfor %}
+                                        {% for flash_message in app.flashes('success') %}
+                                            <div class="alert mt-2 p-2 alert-success small">
+                                                {{ flash_message }}
+                                            </div>
+                                        {% endfor %}
+                                            {{ form_widget(deleteAccountForm.submit) }}
+                                        {{ form_end(deleteAccountForm) }}
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

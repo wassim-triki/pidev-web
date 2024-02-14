@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\AccountInformationFormType;
+use App\Form\DeleteAccountType;
 use App\Form\EmailChangeFormType;
 use App\Form\ProfilePictureType;
 use App\Repository\UserRepository;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UserController extends AbstractController
@@ -45,6 +48,9 @@ class UserController extends AbstractController
         $emailChangeForm = $this->createForm(EmailChangeFormType::class);
         $emailChangeForm->handleRequest($request);
 
+        $deleteAccountForm = $this->createForm(DeleteAccountType::class);
+        $deleteAccountForm->handleRequest($request);
+
 
 
         if ($accountForm->isSubmitted() && $accountForm->isValid()) {
@@ -78,6 +84,7 @@ class UserController extends AbstractController
             'selectedTab' => $tab,
             'accountForm' => $accountForm->createView(),
             'emailChangeForm' => $emailChangeForm->createView(),
+            'deleteAccountForm' => $deleteAccountForm->createView(),
         ]);
     }
 
@@ -122,6 +129,43 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_profile', ['username' => $username]);
     }
+
+
+    #[Route('/settings/delete-account', name: 'user_delete_account', methods: ['POST'])]
+    public function deleteAccount(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder,TokenStorageInterface $tokenStorage): Response
+    {
+
+        $user = $this->getUser();
+        $form = $this->createForm(DeleteAccountType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() ) {
+            $formData = $form->getData();
+
+            if ($user->getEmail() === $formData['email'] && $passwordEncoder->isPasswordValid($user, $formData['password'])) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($user);
+                $entityManager->flush();
+
+                // Invalidate the session after deleting the user
+                $session = $request->getSession();
+                if ($session) {
+                    $session->invalidate();
+                }
+                $tokenStorage->setToken();
+
+                $this->addFlash('success', 'Account deleted successfully.');
+                return $this->redirectToRoute('app_home');
+            } else {
+                $this->addFlash('error', 'Invalid email or password.');
+            }
+        }
+
+        return $this->redirectToRoute('user_settings', ['tab' => 'delete']);
+    }
+
+
+
 
 
 
