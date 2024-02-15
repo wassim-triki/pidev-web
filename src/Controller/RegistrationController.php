@@ -104,7 +104,7 @@ class RegistrationController extends AbstractController
             throw $this->createNotFoundException('This verification token is invalid.');
         }
 
-        $user->setIsEmailVerified(true);
+        $user->setIsVerified(true);
         $user->setEmailVerificationToken(null);
         $entityManager->flush();
 
