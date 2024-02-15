@@ -60,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $emailVerificationToken = null;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $isEmailVerified = false;
+    private bool $isVerified = false;
 
     public function getEmailVerificationToken(): ?string
     {
@@ -72,14 +72,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emailVerificationToken = $emailVerificationToken;
     }
 
-    public function isEmailVerified(): bool
+    public function isVerified(): bool
     {
-        return $this->isEmailVerified;
+        return $this->isVerified;
     }
 
-    public function setIsEmailVerified(bool $isEmailVerified): void
+    public function setIsVerified(bool $isVerified): void
     {
-        $this->isEmailVerified = $isEmailVerified;
+        $this->isVerified = $isVerified;
     }
 
 
