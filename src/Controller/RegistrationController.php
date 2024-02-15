@@ -25,6 +25,9 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer,UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response // Add SluggerInterface
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -98,6 +101,7 @@ class RegistrationController extends AbstractController
     #[Route('/verify-email/{token}', name: 'app_verify_email')]
     public function verifyEmail(string $token, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
+
         $user = $userRepository->findOneBy(['emailVerificationToken' => $token]);
 
         if (!$user) {
