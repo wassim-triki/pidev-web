@@ -6,6 +6,7 @@ use App\Repository\MarketRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MarketRepository::class)]
 class Market
@@ -15,9 +16,17 @@ class Market
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: "The name must not be blank")]
+    #[Assert\Length(min:5,minMessage:"the market name must be at least 5 characters long")]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
+    #[Assert\NotBlank(message: "The address must not be blank")]
+    #[Assert\Regex(
+        pattern: '/^[A-Z]/',
+        message: "The address name must start with a capital letter"
+    )]
+    
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 

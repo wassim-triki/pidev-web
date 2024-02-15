@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\MarketType;
+use App\Repository\MarketRepository;
 
 class MarketController extends AbstractController
 {
@@ -34,6 +35,15 @@ class MarketController extends AbstractController
         return $this->render('market/show.html.twig', ['market' => $market,]);
     }
 
+    #[Route('/market/showmarkets', name: 'showmarket')]
+    public function showMarket(MarketRepository $marketRepository): Response
+    {
+        $market = $marketRepository->findAll();
+        return $this->render('market/showMarket.html.twig', [
+            'markets' => $market
+        ]);
+    }
+
     #[Route('/market/newmarket', name: 'market_new', methods: ['GET', 'POST'])]
     public function newMarket(Request $request): Response
     {
@@ -53,5 +63,34 @@ class MarketController extends AbstractController
             'market' => $market,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/market/{id}', name: 'market_edit', methods: ['GET', 'POST'])]
+    public function editMarket(Request $request, Market $market): Response
+    {
+        $form = $this->createForm(MarketType::class, $market);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->managerRegistry->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('showmarket', ['id' => $market->getId()]);
+        }
+
+        return $this->render('market/editMarket.html.twig', [
+            'market' => $market,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    #[Route('/deletemarket/{id}', name: 'deletemarket')]
+    public function deleteroom($id,MarketRepository $postRepository,ManagerRegistry $managerRegistry): Response {
+        $em = $managerRegistry->getManager();
+        $dataid = $postRepository->find($id);
+        $em->remove($dataid);
+        $em->flush();
+        return $this->redirectToRoute('showmarket');
     }
 }

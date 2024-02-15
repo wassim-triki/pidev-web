@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %} Add new form to the system {% endblock %}
     {% block main %}
-        {{form_start(form)}}
+        {{form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}})}}
         <main class="py-5">
     <div class="container">
         <div class="row justify-content-center">
@@ -15,12 +15,17 @@
                         <div class="mb-3">
                             {{ form_label(form.name) }}
                             {{ form_widget(form.name) }}
+                            <div style="color: red;">{{ form_errors(form.name) }}</div>
                         </div>
                         
                         {# Render the description field #}
                         <div class="mb-3">
                             {{ form_label(form.address) }}
                             {{ form_widget(form.address) }}
+                            <div style="color: red;">{{ form_errors(form.address) }}</div>
+                        </div>
+                        <div>
+                            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
                         </div>
                     </div>
                 </div>
