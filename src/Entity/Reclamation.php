@@ -19,23 +19,23 @@ class Reclamation
 
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The description n'est pas vide")]
-    #[Assert\Length(min:8,minMessage:'le sujet doit contenir au moins 8 caractères au minimum')]
+    #[Assert\NotBlank(message: "Subject ies required")]
+    #[Assert\Length(min:8,minMessage:'subject must be at least 8 characters long.')]
     private ?string $subject = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The description n'est pas vide")]
+    #[Assert\NotBlank(message: "Description is required")]
     private ?string $description = null;
 
     
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The description n'est pas vide")]
+    #[Assert\NotBlank(message: "Email is required")]
     #[Assert\Email(message: 'The email {{ value }} is not a valid email.')]
     private ?string $EmailReportedUser = null;
 
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "select un items")]
+    #[Assert\NotBlank(message: "select one items")]
     private ?string $TypeReclamation = null;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations')]

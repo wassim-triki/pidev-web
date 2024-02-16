@@ -33,7 +33,7 @@ class ReclamationType extends AbstractType
         ])
         
         ->add('save', SubmitType::class, [
-            'label' => 'Enregistrer',
+            'label' => 'save',
         ]);
     }
 
