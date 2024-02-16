@@ -24,7 +24,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/showpost', name: 'showpost')]
-    public function showbook(PostRepository $postRepository): Response
+    public function showpost(PostRepository $postRepository): Response
     {
         $post = $postRepository->findAll();
         return $this->render('post/showpost.html.twig', [
@@ -32,16 +32,22 @@ class PostController extends AbstractController
         ]);
     }
 
+    
+
     #[Route('/addpost', name: 'addpost')]
     public function addpost(ManagerRegistry $managerRegistry, Request $req): Response
     {
         $em = $managerRegistry->getManager();
         $post = new Post();
+        $post->setDate(new \DateTime());
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($req);
         if ($form->isSubmitted() and $form->isValid()) {
             $em->persist($post);
             $em->flush();
+            dump($post);
+            $this->addFlash('success', 'Post successfully added!');
+
         }
         return $this->renderForm('post/addpost.html.twig', [
             'f' => $form
@@ -73,5 +79,22 @@ class PostController extends AbstractController
         $em->remove($dataid);
         $em->flush();
         return $this->redirectToRoute('showpost');
+    }
+
+    #[Route('/go', name: 'go')]
+    public function go(PostRepository $postRepository): Response
+    {
+        return $this->render('test.html.twig', [
+        ]);
+    }
+
+    #[Route('/showpostid/{user}', name: 'showpostid')]
+    public function showpostid($user, PostRepository $postRepository): Response
+    {
+        $listpost = $postRepository->showpostid($user);
+        // var_dump($listbook) . die();
+        return $this->render('post/showpost.html.twig', [
+            'a' => $listpost
+        ]);
     }
 }

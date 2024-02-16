@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Post;
 use App\Enum\PostTypeEnum;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,17 +19,22 @@ class PostType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
-            ->add('date')
             ->add('type', ChoiceType::class, [
-                'choices' => [
-                    'Lost' => 'LOST',
-                    'Found' => 'FOUNDED',
-                ],
-                'mapped' => true,
+            'choices' => [
+            'Lost' => PostTypeEnum::LOST->value,
+            'Found' => PostTypeEnum::FOUND->value,
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            'label_attr' => ['class' => 'form-label'],
+            'label' => 'Type:',
             ])
             ->add('imageUrl')
-            ->add('place')
+            ->add('place')           
             ->add('save', SubmitType::class);
+            // In your form type class
+            
+
         ;
     }
 

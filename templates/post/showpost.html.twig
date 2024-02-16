@@ -20,7 +20,7 @@
         <div class="col">
             <form action="{{ path('editpost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir moddifier ce poste?');">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
-                <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                <button type="submit" class="btn btn-blanc" title="Supprimer le poste">
                     <i class="fas fa-edit"></i>
                 </button>
             </form>
@@ -28,7 +28,7 @@
         <div class="col">
             <form action="{{ path('deletepost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
-                <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                <button type="submit" class="btn btn-blanc" title="Supprimer le poste" >
                     <i class="fas fa-trash"></i>
                 </button>
             </form>

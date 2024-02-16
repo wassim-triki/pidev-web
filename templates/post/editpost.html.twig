@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Create New Event{% endblock %}
+{% block title %}Modifier Post{% endblock %}
 {% block main %}
 {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
@@ -9,31 +9,37 @@
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-header">
-                        <h4 class="mb-0">New Event</h4>
+                        <center>
+                        <h4 class="mb-0">Modifier Post</h4>
+                        </center>
                     </div>
                     <div class="card-body">
                         {# Render the title field #}
                         <div class="mb-3">
                             {{ form_label(f.titre) }}
                             {{ form_widget(f.titre, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color: red;">{{ form_errors(f.titre) }}</div>
                         </div>
                         
                         {# Render the description field #}
                         <div class="mb-3">
                             {{ form_label(f.description) }}
                             {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color: red;">{{ form_errors(f.description) }}</div>
                         </div>
                         
                         {# Render the date field #}
                         <div class="mb-3">
                             {{ form_label(f.date) }}
                             {{ form_widget(f.date, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color: red;">{{ form_errors(f.date) }}</div>
                         </div>
                         
                         {# Render the place field #}
                         <div class="mb-3">
                             {{ form_label(f.place) }}
                             {{ form_widget(f.place, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color: red;">{{ form_errors(f.place) }}</div>
                         </div>
                         
                         {# Render the type field as radio buttons #}
@@ -50,11 +56,12 @@
                         <div class="mb-3">
                             {{ form_label(f.imageUrl) }}
                             {{ form_widget(f.imageUrl, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
                         </div>
                         
                         {# Render the submit button #}
-                        <div class="d-grid gap-2">
-                            {{ form_widget(f.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+                        <div class="d-grid gap-2" style="color: orange;">
+                            {{ form_widget(f.save, {'attr': {'class': 'btn btn-blanc btn-lg' , 'style': 'background-color: orange; color: white;'}}) }}
                         </div>
                     </div>
                 </div>

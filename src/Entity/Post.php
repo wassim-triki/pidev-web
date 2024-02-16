@@ -34,14 +34,14 @@ class Post
     #[Assert\NotBlank(message: "The type n'est pas vide")]
     #[ORM\Column(length: 255,enumType:PostTypeEnum::class)]
     private ?PostTypeEnum $type = null;
-
+    
     #[Assert\NotBlank(message: "The image n'est pas vide")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageUrl = null;
 
 
     #[Assert\NotBlank(message: "The place n'est pas vide")]
-    #[Assert\Length(min:8,minMessage:"le place doit avoir un longeur plus que 5 charactére")]
+    #[Assert\Length(min:5,minMessage:"le place doit avoir un longeur plus que 5 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $place = null;
 
