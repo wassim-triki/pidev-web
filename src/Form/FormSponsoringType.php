@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class FormSponsoringType extends AbstractType
 {
@@ -15,10 +16,25 @@ class FormSponsoringType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('description')
             ->add('date')
-            ->add('image',FileType::class)
-            ->add('save',SubmitType::class)
-        ;
+            ->add('contrat')
+            
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file',
+                    ])
+                ],
+            ])
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

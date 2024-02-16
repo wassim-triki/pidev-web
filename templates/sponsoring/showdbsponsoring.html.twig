@@ -23,8 +23,10 @@
                 {% for a in sponsor %}
                 <tr>
                     <td>{{ a.id }}</td>
-                    <td> <img src="{{asset(a.image)}}", style="width: 100px;height:100px;"></td>
+                    <td> <img src="{{ asset('uploads/' ~ a.image) }}" style="width: 100px;height:100px;"></td>
                     <td>{{ a.name }}</td>
+                    <td>{{ a.description }}</td>
+                    <td>{{ a.Contrat }}</td>
                     <td>{{ a.date | date('Y-m-d') }}</td>
                     <td>
                         <a href="{{ path('editsponsor', {'id': a.id}) }}" class="btn btn-warning mr-2">Edit</a> {# Green color for Edit #}
