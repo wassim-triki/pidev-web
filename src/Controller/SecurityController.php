@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
 
             if ($user) {
                 // Generate a reset token with JwtTokenService
-                $resetToken = $jwtTokenService->createToken(['user_id' => $user->getId()], new \DateInterval('PT3S'));
+                $resetToken = $jwtTokenService->createToken(['user_id' => $user->getId()], new \DateInterval('PT1H'));
 
 
                 $user->setResetToken($resetToken);
