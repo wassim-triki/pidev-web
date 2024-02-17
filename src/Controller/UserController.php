@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\AccountInformationFormType;
 use App\Form\ChangePasswordType;
 use App\Form\DeleteAccountType;
 use App\Form\EmailChangeFormType;
 use App\Form\ProfilePictureType;
 use App\Repository\UserRepository;
+use App\Service\JwtTokenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -37,7 +42,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/settings', name: 'user_settings')]
-    public function userSettings(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
+    public function userSettings(Request $request,UserPasswordEncoderInterface $passwordEncoder,MailerInterface $mailer,JwtTokenService $jwtTokenService): Response
     {
         $tab = $request->query->get('tab', 'account');
 
@@ -69,11 +74,36 @@ class UserController extends AbstractController
             $oldEmail = $emailChangeForm->get('oldEmail')->getData();
             $newEmail = $emailChangeForm->get('newEmail')->getData();
 
+            // Check if the new email already exists in the database
+            $existingUser = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $newEmail]);
+            if ($existingUser) {
+                $this->addFlash('em_err', 'This email is already in use.');
+                return $this->redirectToRoute('user_settings', ['tab' => 'email']);
+            }
+
             if ($oldEmail === $user->getEmail()) {
+                // Generate a verification token with JwtTokenService
+                $verificationToken = $jwtTokenService->createToken(['user_id' => $user->getId()], new \DateInterval('PT1H'));
+
+                // Set the new email and verification token
                 $user->setEmail($newEmail);
+                $user->setIsVerified(false);
+                $user->setEmailVerificationToken($verificationToken);
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
-                $this->addFlash('em_succ', 'Email address updated successfully.');
+
+                // Send verification email with JWT token
+                $verificationUrl = $this->generateUrl('app_verify_email', ['token' => $verificationToken], UrlGeneratorInterface::ABSOLUTE_URL);
+                $email = (new Email())
+                    ->from('no-reply@al9ani.tn')
+                    ->to($newEmail)
+                    ->subject('New Email Verification')
+                    ->html("Please click on the following link to verify your new email: <a href='$verificationUrl'>$verificationUrl</a>");
+
+                $mailer->send($email);
+
+                $this->addFlash('em_succ', 'A verification link has been sent to your new email address.');
             } else {
                 $this->addFlash('em_err', 'Old email address does not match.');
             }
