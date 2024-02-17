@@ -2684,6 +2684,8 @@ footer {
   width: 100%;
   padding: 23px 0;
   margin-top: auto;
+  position: absolute;
+  bottom: 0;
 }
 
 .footer-left {
@@ -6422,7 +6424,8 @@ footer {
 /* === Contact Us Page === */
 
 .contact-mp {
-  padding: 30px 0 50px !important;
+  padding: 100px 0 50px !important;
+
 }
 
 .contact-heading h2 {

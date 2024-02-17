@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\EmailFormType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Service\JwtTokenService;
@@ -61,14 +62,19 @@ class SecurityController extends AbstractController
     #[Route('/forgot-password', name: 'app_forgot_password')]
     public function forgotPassword(Request $request, UserRepository $userRepository, MailerInterface $mailer, JwtTokenService $jwtTokenService): Response
     {
-        if ($request->isMethod('POST')) {
-            $email = $request->request->get('email');
+        if ($this->getUser()) {
+            return $this->redirectToRoute('user_settings',['tab'=>'password']);
+        }
+        $form = $this->createForm(EmailFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $email = $form->get('email')->getData();
             $user = $userRepository->findOneBy(['email' => $email]);
 
             if ($user) {
                 // Generate a reset token with JwtTokenService
                 $resetToken = $jwtTokenService->createToken(['user_id' => $user->getId()], new \DateInterval('PT1H'));
-
 
                 $user->setResetToken($resetToken);
                 $entityManager = $this->getDoctrine()->getManager();
@@ -90,8 +96,11 @@ class SecurityController extends AbstractController
             }
         }
 
-        return $this->render('security/forgot_password.html.twig');
+        return $this->render('security/forgot_password.html.twig', [
+            'forgotForm' => $form->createView(),
+        ]);
     }
+
 
     #[Route('/reset-password/{token}', name: 'app_reset_password')]
     public function resetPassword(Request $request, string $token, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, JwtTokenService $jwtTokenService): Response
