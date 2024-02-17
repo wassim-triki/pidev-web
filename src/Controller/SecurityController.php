@@ -107,6 +107,11 @@ class SecurityController extends AbstractController
     {
         $user = $userRepository->findOneBy(['resetToken' => $token]);
 
+        if(!$user){
+            $this->addFlash('error', 'This password reset link is invalid or has expired.');
+            return $this->redirectToRoute('app_forgot_password');
+        }
+
         if ($user) {
             // Validate the token with JwtTokenService
             if (!$jwtTokenService->validateToken($token)) {
