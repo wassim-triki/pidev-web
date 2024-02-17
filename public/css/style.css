@@ -5683,6 +5683,9 @@ footer {
 .lg-left {
   position: relative; /* This is needed to position the overlay */
   background-image: url(../images/login-register/bg.jpg);
+  background-repeat: no-repeat;
+  /*background-position: center;*/
+  background-size: cover;
   /*height: 646px;*/
   height: 100%;
   width: 100%;
