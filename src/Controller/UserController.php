@@ -21,6 +21,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class UserController extends AbstractController
 {
@@ -42,6 +45,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/settings', name: 'user_settings')]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED)]
     public function userSettings(Request $request,UserPasswordEncoderInterface $passwordEncoder,MailerInterface $mailer,JwtTokenService $jwtTokenService): Response
     {
         $tab = $request->query->get('tab', 'account');
@@ -56,6 +60,9 @@ class UserController extends AbstractController
 
         $deleteAccountForm = $this->createForm(DeleteAccountType::class);
         $deleteAccountForm->handleRequest($request);
+
+        $changePasswordForm = $this->createForm(ChangePasswordType::class);
+        $changePasswordForm->handleRequest($request);
 
 
 
@@ -111,8 +118,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_settings', ['tab' => 'email']);
         }
 
-        $changePasswordForm = $this->createForm(ChangePasswordType::class);
-        $changePasswordForm->handleRequest($request);
+
 
         if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
             $oldPassword = $changePasswordForm->get('oldPassword')->getData();
