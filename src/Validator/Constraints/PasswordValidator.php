@@ -17,19 +17,19 @@ class PasswordValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Password::class);
         }
 
-        if (null === $value || '' === $value) {
-            $this->context->buildViolation($constraint->message)
-                ->addViolation();
-            return;
-        }
-
-        if (!is_string($value)) {
-            throw new UnexpectedValueException($value, 'string');
-        }
+//        if (null === $value || '' === $value) {
+//            $this->context->buildViolation($constraint->message)
+//                ->addViolation();
+//            return;
+//        }
+//
+//        if (!is_string($value)) {
+//            throw new UnexpectedValueException($value, 'string');
+//        }
 
         $length = strlen($value);
 
-        if ($length < $constraint->minLength) {
+        if ($length < $constraint->minLength && $length > 0) {
             $this->context->buildViolation($constraint->minMessage)
                 ->setParameter('{{ limit }}', $constraint->minLength)
                 ->addViolation();
@@ -43,13 +43,13 @@ class PasswordValidator extends ConstraintValidator
             return;
         }
 
-        if (!preg_match('/\d/', $value)) {
+        if (!preg_match('/\d/', $value ) && $length > 0) {
             $this->context->buildViolation($constraint->numberMessage)
                 ->addViolation();
             return;
         }
 
-        if (!preg_match('/[a-zA-Z]/', $value)) {
+        if (!preg_match('/[a-zA-Z]/', $value) && $length > 0) {
             $this->context->buildViolation($constraint->characterMessage)
                 ->addViolation();
             return;

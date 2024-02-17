@@ -59,6 +59,16 @@
                                                     </div>
                                                 {% endfor %}
                                             </div>
+                                            {% for flash_message in app.flashes('acc_succ') %}
+                                                <div class="alert mt-2 p-2 alert-success small">
+                                                    {{ flash_message }}
+                                                </div>
+                                            {% endfor %}
+                                            {% for flash_message in app.flashes('acc_err') %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ flash_message }}
+                                                </div>
+                                            {% endfor %}
                                             {{ form_widget(accountForm) }}
                                             {{ form_end(accountForm) }}
                                         </div>
@@ -127,7 +137,7 @@
                                                 </div>
                                             {% endfor %}
 
-                                            {% for flash_message in app.flashes('matchError') %}
+                                            {% for flash_message in app.flashes('em_err') %}
                                                 <div class="alert mt-2 p-2 alert-danger small">
                                                     {{ flash_message }}
                                                 </div>
@@ -142,7 +152,7 @@
                                                     </div>
                                                 {% endfor %}
                                         </div>
-                                        {% for flash_message in app.flashes('success') %}
+                                        {% for flash_message in app.flashes('em_succ') %}
                                             <div class="alert mt-2 p-2 alert-success small">
                                                 {{ flash_message }}
                                             </div>
@@ -160,17 +170,39 @@
                                         <h3>Change Password</h3>
                                     </div>
                                     <div class="setting-area">
+                                        {{ form_start(changePasswordForm, {'attr': {'class': 'form', 'novalidate': 'novalidate'}}) }}
                                         <div class="form-group">
-                                            <label class="form-label">Old Password*</label>
-                                            <input class="form-input" type="password" placeholder="Enter Old Password">
+                                            {{ form_label(changePasswordForm.oldPassword, 'Old Password*', {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(changePasswordForm.oldPassword, {'attr': {'class': 'form-input', 'placeholder': 'Enter Old Password'}}) }}
+                                            {% for error in changePasswordForm.oldPassword.vars.errors %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ error.message }}
+                                                </div>
+                                            {% endfor %}
+                                            {% for flash_message in app.flashes('pass_err') %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ flash_message }}
+                                                </div>
+                                            {% endfor %}
+
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">New Password*</label>
-                                            <input class="form-input" type="password" placeholder="Enter New Password">
+                                            {{ form_label(changePasswordForm.newPassword, 'New Password*', {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(changePasswordForm.newPassword, {'attr': {'class': 'form-input', 'placeholder': 'Enter New Password'}}) }}
+                                            {% for error in changePasswordForm.newPassword.vars.errors %}
+                                                <div class="alert mt-2 p-2 alert-danger small">
+                                                    {{ error.message }}
+                                                </div>
+                                            {% endfor %}
                                         </div>
-                                        <div class="add-profile-btn">
-                                            <button class="setting-save-btn" type="submit">Save Changes</button>
-                                        </div>
+                                        {% for flash_message in app.flashes('pass_succ') %}
+                                            <div class="alert mt-2 p-2 alert-success small">
+                                                {{ flash_message }}
+                                            </div>
+                                        {% endfor %}
+                                        {{ form_widget(changePasswordForm.submit) }}
+                                        {{ form_end(changePasswordForm) }}
+
                                     </div>
                                 </div>
                             </div>

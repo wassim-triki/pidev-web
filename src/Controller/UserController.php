@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\AccountInformationFormType;
+use App\Form\ChangePasswordType;
 use App\Form\DeleteAccountType;
 use App\Form\EmailChangeFormType;
 use App\Form\ProfilePictureType;
@@ -36,7 +37,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/settings', name: 'user_settings')]
-    public function userSettings(Request $request): Response
+    public function userSettings(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $tab = $request->query->get('tab', 'account');
 
@@ -59,9 +60,9 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Account information updated successfully.');
+            $this->addFlash('acc_succ', 'Account information updated successfully.');
 
-            return $this->redirectToRoute('user_settings');
+            return $this->redirectToRoute('user_settings',['tab'=>'account']);
         }
 
         if ($emailChangeForm->isSubmitted() && $emailChangeForm->isValid()) {
@@ -72,12 +73,33 @@ class UserController extends AbstractController
                 $user->setEmail($newEmail);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
-                $this->addFlash('success', 'Email address updated successfully.');
+                $this->addFlash('em_succ', 'Email address updated successfully.');
             } else {
-                $this->addFlash('matchError', 'Old email address does not match.');
+                $this->addFlash('em_err', 'Old email address does not match.');
             }
 
             return $this->redirectToRoute('user_settings', ['tab' => 'email']);
+        }
+
+        $changePasswordForm = $this->createForm(ChangePasswordType::class);
+        $changePasswordForm->handleRequest($request);
+
+        if ($changePasswordForm->isSubmitted() && $changePasswordForm->isValid()) {
+            $oldPassword = $changePasswordForm->get('oldPassword')->getData();
+            $newPassword = $changePasswordForm->get('newPassword')->getData();
+
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+
+                $user->setPassword($passwordEncoder->encodePassword($user, $newPassword));
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('pass_succ', 'Password changed successfully.');
+                return $this->redirectToRoute('user_settings',['tab'=>"password"]);
+            } else {
+                $this->addFlash('pass_err', 'Old password is incorrect.');
+            }
         }
 
         return $this->render('user/settings.html.twig', [
@@ -85,6 +107,7 @@ class UserController extends AbstractController
             'accountForm' => $accountForm->createView(),
             'emailChangeForm' => $emailChangeForm->createView(),
             'deleteAccountForm' => $deleteAccountForm->createView(),
+            'changePasswordForm' => $changePasswordForm->createView()
         ]);
     }
 
@@ -154,15 +177,20 @@ class UserController extends AbstractController
                 }
                 $tokenStorage->setToken();
 
-                $this->addFlash('success', 'Account deleted successfully.');
+                $this->addFlash('del_succ', 'Account deleted successfully.');
                 return $this->redirectToRoute('app_home');
             } else {
-                $this->addFlash('error', 'Invalid email or password.');
+                $this->addFlash('del_err', 'Invalid email or password.');
             }
         }
 
         return $this->redirectToRoute('user_settings', ['tab' => 'delete']);
     }
+
+
+
+
+
 
 
 
