@@ -47,14 +47,14 @@ class ReclamationController extends AbstractController
                 // Stockez le nom du fichier dans votre entité Reclamation
                 $reclamation->setScreenshot($fileName);}
            
-            $emailReportedUser = $reclamation->getEmailReportedUser();
+            $ReportedUsername = $reclamation->getReportedUsername();
 
-            $avertissement = $entityManager->getRepository(Avertissement::class)->findOneBy(['email' => $emailReportedUser]);
+            $avertissement = $entityManager->getRepository(Avertissement::class)->findOneBy(['ReportedUsername' => $ReportedUsername]);
 
             if (!$avertissement) {
                
                 $avertissement = new Avertissement();
-                $avertissement->setEmail($emailReportedUser);
+                $avertissement->setReportedUsername($ReportedUsername);
                 $avertissement->setNombreReclamation(1); 
             } else {
                

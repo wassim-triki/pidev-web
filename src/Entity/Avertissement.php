@@ -16,13 +16,19 @@ class Avertissement
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $email = null;
+    private ?string $ReportedUsername = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $nombreReclamation = null;
 
     #[ORM\OneToMany(mappedBy: 's', targetEntity: Reclamation::class)]
     private Collection $reclamations;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $confirmation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'avertissements')]
+    private ?User $f = null;
 
     public function __construct()
     {
@@ -35,14 +41,14 @@ class Avertissement
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getReportedUsername(): ?string
     {
-        return $this->email;
+        return $this->ReportedUsername;
     }
 
-    public function setEmail(?string $email): static
+    public function setReportedUsername(?string $ReportedUsername): static
     {
-        $this->email = $email;
+        $this->ReportedUsername = $ReportedUsername;
 
         return $this;
     }
@@ -85,6 +91,30 @@ class Avertissement
                 $reclamation->setS(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isConfirmation(): ?bool
+    {
+        return $this->confirmation;
+    }
+
+    public function setConfirmation(bool $confirmation): static
+    {
+        $this->confirmation = $confirmation;
+
+        return $this;
+    }
+
+    public function getF(): ?User
+    {
+        return $this->f;
+    }
+
+    public function setF(?User $f): static
+    {
+        $this->f = $f;
 
         return $this;
     }

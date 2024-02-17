@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -46,6 +48,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Status = null;
+
+    #[ORM\Column]
+    private ?int $avertissementsCount = null;
+
+    #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
+    private Collection $avertissements;
+
+    public function __construct()
+    {
+        $this->avertissements = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -205,6 +221,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateOfBirth(\DateTimeInterface $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(string $Status): static
+    {
+        $this->Status = $Status;
+
+        return $this;
+    }
+
+    public function getAvertissementsCount(): ?int
+    {
+        return $this->avertissementsCount;
+    }
+
+    public function setAvertissementsCount(int $avertissementsCount): static
+    {
+        $this->avertissementsCount = $avertissementsCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avertissement>
+     */
+    public function getAvertissements(): Collection
+    {
+        return $this->avertissements;
+    }
+
+    public function addAvertissement(Avertissement $avertissement): static
+    {
+        if (!$this->avertissements->contains($avertissement)) {
+            $this->avertissements->add($avertissement);
+            $avertissement->setF($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvertissement(Avertissement $avertissement): static
+    {
+        if ($this->avertissements->removeElement($avertissement)) {
+            // set the owning side to null (unless already changed)
+            if ($avertissement->getF() === $this) {
+                $avertissement->setF(null);
+            }
+        }
 
         return $this;
     }

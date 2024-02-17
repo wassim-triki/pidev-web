@@ -30,8 +30,8 @@ class Reclamation
     
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Email is required")]
-    #[Assert\Email(message: 'The email {{ value }} is not a valid email.')]
-    private ?string $EmailReportedUser = null;
+    
+    private ?string $ReportedUsername = null;
 
 
     #[ORM\Column(length: 255)]
@@ -74,14 +74,14 @@ class Reclamation
         return $this;
     }
 
-    public function getEmailReportedUser(): ?string
+    public function getReportedUsername(): ?string
     {
-        return $this->EmailReportedUser;
+        return $this->ReportedUsername;
     }
 
-    public function setEmailReportedUser(?string $EmailReportedUser): static
+    public function setReportedUsername(?string $ReportedUsername): static
     {
-        $this->EmailReportedUser = $EmailReportedUser;
+        $this->ReportedUsername = $ReportedUsername;
 
         return $this;
     }

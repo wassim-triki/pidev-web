@@ -1,0 +1,30 @@
+
+    <h1>Liste des Avertissements</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Sujet</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avertissement in list %}
+                <tr>
+                    <td>{{ avertissement.ReportedUsername }}</td>
+                    <td>{{ avertissement.nombreReclamation }}</td>
+                    <td>
+                        {% if not avertissement.confirmation         %}
+                            <form action="{{ path('avertissement_confirm', {'id': avertissement.id}) }}" method="post">
+                                <button type="submit">Valider</button>
+                            </form>
+                        {% else %}
+                            Avertissement déjà confirmé
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+

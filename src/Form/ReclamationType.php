@@ -18,7 +18,7 @@ class ReclamationType extends AbstractType
         $builder
         ->add('subject')
         ->add('description')
-        ->add('EmailReportedUser')
+        ->add('ReportedUsername')
         ->add('TypeReclamation', ChoiceType::class, [
             'choices' => array_flip(TypeReclamationEnum::getTypes()),
             'label' => 'Type de Réclamation',
