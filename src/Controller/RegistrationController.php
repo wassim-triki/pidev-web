@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
             $verificationUrl = $this->generateUrl('app_verify_email', ['token' => $verificationToken], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $email = (new Email())
-                ->from('no-reply@al9ani.com')
+                ->from('no-reply@al9ani.tn')
                 ->to($user->getEmail())
                 ->subject('Email Verification')
                 ->html("Please click on the following link to verify your email: <a href='$verificationUrl'>$verificationUrl</a>");
