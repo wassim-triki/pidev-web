@@ -2684,8 +2684,8 @@ footer {
   width: 100%;
   padding: 23px 0;
   margin-top: auto;
-  position: absolute;
-  bottom: 0;
+  /*position: absolute;*/
+  /*bottom: 0;*/
 }
 
 .footer-left {
@@ -6425,6 +6425,8 @@ footer {
 
 .contact-mp {
   padding: 100px 0 50px !important;
+  margin-top: 20px;
+  margin-bottom: 50px;
 
 }
 
