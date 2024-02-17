@@ -5636,7 +5636,7 @@ display: block;
 }
 
 .lg-left {
-    background-image: url(../images/login-register/bg.jpg);
+    background-image: url(../../templates/Goeveni/images/login-register/bg.jpg);
     height: 646px;
     width: 100%;
     padding: 30px;
