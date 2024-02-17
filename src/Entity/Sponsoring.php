@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SponsoringRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,6 +35,14 @@ class Sponsoring
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "PLEASE! the discription")]
     private ?string $description = null;
+
+    #[ORM\OneToMany(mappedBy: 'sponsoring', targetEntity: PostGroup::class)]
+    private Collection $postgroup;
+
+    public function __construct()
+    {
+        $this->postgroup = new ArrayCollection();
+    }
 
 
 
@@ -98,6 +108,36 @@ class Sponsoring
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostGroup>
+     */
+    public function getPostgroup(): Collection
+    {
+        return $this->postgroup;
+    }
+
+    public function addPostgroup(PostGroup $postgroup): static
+    {
+        if (!$this->postgroup->contains($postgroup)) {
+            $this->postgroup->add($postgroup);
+            $postgroup->setSponsoring($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostgroup(PostGroup $postgroup): static
+    {
+        if ($this->postgroup->removeElement($postgroup)) {
+            // set the owning side to null (unless already changed)
+            if ($postgroup->getSponsoring() === $this) {
+                $postgroup->setSponsoring(null);
+            }
+        }
 
         return $this;
     }

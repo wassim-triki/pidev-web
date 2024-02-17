@@ -29,8 +29,9 @@
                             {{ form_end(f) }}
                         </div>
                     </div>
+                    {% for a in showpost %}
                     <div class="blog-comntd-bg">
-                        {% for a in showpost %}
+                        
                             <div class="bcmnt-dt">
                                 <div class="blog-usr-dt">
                                     <img src="images/event-view/user-2.jpg" alt="">
@@ -39,14 +40,8 @@
                                 </div>
                                 <p>{{ a.contenu }}</p>
                             </div>
-                        {% endfor %}
-                        <div class="breply-dt">
-                            <div class="blog-usr-dt2">
-                                <img src="images/event-view/my-reply-dp.jpg" alt="">
-                                <a href="user_profile.html"><h4>John Doe</h4></a>
-                            </div>
-                            <p>Thanks</p>
-                        </div>
+                        
+                       
                         <div class="blog-post-reply">
                             <div class="breply-dp1">
                                 <img src="images/event-view/user-1.jpg" alt="">
@@ -56,7 +51,8 @@
                                 <button class="breply-post-btn" type="submit">Reply</button>
                             </form>
                         </div>
-                    </div>                        
+                    </div>  
+                    {% endfor %}                      
                 </div>
             </div>              
         </div>

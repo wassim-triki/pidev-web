@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PostGroup;
+use App\Entity\Sponsoring;
 use App\Form\PostGroupType;
 use App\Repository\PostGroupRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,56 +22,66 @@ class PostGroupController extends AbstractController
         ]);
     }
 
-    #[Route('/addpostgroup', name: 'addpostgroup')]
-    public function addpostgroup(ManagerRegistry $managerRegistry, Request $req, PostGroupRepository $postRepository): Response
+    #[Route('/addpostgroup/{id}', name: 'addpostgroup')]
+public function addpostgroup(ManagerRegistry $managerRegistry, Request $request, int $id): Response
+{
+    $em = $managerRegistry->getManager();
+    
+    // Récupérer l'objet Sponsoring associé à l'ID
+    $sponsoring = $this->getDoctrine()->getRepository(Sponsoring::class)->find($id);
+    
+    // Vérifier si le sponsoring existe
+    if (!$sponsoring) {
+        throw $this->createNotFoundException('Sponsoring non trouvé pour l\'ID ' . $id);
+    }
+    
+    // Créer un nouveau post
+    $post = new PostGroup();
+    $post->setSponsoring($sponsoring); // Associer le sponsoring au post
+
+    $form = $this->createForm(PostGroupType::class, $post);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $currentDate = new \DateTime();
+        $post->setDate($currentDate);
+        $em->persist($post);
+        $em->flush();
+    }
+
+    // Récupérer uniquement les posts associés à ce sponsoring spécifique
+    $showpost = $sponsoring->getPostgroup(); // Utiliser la méthode getPostgroup
+
+    return $this->renderForm('post_group/group.html.twig', [
+        'f' => $form,
+        'showpost' => $showpost
+    ]);
+}
+
+  
+
+#[Route('/showdbpostgroup', name: 'showdbpostgroup')]
+    public function showdbpostgroup(PostGroupRepository $PostGroupRepository, Request $request): Response
     {
-        $em = $managerRegistry->getManager();
-        $post = new PostGroup();
-        $form = $this->createForm(PostGroupType::class, $post);
-        $form->handleRequest($req);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentDate = new \DateTime();
-            $post->setDate($currentDate);
-            $em->persist($post);
-            $em->flush();
-        }
-    
-        $showpost = $postRepository->findAll();
-    
-        return $this->renderForm('post_group/group.html.twig', [
-            'f' => $form,
-            'showpost' => $showpost
+        $post = $PostGroupRepository->findAll();
+
+
+        return $this->renderForm('post_group/showdbpostgroup.html.twig', [
+            'post' => $post
         ]);
     }
 
-    #[Route('/editpost/{id}', name: 'editpost')]
-    public function editpost($id, PostGroupRepository $postRepository, Request $req, ManagerRegistry $managerRegistry): Response
-    {
-        $em = $managerRegistry->getManager();
+   
 
-        $dataid = $postRepository->find($id);
-
-        $form = $this->createForm(PostGroupType::class, $dataid);
-        $form->handleRequest($req);
-        if ($form->isSubmitted() and $form->isValid()) {
-            $em->persist($dataid);
-            $em->flush();
-            return $this->redirectToRoute('group');
-        }
-
-        return $this->renderForm('post_group/group.html.twig', [
-            'f' => $form
-        ]);
-    }
+  
     #[Route('/deletepost/{id}', name: 'deletepost')]
-    public function deletepost($id, PostGroupRepository $postRepository, ManagerRegistry $managerRegistry): Response
+    public function deletepost($id, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
-        $dataid = $postRepository->find($id);
+        $dataid = $PostGroupRepository->find($id);
         $em->remove($dataid);
         $em->flush();
-        return $this->redirectToRoute('post_group/group.html.twig');
+        return $this->redirectToRoute('showdbpostgroup');
     }
     
 

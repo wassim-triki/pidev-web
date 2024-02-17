@@ -7,9 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[ORM\Entity(repositoryClass: PostGroupRepository::class)]
-class PostGroup
+class PostGroup extends AbstractController
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,6 +28,9 @@ class PostGroup
 
     #[ORM\OneToMany(mappedBy: 'postgroup', targetEntity: Postcommentaire::class, orphanRemoval: true)]
     private Collection $postcommentaires;
+
+    #[ORM\ManyToOne(inversedBy: 'postgroup')]
+    private ?Sponsoring $sponsoring = null;
 
     
 
@@ -87,6 +94,18 @@ class PostGroup
                 $postcommentaire->setPostgroup(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSponsoring(): ?Sponsoring
+    {
+        return $this->sponsoring;
+    }
+
+    public function setSponsoring(?Sponsoring $sponsoring): static
+    {
+        $this->sponsoring = $sponsoring;
 
         return $this;
     }

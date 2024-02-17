@@ -18,7 +18,7 @@
                                 <a href="blog_detail_view.html"><h4>{{ a.name }}</h4></a>                                    
                                 <div class="by-cmmnt">
                                     <div class="comnt-rght">
-                                        <a href="blog_detail_view.html"><i class="far fa-comment"></i> OPEN </a>
+                                        <a href="{{ path('addpostgroup', {'id': a.id}) }}" class="far fa-comment">OPEN</a> 
                                     </div>
                                 </div> 
                             </div>                                                              
