@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
-use mysql_xdevapi\Exception;
+use App\Service\JwtTokenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
+
+// JWT configuration
+$config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText('your_secret_key'));
 
 class SecurityController extends AbstractController
 {
@@ -49,18 +56,20 @@ class SecurityController extends AbstractController
     }
 
 
-    // src/Controller/SecurityController.php
+// src/Controller/SecurityController.php
 
     #[Route('/forgot-password', name: 'app_forgot_password')]
-    public function forgotPassword(Request $request, UserRepository $userRepository, MailerInterface $mailer): Response
+    public function forgotPassword(Request $request, UserRepository $userRepository, MailerInterface $mailer, JwtTokenService $jwtTokenService): Response
     {
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
-            $user = $userRepository->findOneBy(['email'=>$email]);
+            $user = $userRepository->findOneBy(['email' => $email]);
 
             if ($user) {
-                // Generate a reset token
-                $resetToken = bin2hex(random_bytes(32));
+                // Generate a reset token with JwtTokenService
+                $resetToken = $jwtTokenService->createToken(['user_id' => $user->getId()], new \DateInterval('PT3S'));
+
+
                 $user->setResetToken($resetToken);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
@@ -75,9 +84,7 @@ class SecurityController extends AbstractController
                     ->html("Please click on the following link to reset your password: <a href='$resetUrl'>$resetUrl</a>");
 
                 $mailer->send($email);
-
-                $this->addFlash('success', 'A password reset link has been sent to your email.');
-//                return $this->redirectToRoute('app_login');
+                $this->addFlash('success', 'A password reset link has been sent to '.$user->getEmail());
             } else {
                 $this->addFlash('error', 'No account found with this email.');
             }
@@ -86,18 +93,22 @@ class SecurityController extends AbstractController
         return $this->render('security/forgot_password.html.twig');
     }
 
-
-    // src/Controller/SecurityController.php
-
     #[Route('/reset-password/{token}', name: 'app_reset_password')]
-    public function resetPassword(Request $request, string $token, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function resetPassword(Request $request, string $token, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, JwtTokenService $jwtTokenService): Response
     {
-        $user = $userRepository->findOneBy(['resetToken'=>$token]);
+        $user = $userRepository->findOneBy(['resetToken' => $token]);
 
+        if ($user) {
+            // Validate the token with JwtTokenService
+            if (!$jwtTokenService->validateToken($token)) {
+                $this->addFlash('error', 'This password reset link is invalid or has expired.');
+                $user->setResetToken(null);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-        if (!$user) {
-            $this->addFlash('error', 'Invalid or expired password reset token.');
-            return $this->redirectToRoute('app_forgot_password');
+                return $this->redirectToRoute('app_forgot_password');
+            }
         }
 
         $form = $this->createForm(ResetPasswordType::class);
@@ -123,6 +134,7 @@ class SecurityController extends AbstractController
             'resetForm' => $form->createView(),
         ]);
     }
+
 
 
 }

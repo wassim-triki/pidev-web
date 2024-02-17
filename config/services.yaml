@@ -11,6 +11,8 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    App\Service\JwtTokenService:
+
     App\Validator\Constraints\UniqueEmailValidator:
         tags:
             - { name: validator.constraint_validator, alias: unique_email_validator }
