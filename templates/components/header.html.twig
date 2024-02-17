@@ -24,6 +24,10 @@
         padding: 10px 12px!important;
     }
 
+    .btns-container{
+        margin-left: auto !important;
+    }
+
     .btn-login:hover{
         color: #ff7555 !important;
         transition: color ease-in-out 0.1s;
@@ -92,7 +96,7 @@
                     <a href="#" class="add-event-btn btn-hover d-block d-lg-none"
                     >Add New Event</a
                     >
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe_5">
                         <li class="nav-item">
                             <a
                                     class="nav-link active"
@@ -121,54 +125,54 @@
                                 Discussion
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a
-                                    class="nav-link custom-d-toggle"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                            >
-                    <span class="nav-icon d-lg-none me-3">
-                      <i class="feather-list"></i>
-                    </span>
-                                Pages<i
-                                        class="fas fa-caret-down ms-2 d-none d-lg-inline-block"
-                                ></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="link-item" href="login.html">Login</a>
-                                <a class="link-item" href="register.html">Register</a>
-                                <a class="link-item" href="error_404.html">Error 404</a>
-                                <a class="link-item" href="categories.html">Categories</a>
-                                <a class="link-item" href="event_detail_view.html"
-                                >Event Detail View</a
-                                >
-                                <a class="link-item" href="user_profile.html"
-                                >User Profile</a
-                                >
-                                <a class="link-item" href="find_friends.html"
-                                >Find Friends</a
-                                >
-                                <a class="link-item" href="messages.html">Messages</a>
-                                <a class="link-item" href="friend_requests.html"
-                                >Friend Requests</a
-                                >
-                                <a class="link-item" href="notifications.html"
-                                >Notifications</a
-                                >
-                                <a class="link-item" href="credit.html">Credit</a>
-                                <a class="link-item" href="checkout.html">Checkout</a>
-                                <a class="link-item" href="confirmed_order.html"
-                                >Confirmed Order</a
-                                >
-                                <a class="link-item" href="about.html">About</a>
-                                <a class="link-item" href="blog_detail_view.html"
-                                >Blog Detail View</a
-                                >
-                                <a class="link-item" href="contact_us.html">Contact</a>
-                            </div>
-                        </li>
+{#                        <li class="nav-item dropdown">#}
+{#                            <a#}
+{#                                    class="nav-link custom-d-toggle"#}
+{#                                    href="#"#}
+{#                                    role="button"#}
+{#                                    data-bs-toggle="dropdown"#}
+{#                                    aria-expanded="false"#}
+{#                            >#}
+{#                    <span class="nav-icon d-lg-none me-3">#}
+{#                      <i class="feather-list"></i>#}
+{#                    </span>#}
+{#                                Pages<i#}
+{#                                        class="fas fa-caret-down ms-2 d-none d-lg-inline-block"#}
+{#                                ></i>#}
+{#                            </a>#}
+{#                            <div class="dropdown-menu">#}
+{#                                <a class="link-item" href="login.html">Login</a>#}
+{#                                <a class="link-item" href="register.html">Register</a>#}
+{#                                <a class="link-item" href="error_404.html">Error 404</a>#}
+{#                                <a class="link-item" href="categories.html">Categories</a>#}
+{#                                <a class="link-item" href="event_detail_view.html"#}
+{#                                >Event Detail View</a#}
+{#                                >#}
+{#                                <a class="link-item" href="user_profile.html"#}
+{#                                >User Profile</a#}
+{#                                >#}
+{#                                <a class="link-item" href="find_friends.html"#}
+{#                                >Find Friends</a#}
+{#                                >#}
+{#                                <a class="link-item" href="messages.html">Messages</a>#}
+{#                                <a class="link-item" href="friend_requests.html"#}
+{#                                >Friend Requests</a#}
+{#                                >#}
+{#                                <a class="link-item" href="notifications.html"#}
+{#                                >Notifications</a#}
+{#                                >#}
+{#                                <a class="link-item" href="credit.html">Credit</a>#}
+{#                                <a class="link-item" href="checkout.html">Checkout</a>#}
+{#                                <a class="link-item" href="confirmed_order.html"#}
+{#                                >Confirmed Order</a#}
+{#                                >#}
+{#                                <a class="link-item" href="about.html">About</a>#}
+{#                                <a class="link-item" href="blog_detail_view.html"#}
+{#                                >Blog Detail View</a#}
+{#                                >#}
+{#                                <a class="link-item" href="contact_us.html">Contact</a>#}
+{#                            </div>#}
+{#                        </li>#}
                         <li class="nav-item">
                             <a class="nav-link" href="our_blog.html">
                     <span class="nav-icon d-lg-none me-3">
@@ -180,9 +184,10 @@
                     </ul>
                 </div>
             </div>
-            <a href="add_new_event.html" class="add-event d-none d-lg-block"
-            ><i class="feather-plus"></i
-                ></a>
+{#            <a href="add_new_event.html" class="add-event d-none d-lg-block"#}
+{#            ><i class="feather-plus"></i#}
+{#                ></a>#}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <ul class="group-icons">
                 <li
                         class="dropdown d-lg-inline-block d-none d-xl-none nav-icon iq-show"
@@ -208,123 +213,123 @@
                         </div>
                     </div>
                 </li>
-                <li class="dropdown">
-                    <a
-                            href="#"
-                            class="icon-set dropdown-toggle-no-caret"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                    >
-                        <i class="feather-user-plus"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-list dropdown-menu-end p-0">
-                        <div class="item-header">
-                            <h6>Friend Requests</h6>
-                            <div class="heading-btns">
-                                <a href="friend_requests.html">Setting</a>
-                                <a href="find_friends.html">Find Friends</a>
-                            </div>
-                        </div>
-                        <div class="item-body">
-                            <div class="media">
-                                <div class="item-img">
-                                    <img src="images/find-peoples/user-2.jpg" alt="" />
-                                    <span class="chat-status offline"></span>
-                                </div>
-                                <div class="media-body">
-                                    <a href="user_profile.html" class="item-title"
-                                    >Lily Zaman</a
-                                    >
-                                    <p>4 in mutual friends</p>
-                                </div>
-                                <div class="btn-area">
-                                    <a
-                                            href="#"
-                                            class="item-btn"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Accept"
-                                    ><i class="feather-user-plus"></i
-                                        ></a>
-                                    <a
-                                            href="#"
-                                            class="item-btn"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Decline"
-                                    ><i class="feather-user-minus"></i
-                                        ></a>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="item-img">
-                                    <img src="images/find-peoples/user-3.jpg" alt="" />
-                                    <span class="chat-status online"></span>
-                                </div>
-                                <div class="media-body">
-                                    <a href="user_profile.html" class="item-title"
-                                    >Johnson Dua</a
-                                    >
-                                    <p>6 in mutual friends</p>
-                                </div>
-                                <div class="btn-area">
-                                    <a
-                                            href="#"
-                                            class="item-btn"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Accept"
-                                    ><i class="feather-user-plus"></i
-                                        ></a>
-                                    <a
-                                            href="#"
-                                            class="item-btn"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Decline"
-                                    ><i class="feather-user-minus"></i
-                                        ></a>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="item-img">
-                                    <img src="images/find-peoples/user-4.jpg" alt="" />
-                                    <span class="chat-status offline"></span>
-                                </div>
-                                <div class="media-body">
-                                    <a href="user_profile.html" class="item-title"
-                                    >Rock William</a
-                                    >
-                                    <p>No mutual friends</p>
-                                </div>
-                                <div class="btn-area">
-                                    <a
-                                            href="#"
-                                            class="item-btn"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Accept"
-                                    ><i class="feather-user-plus"></i
-                                        ></a>
-                                    <a
-                                            href="#"
-                                            class="item-btn"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title="Decline"
-                                    ><i class="feather-user-minus"></i
-                                        ></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <a href="friend_requests.html" class="view-all"
-                            >View All Friend Request</a
-                            >
-                        </div>
-                    </div>
-                </li>
+{#                <li class="dropdown">#}
+{#                    <a#}
+{#                            href="#"#}
+{#                            class="icon-set dropdown-toggle-no-caret"#}
+{#                            role="button"#}
+{#                            data-bs-toggle="dropdown"#}
+{#                            aria-expanded="false"#}
+{#                    >#}
+{#                        <i class="feather-user-plus"></i>#}
+{#                    </a>#}
+{#                    <div class="dropdown-menu dropdown-list dropdown-menu-end p-0">#}
+{#                        <div class="item-header">#}
+{#                            <h6>Friend Requests</h6>#}
+{#                            <div class="heading-btns">#}
+{#                                <a href="friend_requests.html">Setting</a>#}
+{#                                <a href="find_friends.html">Find Friends</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="item-body">#}
+{#                            <div class="media">#}
+{#                                <div class="item-img">#}
+{#                                    <img src="images/find-peoples/user-2.jpg" alt="" />#}
+{#                                    <span class="chat-status offline"></span>#}
+{#                                </div>#}
+{#                                <div class="media-body">#}
+{#                                    <a href="user_profile.html" class="item-title"#}
+{#                                    >Lily Zaman</a#}
+{#                                    >#}
+{#                                    <p>4 in mutual friends</p>#}
+{#                                </div>#}
+{#                                <div class="btn-area">#}
+{#                                    <a#}
+{#                                            href="#"#}
+{#                                            class="item-btn"#}
+{#                                            data-bs-toggle="tooltip"#}
+{#                                            data-bs-placement="top"#}
+{#                                            title="Accept"#}
+{#                                    ><i class="feather-user-plus"></i#}
+{#                                        ></a>#}
+{#                                    <a#}
+{#                                            href="#"#}
+{#                                            class="item-btn"#}
+{#                                            data-bs-toggle="tooltip"#}
+{#                                            data-bs-placement="top"#}
+{#                                            title="Decline"#}
+{#                                    ><i class="feather-user-minus"></i#}
+{#                                        ></a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="media">#}
+{#                                <div class="item-img">#}
+{#                                    <img src="images/find-peoples/user-3.jpg" alt="" />#}
+{#                                    <span class="chat-status online"></span>#}
+{#                                </div>#}
+{#                                <div class="media-body">#}
+{#                                    <a href="user_profile.html" class="item-title"#}
+{#                                    >Johnson Dua</a#}
+{#                                    >#}
+{#                                    <p>6 in mutual friends</p>#}
+{#                                </div>#}
+{#                                <div class="btn-area">#}
+{#                                    <a#}
+{#                                            href="#"#}
+{#                                            class="item-btn"#}
+{#                                            data-bs-toggle="tooltip"#}
+{#                                            data-bs-placement="top"#}
+{#                                            title="Accept"#}
+{#                                    ><i class="feather-user-plus"></i#}
+{#                                        ></a>#}
+{#                                    <a#}
+{#                                            href="#"#}
+{#                                            class="item-btn"#}
+{#                                            data-bs-toggle="tooltip"#}
+{#                                            data-bs-placement="top"#}
+{#                                            title="Decline"#}
+{#                                    ><i class="feather-user-minus"></i#}
+{#                                        ></a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="media">#}
+{#                                <div class="item-img">#}
+{#                                    <img src="images/find-peoples/user-4.jpg" alt="" />#}
+{#                                    <span class="chat-status offline"></span>#}
+{#                                </div>#}
+{#                                <div class="media-body">#}
+{#                                    <a href="user_profile.html" class="item-title"#}
+{#                                    >Rock William</a#}
+{#                                    >#}
+{#                                    <p>No mutual friends</p>#}
+{#                                </div>#}
+{#                                <div class="btn-area">#}
+{#                                    <a#}
+{#                                            href="#"#}
+{#                                            class="item-btn"#}
+{#                                            data-bs-toggle="tooltip"#}
+{#                                            data-bs-placement="top"#}
+{#                                            title="Accept"#}
+{#                                    ><i class="feather-user-plus"></i#}
+{#                                        ></a>#}
+{#                                    <a#}
+{#                                            href="#"#}
+{#                                            class="item-btn"#}
+{#                                            data-bs-toggle="tooltip"#}
+{#                                            data-bs-placement="top"#}
+{#                                            title="Decline"#}
+{#                                    ><i class="feather-user-minus"></i#}
+{#                                        ></a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="item-footer">#}
+{#                            <a href="friend_requests.html" class="view-all"#}
+{#                            >View All Friend Request</a#}
+{#                            >#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </li>#}
                 <li class="dropdown">
                     <a
                             href="#"
@@ -443,7 +448,7 @@
                 </li>
             </ul>
             <div class="account dropdown">
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
                 <a
                         href="#"
                         class="account-link dropdown-toggle-no-caret"
@@ -488,11 +493,15 @@
                     >
                     <a class="link-item" href="{{ path('app_logout') }}"><i class="feather-log-out me-3"></i>Logout</a>
                 </div>
-                {% else %}
+
+            </div>
+            {% else %}
+                <div class="btns-container">
                     <a href="{{ path('app_login') }}" class="button btn-login">Login</a>
                     <a href="{{ path('app_register') }}" class="button btn-reg">Register</a>
-                {% endif %}
-            </div>
+                </div>
+
+            {% endif %}
         </div>
     </nav>
 </header>
