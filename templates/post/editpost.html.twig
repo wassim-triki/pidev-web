@@ -28,13 +28,6 @@
                             <div style="color: red;">{{ form_errors(f.description) }}</div>
                         </div>
                         
-                        {# Render the date field #}
-                        <div class="mb-3">
-                            {{ form_label(f.date) }}
-                            {{ form_widget(f.date, {'attr': {'class': 'form-control'}}) }}
-                            <div style="color: red;">{{ form_errors(f.date) }}</div>
-                        </div>
-                        
                         {# Render the place field #}
                         <div class="mb-3">
                             {{ form_label(f.place) }}
