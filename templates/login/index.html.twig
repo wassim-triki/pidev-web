@@ -27,7 +27,7 @@
                                         <div class="or">Or</div>
                                         <div class="login-register-form">
                                             {% if error %}
-                                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                                <div class="alert alert-danger mt-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                                             {% endif %}
                                             <form action="{{ path('app_login') }}" method="post">
                                                 <div class="form-group">
