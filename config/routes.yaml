@@ -14,10 +14,4 @@ back_office:
   prefix: /admin
 
   # config/routes.yaml
-admin_login:
-  path: /admin/login
-  controller: App\Controller\BackOffice\SecurityController::login
-
-admin_logout:
-  path: /admin/logout
 

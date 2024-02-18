@@ -14,17 +14,6 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
-            provider: app_user_provider
-            form_login:
-                # "app_login" is the name of the route created previously
-                enable_csrf: true
-                login_path: app_login
-                check_path: app_login
-            logout:
-                path: app_logout
-                target: app_login
         back_office:
             pattern: ^/admin
             provider: app_user_provider
@@ -35,6 +24,16 @@ security:
             logout:
                 path: admin_logout
                 target: admin_login
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                enable_csrf: true
+                login_path: app_login
+                check_path: app_login
+            logout:
+                path: app_logout
+                target: app_login
             # You can add more security options for the back office as needed
 
     access_control:

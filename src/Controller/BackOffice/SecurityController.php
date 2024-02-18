@@ -9,7 +9,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route('/admin/login', name: 'admin_login')]
+
+
+    #[Route('/login', name: 'admin_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // Get the login error if there is one
@@ -23,7 +25,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/logout', name: 'admin_logout')]
+    #[Route('/logout', name: 'admin_logout')]
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
