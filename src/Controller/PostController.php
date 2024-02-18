@@ -64,6 +64,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() and $form->isValid()) {
             $em->persist($dataid);
             $em->flush();
+            $this->addFlash('edit', 'Post successfully edited!');
             return $this->redirectToRoute('showpost');
         }
 
@@ -78,6 +79,7 @@ class PostController extends AbstractController
         $dataid = $postRepository->find($id);
         $em->remove($dataid);
         $em->flush();
+        $this->addFlash('echec', 'Post successfully deleted!');
         return $this->redirectToRoute('showpost');
     }
 

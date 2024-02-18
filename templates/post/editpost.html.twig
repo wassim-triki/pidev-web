@@ -1,73 +1,69 @@
 {% extends 'base.html.twig' %}
-{% block title %}Modifier Post{% endblock %}
-{% block main %}
-{{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
-<main class="py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-lg">
-                    <div class="card-header">
-                        <center>
-                        <h4 class="mb-0">Modifier Post</h4>
-                        </center>
+{% block title %}Ajouter Post{% endblock %}
+
+{% block main %}
+<main class="discussion-mp">    
+    <div class="main-section">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-lg-4 col-md-12">
+                    {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}                            
+                    <div class="main-card">
+                        <div class="categories-left-heading border_bottom">
+                            <h3>Type</h3>                            
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(f.type, {'attr': {'class': 'h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.titre) }}</div>
+                        </div>
+                                              
+                                             
                     </div>
-                    <div class="card-body">
+                </div>
+                <div class="col-lg-8 col-md-12">                           
+                    <div class="main-card">
+                        <div class="container mt-3">
                         {# Render the title field #}
-                        <div class="mb-3">
-                            {{ form_label(f.titre) }}
-                            {{ form_widget(f.titre, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-group">
+                            {{ form_label(f.titre, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.titre, {'attr': {'class': 'form-input h_50'}}) }}
                             <div style="color: red;">{{ form_errors(f.titre) }}</div>
                         </div>
                         
                         {# Render the description field #}
-                        <div class="mb-3">
-                            {{ form_label(f.description) }}
-                            {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-group">
+                            {{ form_label(f.description, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.description, {'attr': {'class': 'form-input h_50'}}) }}
                             <div style="color: red;">{{ form_errors(f.description) }}</div>
                         </div>
                         
                         {# Render the place field #}
-                        <div class="mb-3">
-                            {{ form_label(f.place) }}
-                            {{ form_widget(f.place, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-group">
+                            {{ form_label(f.place, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.place, {'attr': {'class': 'form-input h_50'}}) }}
                             <div style="color: red;">{{ form_errors(f.place) }}</div>
                         </div>
                         
-                        {# Render the type field as radio buttons #}
-                        <div class="mb-3">
-                            <fieldset class="form-group">
-                                {{ form_label(f.type) }}
-                                <div class="d-flex">
-                                    {{ form_widget(f.type) }}
-                                </div>
-                            </fieldset>
-                        </div>
-                        
                         {# Render the image upload field #}
-                        <div class="mb-3">
-                            {{ form_label(f.imageUrl) }}
-                            {{ form_widget(f.imageUrl, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-group">
+                            {{ form_label(f.imageUrl, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.imageUrl) }}
                             <div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
                         </div>
-                        
-                        {# Render the submit button #}
-                        <div class="d-grid gap-2" style="color: orange;">
-                            {{ form_widget(f.save, {'attr': {'class': 'btn btn-blanc btn-lg' , 'style': 'background-color: orange; color: white;'}}) }}
+                        <br>
                         </div>
                     </div>
-                </div>
-            </div>
+
+                    <div class="loading-btn mb-3">
+                        <button class="process-btn btn-hover" type="button">
+                            {{ form_widget(f.save) }}
+                        </button>
+                    </div>
+                    {{ form_end(f) }}
+                </div>                          
+            </div>                    
         </div>
     </div>
 </main>
-
-{{ form_end(f) }}
-{% endblock %}
-
-{% block javascripts %}
-<script>
-    // Custom JavaScript can be added here, if needed
-</script>
 {% endblock %}

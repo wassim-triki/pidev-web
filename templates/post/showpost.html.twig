@@ -4,69 +4,94 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {# Include Bootstrap CSS link if not already included in the parent template #}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-Ty0W1DIi3qX9m2L5C1oBLGEIfX6mwIcYIUVG48iHwbLTfjZUnLDJ5HR9tJR3BCmD" crossorigin="anonymous">
-    <style>
-        /* Add custom styles if needed */
-    </style>
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
+    {# Other styles or scripts if needed #}
 {% endblock %}
 
 {% block main %}
-    <div class="container mt-4">
+    <div class="container mt-3">
         <div class="row">
-            <div class="card-group">
-            {% for i in post %}
-                <div class="col-md-3">
-                    <div class="card card-cascade" style="width: 18rem;">
-                        <div class="card-header bg-transparent border-success">
-                            <div class="media">
-                                <img src="{{ i.user.photo }}" class="d-block ui-w-40 rounded-circle" style="width: 17%; height: 40px;">
-                                <div class="media-body ml-3">
-                                    <h5 class="mt-0">{{ i.user.username | default('No username') }}</h5>
-                                    <p class="mb-0 text-muted">{{ i.user.email | default('No Email') }}</p>
+                {% for i in post %}                  
+                        <div class="col-md-4">
+                            <div class="event-main-post">
+                              <div class="main-photo">
+                                <a href="event_detail_view.html">
+                                  <div class="photo-overlay"></div>
+                                  <img
+                                    src="{{ i.ImageUrl }}"
+                                    alt="" 
+                                    style="height: 8.5cm;"
+                                  />
+                                </a>
+                                <div class="option-ellipsis">
+                                  <div class="dropdown">
+                                    <a
+                                      class="ellipsis-btn dropdown-toggle-no-caret"
+                                      href="#"
+                                      role="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                      ><i class="fas fa-ellipsis-v"></i
+                                    ></a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                      <a class="post-link-item" href="#"
+                                        ><i class="feather-eye-off icon-mr1"></i
+                                        >Hide</a
+                                      >
+                                      <a class="post-link-item" href="#"
+                                        ><i class="feather-bookmark icon-mr1"></i
+                                        >Save</a
+                                      >
+                                      <a class="post-link-item" href="#"
+                                        ><i class="feather-user icon-mr1"></i>User
+                                        Profile</a
+                                      >
+                                      <a
+                                        class="post-link-item"
+                                        href="#"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reportModal"
+                                        ><i class="feather-flag icon-mr1"></i
+                                        >Report</a
+                                      >
+                                    </div>
+                                  </div>
                                 </div>
-                            </div>
-                        </div>
-                        
-                    <div class="view view-cascade overlay">
-                        <img class="card-img-top" src="{{ i.ImageUrl }}" alt="Card image" style="width: 100%; height: 200px;">
-                    <a>
-                    <div class="mask rgba-white-slight waves-effect waves-light"></div>
-                    </a>
-                    </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ i.titre }}</h5>
-                            <p class="card-text">{{ i.description }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">{{ i.date|date("F j, Y, g:i a") }}</small>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <center>
-                            <div class="row">
-                                <div class="col">
+                              </div>
+                              <div class="event-body">
+                                <span class="event-time"
+                                  >{{ i.date|date("F j, Y, g:i a") }}</span
+                                >
+                                <a href="event_detail_view.html" class="event-title"
+                                  >{{ i.titre }}</a
+                                >
+                                <span class="event-type">{{ i.description }}</span>
+                                <p class="ingo-counter">
+                                  <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
+                                  <span>{{ i.place }}</span>
+                                </p>
+                                <div class="group-btns">
                                     <form action="{{ path('editpost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir modifier ce poste?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
-                                        <button type="submit" class="btn btn-primary btn-sm" title="Modifier le poste">
-                                            <i class="fas fa-edit"></i>
-                                        </button>                                        
+                                  <button class="interest-btn btn-hover">
+                                    <i class="feather-edit-2 me-2"></i>Modifier
+                                  </button>
                                     </form>
-                                </div>
-                                <div class="col">
                                     <form action="{{ path('deletepost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Supprimer le poste">
-                                            <i class="fas fa-trash"></i> 
-                                        </button>
-                                    </form>
+                                  <button
+                                    class="share-btn btn-hover"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#shareModal"
+                                  >
+                                    <i class="feather-delete"></i>
+                                  </button>
+                                  </form>
                                 </div>
+                              </div>
                             </div>
-                            </center>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+                        </div> 
+                {% endfor %}
         </div>
     </div>
     <br><br>
