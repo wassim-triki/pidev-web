@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\FrontOffice;
 
 
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +36,9 @@ class PostController extends AbstractController
     #[Route('/addpost', name: 'addpost')]
     public function addpost(ManagerRegistry $managerRegistry, Request $req): Response
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
         $em = $managerRegistry->getManager();
         $user= $this->getUser();
         $post = new Post();
