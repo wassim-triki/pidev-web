@@ -2,13 +2,14 @@
 
 // src/Controller/RegistrationController.php
 
-namespace App\Controller;
+namespace App\Controller\FrontOffice;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -17,8 +18,10 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\String\Slugger\SluggerInterface; // Add this line
-use Symfony\Component\HttpFoundation\File\Exception\FileException; // Optional, if you want to catch file-specific exceptions
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+// Add this line
+// Optional, if you want to catch file-specific exceptions
 
 class RegistrationController extends AbstractController
 {
@@ -90,7 +93,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('front_office/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

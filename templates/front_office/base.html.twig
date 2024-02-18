@@ -13,7 +13,7 @@
 
     {% block css %}
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" href="{{ asset('images/fav.png') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('front_office/images/fav.png') }}" />
 
     <!-- Stylesheets -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
@@ -22,33 +22,33 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
       rel="stylesheet"
     />
-    <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/datepicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('front_office/css/responsive.css') }}" rel="stylesheet" />
+    <link href="{{ asset('front_office/css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('front_office/css/datepicker.min.css') }}" rel="stylesheet" />
 
     <!-- Vendor Stylesheets -->
     <link
-      href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"
+      href="{{ asset('front_office/vendor/bootstrap/css/bootstrap.min.css') }}"
       rel="stylesheet"
     />
     <link
-      href="{{ asset('vendor/feather-icons/feather.css') }}"
+      href="{{ asset('front_office/vendor/feather-icons/feather.css') }}"
       rel="stylesheet"
     />
     <link
-      href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}"
+      href="{{ asset('front_office/vendor/fontawesome-free/css/all.min.css') }}"
       rel="stylesheet"
     />
     <link
-      href="{{ asset('vendor/OwlCarousel/assets/owl.carousel.css') }}"
+      href="{{ asset('front_office/vendor/OwlCarousel/assets/owl.carousel.css') }}"
       rel="stylesheet"
     />
     <link
-      href="{{ asset('vendor/OwlCarousel/assets/owl.theme.default.min.css') }}"
+      href="{{ asset('front_office/vendor/OwlCarousel/assets/owl.theme.default.min.css') }}"
       rel="stylesheet"
     />
     <link
-      href="{{ asset('vendor/bootstrap-select/css/bootstrap-select.min.css') }}"
+      href="{{ asset('front_office/vendor/bootstrap-select/css/bootstrap-select.min.css') }}"
       rel="stylesheet"
     />
 
@@ -801,17 +801,17 @@
     {% endblock %}
     {% block js %}
     <!-- Scripts js -->
-    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('front_office/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{
-        asset('vendor/bootstrap/js/bootstrap.bundle.min.js')
+        asset('front_office/vendor/bootstrap/js/bootstrap.bundle.min.js')
       }}"></script>
     <script src="{{
-        asset('vendor/bootstrap-select/js/bootstrap-select.min.js')
+        asset('front_office/vendor/bootstrap-select/js/bootstrap-select.min.js')
       }}"></script>
-    <script src="{{ asset('vendor/OwlCarousel/owl.carousel.js') }}"></script>
-    <script src="{{ asset('js/datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/i18n/datepicker.en.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('front_office/vendor/OwlCarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('front_office/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('front_office/js/i18n/datepicker.en.js') }}"></script>
+    <script src="{{ asset('front_office/js/custom.js') }}"></script>
     {% endblock %}
   </body>
 

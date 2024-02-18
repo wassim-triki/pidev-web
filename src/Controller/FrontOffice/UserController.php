@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\FrontOffice;
 
 use App\Entity\User;
 use App\Form\AccountInformationFormType;
@@ -10,6 +10,7 @@ use App\Form\EmailChangeFormType;
 use App\Form\ProfilePictureType;
 use App\Repository\UserRepository;
 use App\Service\JwtTokenService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,9 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 class UserController extends AbstractController
@@ -37,7 +37,7 @@ class UserController extends AbstractController
 
         $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
 
-        return $this->render('user/profile.html.twig', [
+        return $this->render('front_office/user/profile.html.twig', [
             'user' => $user,
             'isOwnProfile' => $isOwnProfile,
             'profilePictureForm' => $profilePictureForm->createView(),
@@ -138,7 +138,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/settings.html.twig', [
+        return $this->render('front_office/user/settings.html.twig', [
             'selectedTab' => $tab,
             'accountForm' => $accountForm->createView(),
             'emailChangeForm' => $emailChangeForm->createView(),

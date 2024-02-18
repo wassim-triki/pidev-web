@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\FrontOffice;
 
 use App\Form\EmailFormType;
 use App\Form\ResetPasswordType;
@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
             // Clear the flash message to prevent it from appearing on subsequent requests
             $flashBag->clear('registered_email');
         }
-        return $this->renderForm('security/login.html.twig', [
+        return $this->renderForm('front_office/security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
@@ -96,7 +96,7 @@ class SecurityController extends AbstractController
             }
         }
 
-        return $this->render('security/forgot_password.html.twig', [
+        return $this->render('front_office/security/forgot_password.html.twig', [
             'forgotForm' => $form->createView(),
         ]);
     }
@@ -144,7 +144,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('security/reset_password.html.twig', [
+        return $this->render('front_office/security/reset_password.html.twig', [
             'resetForm' => $form->createView(),
         ]);
     }
