@@ -1,18 +1,96 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Market Details{% endblock %}
+    {% block css %}
+        {{ parent() }}
+        <style>
+            .table {
+                    width: 100%;
+                    border-collapse: collapse;
+            }
+
+            .table th,
+            .table td {
+                padding: 8px;
+                border: none;
+            }
+
+            .table th {
+                background-color: #f2f2f2;
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+                border: none;
+            }
+
+            .table tbody tr:hover {
+                background-color: #e9e9e9;
+                border: none;
+            }
+            
+            .container-custom {
+
+                margin-top: 0%;
+                background-color: dimgray;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                padding: 5%;
+            }
+            h1,p {
+                color: white;
+            }
+            img {
+                width: 50px;
+                height: 50px;
+                margin-top: 5%;
+            }
+            .container-custom-1{
+                display: flex;
+                justify-content: space-between;
+                align-items: start;
+                width: 100%;
+                height: 100%;
+                padding: 5%;
+            }
+    </style>
+    {% endblock %}
 
 {% block main %}
-    <h1>{{ market.name }} Details</h1>
-    <p>Region: {{ market.region }}</p>
-    <p>City: {{ market.city }}</p>
-    <p>Zip Code: {{ market.zipCode }}</p>
-    <p>Address: {{ market.address }}</p>
+    <div class="container-custom">
+        <h1>{{ market.name }} Details :</h1>
+        <p>Region: {{ market.region }}</p>
+        <p>City: {{ market.city }}</p>
+        <p>Zip Code: {{ market.zipCode }}</p>
+        <p>Address: {{ market.address }}</p>
+        
+    </div>
 
-    <h2>Vouchers</h2>
-    <ul>
-        {% for voucher in market.vouchers %}
-            <li>{{ voucher.code }} - {{ voucher.description }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container-custom-1">
+        <h2>Vouchers</h2>
+        <a href="{{ path('back_to_index') }}"><img src="{{ asset('images/fleche-petite-gauche.png') }}" alt=""></a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table-header">Code</th>
+                <th class="table-header">Expiration Date</th>
+                <th class="table-header">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voucher in market.vouchers %}
+                <tr class="table-row">
+                    <td class="table-data">{{ voucher.code }}</td>
+                    <td class="table-data">{{ voucher.expiration ? voucher.expiration.format('Y-m-d') : '' }}</td>
+                    <td class="table-data">{{ voucher.value }} DT</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
 {% endblock %}

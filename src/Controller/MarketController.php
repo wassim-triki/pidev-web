@@ -23,7 +23,7 @@ class MarketController extends AbstractController
     #[Route('/market', name: 'market_index')]
     public function index(): Response
     {
-        return $this->render('market/index.html.twig', [
+        return $this->render('market/showMarket.html.twig', [
             'markets' => $this->managerRegistry->getRepository(Market::class)->findAll(),
         ]);
     }
@@ -63,7 +63,7 @@ class MarketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $address = $market->getRegion() . ', ' . $market->getCity() . ', ' . $market->getZipCode();
+            $address = $market->getRegion() . ' - ' . $market->getCity() . ' - ' . $market->getZipCode();
             $market->setAddress($address);
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($market);
@@ -104,6 +104,12 @@ class MarketController extends AbstractController
         $dataid = $postRepository->find($id);
         $em->remove($dataid);
         $em->flush();
+        return $this->redirectToRoute('showmarket');
+    }
+
+    #[Route('/back-to-index', name: 'back_to_index')]
+    public function backToIndex(): Response
+    {
         return $this->redirectToRoute('showmarket');
     }
 }
