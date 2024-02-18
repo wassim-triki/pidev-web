@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -47,6 +49,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PostGroup::class)]
+    private Collection $postGroups;
+
+    public function __construct()
+    {
+        $this->postGroups = new ArrayCollection();
+    }
+
     public function getId(): ?string
     {
         return $this->id;
@@ -74,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->id;
+        return (string) $this->username;
     }
 
     /**
@@ -205,6 +215,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateOfBirth(\DateTimeInterface $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostGroup>
+     */
+    public function getPostGroups(): Collection
+    {
+        return $this->postGroups;
+    }
+
+    public function addPostGroup(PostGroup $postGroup): static
+    {
+        if (!$this->postGroups->contains($postGroup)) {
+            $this->postGroups->add($postGroup);
+            $postGroup->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostGroup(PostGroup $postGroup): static
+    {
+        if ($this->postGroups->removeElement($postGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($postGroup->getUser() === $this) {
+                $postGroup->setUser(null);
+            }
+        }
 
         return $this;
     }

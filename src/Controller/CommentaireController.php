@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Postcommentaire;
-use App\Entity\PostGroup;
-use App\Form\FormCommentaireType;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

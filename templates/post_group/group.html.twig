@@ -14,7 +14,7 @@
                     <div class="blog-post-comment">
                         <div class="blog-comments">
                             <div class="blog-comment-title">
-                                <h2>03 Comments</h2>
+                                <h2>FOUND IT HERE</h2>
                             </div>
                             {{ form_start(f, {'attr': {'novalidate': 'novalidate', 'class': 'form-group'}}) }}
                             <div class="blog-post-comment">
@@ -34,8 +34,8 @@
                         
                             <div class="bcmnt-dt">
                                 <div class="blog-usr-dt">
-                                    <img src="images/event-view/user-2.jpg" alt="">
-                                    <a href="user_profile.html"><h4>Rock Smith</h4></a>
+                                    <img src="{{ asset('uploads/' ~ a.user.photo) }}">
+                                    <a href="user_profile.html"><h4>{{ a.user.getUsername() }}</h4></a>
                                     <h6><span style="font-size: x-small; padding-left: 75px;">{{ a.date | date('Y-m-d') }}</span></h6>                                               
                                 </div>
                                 <p>{{ a.contenu }}</p>

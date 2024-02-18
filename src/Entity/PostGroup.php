@@ -32,6 +32,9 @@ class PostGroup extends AbstractController
     #[ORM\ManyToOne(inversedBy: 'postgroup')]
     private ?Sponsoring $sponsoring = null;
 
+    #[ORM\ManyToOne(inversedBy: 'postGroups')]
+    private ?User $user = null;
+
     
 
     public function __construct()
@@ -106,6 +109,18 @@ class PostGroup extends AbstractController
     public function setSponsoring(?Sponsoring $sponsoring): static
     {
         $this->sponsoring = $sponsoring;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

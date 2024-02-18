@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class PostGroupController extends AbstractController
 {
@@ -23,40 +24,45 @@ class PostGroupController extends AbstractController
     }
 
     #[Route('/addpostgroup/{id}', name: 'addpostgroup')]
-public function addpostgroup(ManagerRegistry $managerRegistry, Request $request, int $id): Response
-{
-    $em = $managerRegistry->getManager();
+    public function addpostgroup(ManagerRegistry $managerRegistry, Request $request, int $id, Security $security): Response
+    {
+        $em = $managerRegistry->getManager();
+        
+        // Récupérer l'objet Sponsoring associé à l'ID
+        $sponsoring = $this->getDoctrine()->getRepository(Sponsoring::class)->find($id);
+        
+        // Vérifier si le sponsoring existe
+        if (!$sponsoring) {
+            throw $this->createNotFoundException('Sponsoring non trouvé pour l\'ID ' . $id);
+        }
+        
+        // Créer un nouveau post
+        $post = new PostGroup();
+        $post->setSponsoring($sponsoring); // Associer le sponsoring au post
+        
+       // Récupérer l'utilisateur actuellement authentifié et l'associer au post
+        $user = $security->getUser();
+        $post->setUser($user);
+
+        
+        $form = $this->createForm(PostGroupType::class, $post);
+        $form->handleRequest($request);
     
-    // Récupérer l'objet Sponsoring associé à l'ID
-    $sponsoring = $this->getDoctrine()->getRepository(Sponsoring::class)->find($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $currentDate = new \DateTime();
+            $post->setDate($currentDate);
+            $em->persist($post);
+            $em->flush();
+        }
     
-    // Vérifier si le sponsoring existe
-    if (!$sponsoring) {
-        throw $this->createNotFoundException('Sponsoring non trouvé pour l\'ID ' . $id);
+        // Récupérer uniquement les posts associés à ce sponsoring spécifique
+        $showpost = $sponsoring->getPostgroup(); // Utiliser la méthode getPostgroup
+    
+        return $this->renderForm('post_group/group.html.twig', [
+            'f' => $form,
+            'showpost' => $showpost
+        ]);
     }
-    
-    // Créer un nouveau post
-    $post = new PostGroup();
-    $post->setSponsoring($sponsoring); // Associer le sponsoring au post
-
-    $form = $this->createForm(PostGroupType::class, $post);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $currentDate = new \DateTime();
-        $post->setDate($currentDate);
-        $em->persist($post);
-        $em->flush();
-    }
-
-    // Récupérer uniquement les posts associés à ce sponsoring spécifique
-    $showpost = $sponsoring->getPostgroup(); // Utiliser la méthode getPostgroup
-
-    return $this->renderForm('post_group/group.html.twig', [
-        'f' => $form,
-        'showpost' => $showpost
-    ]);
-}
 
   
 
