@@ -2,16 +2,20 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Validator\Constraints\Password;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -26,28 +30,82 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Password is required", groups: ["registration"])]
+    #[Password(groups: ["registration"])]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\Email(message: "The email '{{ value }}' is not a valid email.")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^(\+216)?\d{8}$/',
+        message: "Phone number must be exactly 8 digits or in the format +216xxxxxxxx",
+        groups: ["registration"],
+    )]
     private ?string $phone = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    #[ORM\Column(type: 'string', length: 180, unique: true,nullable: true)]
+    private ?string $emailVerificationToken = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
+
+    public function getEmailVerificationToken(): ?string
+    {
+        return $this->emailVerificationToken;
+    }
+
+    public function setEmailVerificationToken(?string $emailVerificationToken): void
+    {
+        $this->emailVerificationToken = $emailVerificationToken;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): void
+    {
+        $this->isVerified = $isVerified;
+    }
+
+
+
     #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    #[Assert\NotBlank(message: "Username is required")]
+    #[Assert\Length(
+        min: 4,
+        max: 50,
+        minMessage: "Username must be at least {{ limit }} characters long",
+        maxMessage: "Username cannot be longer than {{ limit }} characters"
+    )]
+    private ?string $username;
 
     #[ORM\Column(length: 255, enumType: GenderEnum::class)]
+    #[Assert\NotNull(message: "Please select a gender.")]
     private ?GenderEnum $gender = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateOfBirth = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetToken = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
+    private Collection $user;
+
+    public function __construct()
+    {
+        $this->user = new ArrayCollection();
+    }
 
   
 
@@ -81,7 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->id;
+        return (string) $this->email;
     }
 
     /**
@@ -89,7 +147,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->id;
+        return (string) $this->username;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+        return $this;
     }
 
     /**
@@ -175,31 +239,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->phone;
     }
 
-    public function setContact(?string $phone): static
+    public function setPhone(?string $phone): self
     {
-        $this->photo = $phone;
+        $this->phone = $phone; // Correctly assigning to $this->phone
 
         return $this;
     }
+
 
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): static
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
-
         return $this;
     }
 
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
 
-        return $this;
-    }
 
     public function getGender(): ?GenderEnum
     {
@@ -212,14 +271,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDateOfBirth(): ?\DateTimeInterface
+    public function getResetToken(): ?string
     {
-        return $this->dateOfBirth;
+        return $this->resetToken;
     }
 
-    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): static
+    public function setResetToken(?string $resetToken): static
     {
-        $this->dateOfBirth = $dateOfBirth;
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(Post $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+            $user->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Post $user): static
+    {
+        if ($this->user->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getUser() === $this) {
+                $user->setUser(null);
+            }
+        }
 
         return $this;
     }
