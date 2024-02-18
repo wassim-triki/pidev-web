@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Question</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ question.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ question.title }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ question.body }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('question_index') }}">back to list</a>
+{% endblock %}
