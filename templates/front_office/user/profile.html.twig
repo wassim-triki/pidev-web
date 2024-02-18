@@ -37,7 +37,7 @@
                                     </div>
                                 {% endfor %}
                                 <div class="user-avatar-img">
-                                    <img class="user-photo" src="{{ asset(user.photo ? 'uploads/' ~ user.photo : 'images/default-user.png') }}" alt="{{ user.username }}">
+                                    <img class="user-photo" src="{{ asset(user.photo ? 'uploads/' ~ user.photo : 'front_office/images/default-user.png') }}" alt="{{ user.username }}">
                                     {% if isOwnProfile %}
                                         <div class="avatar-img-btn">
                                             {{ form_start(profilePictureForm, {

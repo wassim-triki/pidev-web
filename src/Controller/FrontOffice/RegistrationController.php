@@ -26,7 +26,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer,UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response // Add SluggerInterface
+    public function register(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response // Add SluggerInterface
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
@@ -36,6 +36,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setAvertissementsCount(0);
             // Encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -70,7 +71,7 @@ class RegistrationController extends AbstractController
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // Use the slugger to create a safe filename
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
 
                 try {
                     $photoFile->move(
@@ -87,9 +88,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // After successful registration
-            $this->addFlash('registered_email', "Verification link sent to ".$user->getEmail());
+            $this->addFlash('registered_email', "Verification link sent to " . $user->getEmail());
             // Redirect to some route after the registration
-//            return $this->redirectToRoute('app_login');
+            //            return $this->redirectToRoute('app_login');
             return $this->redirectToRoute('app_register');
         }
 
@@ -119,5 +120,4 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
-
 }
