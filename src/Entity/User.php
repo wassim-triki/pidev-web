@@ -102,13 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
     private Collection $user;
 
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-    }
-
   
-
     #[ORM\Column]
     private ?int $avertissementsCount = null;
 

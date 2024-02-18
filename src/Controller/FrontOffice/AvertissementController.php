@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\FrontOffice;
 
 use App\Entity\Avertissement;
 use App\Repository\AvertissementRepository;
@@ -15,20 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AvertissementController extends AbstractController
 {
-    #[Route('/avertissement', name: 'app_avertissement')]
-    public function index(): Response
-    {
-        return $this->render('avertissement/index.html.twig', [
-            'controller_name' => 'AvertissementController',
-        ]);
-    }
+
 
     #[Route('/listAvertissement', name: 'listAvertissement')]
     public function listAvertissement(AvertissementRepository $repaverti): Response
     {
         $list = $repaverti->findAll();
 
-        return $this->render('avertissement/listAvertissement.html.twig', [
+        return $this->render('front_office/avertissement/listAvertissement.html.twig', [
             'list' => $list,
         ]);
 
