@@ -4,16 +4,20 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    uploads_directory: '%kernel.project_dir%/%env(UPLOADS_DIRECTORY)%'
 services:
     # config/services.yaml
-    App\Service\CloudinaryService:
-        arguments:
-            $cloudinaryUrl: '%env(cloudinary://489998819632647:b_TAcmWLYB6jDor9fK9KZ3KalXQ@dx5cteclw)%'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\Service\JwtTokenService:
+
+    App\Validator\Constraints\UniqueEmailValidator:
+        tags:
+            - { name: validator.constraint_validator, alias: unique_email_validator }
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
