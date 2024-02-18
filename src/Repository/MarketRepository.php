@@ -21,6 +21,23 @@ class MarketRepository extends ServiceEntityRepository
         parent::__construct($registry, Market::class);
     }
 
+    public function findBySearchCriteria($name, $region)
+    {
+        $queryBuilder = $this->createQueryBuilder('m');
+
+        if ($name) {
+            $queryBuilder->andWhere('m.name LIKE :name')
+                ->setParameter('name', '%' . $name . '%');
+        }
+
+        if ($region) {
+            $queryBuilder->andWhere('m.region LIKE :region')
+                ->setParameter('region', '%' . $region . '%');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Market[] Returns an array of Market objects
 //     */
