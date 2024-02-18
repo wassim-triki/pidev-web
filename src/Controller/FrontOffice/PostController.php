@@ -5,7 +5,9 @@ namespace App\Controller\FrontOffice;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Form\ProfilePictureType;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,13 +96,21 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/showpostid/{user}', name: 'showpostid')]
-    public function showpostid($user, PostRepository $postRepository): Response
+    #[Route('/user/{username}/posts', name: 'showpostid')]
+    public function showpostid( $username,PostRepository $postRepository,UserRepository $userRepository): Response
     {
-        $listpost = $postRepository->showpostid($user);
-        // var_dump($listbook) . die();
-        return $this->render('front_office/post/showpost.html.twig', [
-            'a' => $listpost
+        $user=$userRepository->findOneBy(['username'=>$username]);
+        $listpost = $postRepository->findByUser($user);
+        
+         // Create the profile picture form
+         $profilePictureForm = $this->createForm(ProfilePictureType::class);
+
+         $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
+        return $this->render('front_office/post/sowpostown.html.twig', [
+            'a' => $listpost,
+            'user' => $user,
+            'isOwnProfile' => $isOwnProfile,
+            'profilePictureForm' => $profilePictureForm->createView(),
         ]);
     }
 }
