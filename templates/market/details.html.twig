@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Market Details{% endblock %}
+
+{% block main %}
+    <h1>{{ market.name }} Details</h1>
+    <p>Region: {{ market.region }}</p>
+    <p>City: {{ market.city }}</p>
+    <p>Zip Code: {{ market.zipCode }}</p>
+    <p>Address: {{ market.address }}</p>
+
+    <h2>Vouchers</h2>
+    <ul>
+        {% for voucher in market.vouchers %}
+            <li>{{ voucher.code }} - {{ voucher.description }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

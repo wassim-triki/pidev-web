@@ -44,6 +44,17 @@ class MarketController extends AbstractController
         ]);
     }
 
+    #[Route('/market/{id}/details', name: 'market_details')]
+    public function showDetails(Market $market): Response
+    {
+        $entityManager = $this->managerRegistry->getManagerForClass(Market::class);
+        $marketWithVouchers = $entityManager->getRepository(Market::class)->find($market->getId());
+
+        return $this->render('market/details.html.twig', [
+            'market' => $marketWithVouchers,
+        ]);
+    }
+
     #[Route('/market/newmarket', name: 'market_new', methods: ['GET', 'POST'])]
     public function newMarket(Request $request): Response
     {
@@ -52,11 +63,13 @@ class MarketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $address = $market->getRegion() . ', ' . $market->getCity() . ', ' . $market->getZipCode();
+            $market->setAddress($address);
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($market);
             $entityManager->flush();
 
-            return $this->redirectToRoute('market_index');
+            return $this->redirectToRoute('showmarket');
         }
 
         return $this->render('market/newMarket.html.twig', [

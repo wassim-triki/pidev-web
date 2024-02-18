@@ -17,21 +17,39 @@ class Market
     private ?int $id = null;
 
     #[Assert\NotBlank(message: "The name must not be blank")]
-    #[Assert\Length(min:5,minMessage:"the market name must be at least 5 characters long")]
+    #[Assert\Length(min:2,minMessage:"the market name must be at least 2 characters long")]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
-
-    #[Assert\NotBlank(message: "The address must not be blank")]
-    #[Assert\Regex(
-        pattern: '/^[A-Z]/',
-        message: "The address name must start with a capital letter"
-    )]
     
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: 'marketRelated', targetEntity: Voucher::class)]
     private Collection $vouchers;
+
+    #[Assert\NotBlank(message: "The city must not be blank")]
+    #[Assert\Regex(
+        pattern: '/^[A-Za-z\s]+$/',
+        message: "The city name must contain only letters and spaces"
+    )]
+    #[ORM\Column(length: 60)]
+    private ?string $region = null;
+
+    #[Assert\NotBlank(message: "The city must not be blank")]
+    #[Assert\Regex(
+        pattern: '/^[A-Za-z\s]+$/',
+        message: "The city name must contain only letters and spaces"
+    )]
+    #[ORM\Column(length: 50)]
+    private ?string $city = null;
+
+    #[Assert\NotBlank(message: "The zip code must not be blank")]
+    #[Assert\Regex(
+        pattern: '/^\d{4}$/',
+        message: "The zip code must be a 4-digit number"
+    )]
+    #[ORM\Column]
+    private ?int $zipCode = null;
 
     public function __construct()
     {
@@ -93,6 +111,42 @@ class Market
                 $voucher->setMarketRelated(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRegion(): ?string
+    {
+        return $this->region;
+    }
+
+    public function setRegion(string $region): static
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?int
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(int $zipCode): static
+    {
+        $this->zipCode = $zipCode;
 
         return $this;
     }

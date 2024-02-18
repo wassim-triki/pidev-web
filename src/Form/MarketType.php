@@ -16,8 +16,14 @@ class MarketType extends AbstractType
             ->add('name', TextType::class,[
                     'label' => 'Market Name',
                 ])
-            ->add('address', TextType::class,[
-                    'label' => 'Market Address',
+            ->add('region', TextType::class,[
+                    'label' => 'Region',
+                ])
+            ->add('city', TextType::class,[
+                    'label' => 'City',
+                ])
+            ->add('zipCode', TextType::class,[
+                    'label' => 'Zip Code',
                 ])
             ->add('save', SubmitType::class, ['label' => 'Create Market']);
     }

@@ -41,6 +41,12 @@ class Voucher
     #[ORM\JoinColumn(nullable: false)]
     private ?Market $marketRelated = null;
 
+    #[ORM\Column]
+    private ?bool $isValid = null;
+
+    #[ORM\Column]
+    private ?bool $isGivenToUser = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +144,30 @@ class Voucher
     public function setMarketRelated(?Market $marketRelated): static
     {
         $this->marketRelated = $marketRelated;
+
+        return $this;
+    }
+
+    public function isIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(bool $isValid): static
+    {
+        $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    public function isIsGivenToUser(): ?bool
+    {
+        return $this->isGivenToUser;
+    }
+
+    public function setIsGivenToUser(bool $isGivenToUser): static
+    {
+        $this->isGivenToUser = $isGivenToUser;
 
         return $this;
     }
