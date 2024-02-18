@@ -11,7 +11,7 @@
                            <div class="lg-left">
                               <div class="text-container">
                                  <div class="lg-logo">
-                                    <a href="index.html"><img src="images/login-register/logo.svg" alt=""></a>
+                                    <a href="index.html"><img src="{{ asset('front_office/images/login-register/logo.svg') }}" alt=""></a>
                                  </div>
                                  <div class="lr-text">
                                     <h2>Register Now</h2>
@@ -46,7 +46,7 @@
 
                                  <div class="form-group">
                                     <div class="user-avatar-img">
-                                       <img id="user-photo-preview" src="{{ asset('images/default-user.png') }}" alt="Default User">
+                                       <img id="user-photo-preview" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
                                        <div class="avatar-img-btn">
                                           {{ form_widget(registrationForm.photo, {'attr': {'id': 'registrationForm_photo', 'onchange': 'previewImage(event)'}}) }}
                                           <label for={{ registrationForm.photo.vars.id }} class="avatar-img-btn">
