@@ -27,7 +27,7 @@ class PostController extends AbstractController
     public function showpost(PostRepository $postRepository): Response
     {
         $post = $postRepository->findAll();
-        return $this->render('post/showpost.html.twig', [
+        return $this->render('front_office/post/showpost.html.twig', [
             'post' => $post
         ]);
     }
@@ -38,18 +38,20 @@ class PostController extends AbstractController
     public function addpost(ManagerRegistry $managerRegistry, Request $req): Response
     {
         $em = $managerRegistry->getManager();
+        $user= $this->getUser();
         $post = new Post();
         $post->setDate(new \DateTime());
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($req);
         if ($form->isSubmitted() and $form->isValid()) {
+            $post->setUser($user);
             $em->persist($post);
             $em->flush();
             dump($post);
             $this->addFlash('success', 'Post successfully added!');
 
         }
-        return $this->renderForm('post/addpost.html.twig', [
+        return $this->renderForm('front_office/post/addpost.html.twig', [
             'f' => $form
         ]);
     }
@@ -68,7 +70,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('showpost');
         }
 
-        return $this->renderForm('post/editpost.html.twig', [
+        return $this->renderForm('front_office/post/editpost.html.twig', [
             'f' => $form
         ]);
     }
@@ -95,7 +97,7 @@ class PostController extends AbstractController
     {
         $listpost = $postRepository->showpostid($user);
         // var_dump($listbook) . die();
-        return $this->render('post/showpost.html.twig', [
+        return $this->render('front_office/post/showpost.html.twig', [
             'a' => $listpost
         ]);
     }
