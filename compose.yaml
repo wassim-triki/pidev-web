@@ -1,6 +1,9 @@
 version: '3'
 
 services:
+      App\Service\ImgbbUploader:
+        arguments:
+            $apiKey: '%env(20795f6eb14383a2600c33ffbc56e25c)%'
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine

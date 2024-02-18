@@ -6,6 +6,10 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/%env(UPLOADS_DIRECTORY)%'
 services:
+    # config/services.yaml
+    App\Service\CloudinaryService:
+        arguments:
+            $cloudinaryUrl: '%env(cloudinary://489998819632647:b_TAcmWLYB6jDor9fK9KZ3KalXQ@dx5cteclw)%'
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -25,6 +29,8 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
+    {# Other styles or scripts if needed #}
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-3">
+        <div class="row">
+                {% for i in post %}                  
+                        <div class="col-md-4">
+                            <div class="event-main-post">
+                              <div class="main-photo">
+                                <a href="event_detail_view.html">
+                                  <div class="photo-overlay"></div>
+                                  <img
+                                    src="{{ i.ImageUrl }}"
+                                    alt="" 
+                                    style="height: 8.5cm;"
+                                  />
+                                </a>
+                                <div class="option-ellipsis">
+                                  <div class="dropdown">
+                                    <a
+                                      class="ellipsis-btn dropdown-toggle-no-caret"
+                                      href="#"
+                                      role="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                      ><i class="fas fa-ellipsis-v"></i
+                                    ></a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                      <a class="post-link-item" href="#"
+                                        ><i class="feather-eye-off icon-mr1"></i
+                                        >Hide</a
+                                      >
+                                      <a class="post-link-item" href="#"
+                                        ><i class="feather-bookmark icon-mr1"></i
+                                        >Save</a
+                                      >
+                                      <a class="post-link-item" href="#"
+                                        ><i class="feather-user icon-mr1"></i>User
+                                        Profile</a
+                                      >
+                                      <a
+                                        class="post-link-item"
+                                        href="#"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reportModal"
+                                        ><i class="feather-flag icon-mr1"></i
+                                        >Report</a
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="event-body">
+                                <span class="event-time"
+                                  >{{ i.date|date("F j, Y, g:i a") }}</span
+                                >
+                                <a href="event_detail_view.html" class="event-title"
+                                  >{{ i.titre }}</a
+                                >
+                                <span class="event-type">{{ i.description }}</span>
+                                <p class="ingo-counter">
+                                  <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
+                                  <span>{{ i.place }}</span>
+                                </p>
+                                <div class="group-btns">
+                                    <form action="{{ path('editpost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir modifier ce poste?');">
+                                  <button class="interest-btn btn-hover">
+                                    <i class="feather-edit-2 me-2"></i>Modifier
+                                  </button>
+                                    </form>
+                                    <form action="{{ path('deletepost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
+                                  <button
+                                    class="share-btn btn-hover"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#shareModal"
+                                  >
+                                    <i class="feather-delete"></i>
+                                  </button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                        </div> 
+                {% endfor %}
+        </div>
+    </div>
+    <br><br>
+{% endblock %}
