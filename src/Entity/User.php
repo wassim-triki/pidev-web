@@ -49,8 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Status = null;
+  
 
     #[ORM\Column]
     private ?int $avertissementsCount = null;
@@ -225,17 +224,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getStatus(): ?string
-    {
-        return $this->Status;
-    }
-
-    public function setStatus(string $Status): static
-    {
-        $this->Status = $Status;
-
-        return $this;
-    }
+  
 
     public function getAvertissementsCount(): ?int
     {

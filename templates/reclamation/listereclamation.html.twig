@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <h1>Liste Reclamation</h1>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <td>Subject</td>
+                <th>Reported Username</th>
+                <th>Description</th>
+                <th>TypeReclamation</th>
+                <th>screenShot</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in list %}
+                <tr>
+                    <td>{{ r.subject }}</td>
+                    <td>{{ r.ReportedUsername }}</td>
+                    <td>{{ r.description }}</td>
+                    <td>{{ r.TypeReclamation }}</td>
+                    <td>{{ r.screenShot }}</td>
+                    
+
+                    <td>
+                      
+                            <form action="{{ path('editreclamation', {'id': r.id}) }}" method="post">
+                                <button type="submit">modifier</button>
+                            </form>
+                            <form action="{{ path('deletereclamation', {'id': r.id}) }}" method="post">
+                                <button type="submit">supprimer</button>
+                            </form>
+                       
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

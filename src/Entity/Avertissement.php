@@ -30,6 +30,12 @@ class Avertissement
     #[ORM\ManyToOne(inversedBy: 'avertissements')]
     private ?User $f = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $screenShot = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $raison = null;
+
     public function __construct()
     {
         $this->reclamations = new ArrayCollection();
@@ -115,6 +121,30 @@ class Avertissement
     public function setF(?User $f): static
     {
         $this->f = $f;
+
+        return $this;
+    }
+
+    public function getScreenShot(): ?string
+    {
+        return $this->screenShot;
+    }
+
+    public function setScreenShot(string $screenShot): static
+    {
+        $this->screenShot = $screenShot;
+
+        return $this;
+    }
+
+    public function getRaison(): ?string
+    {
+        return $this->raison;
+    }
+
+    public function setRaison(string $raison): static
+    {
+        $this->raison = $raison;
 
         return $this;
     }
