@@ -1,0 +1,69 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block title %}Ajouter Post{% endblock %}
+
+{% block main %}
+<main class="discussion-mp">    
+    <div class="main-section">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-lg-4 col-md-12">
+                    {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}                            
+                    <div class="main-card">
+                        <div class="categories-left-heading border_bottom">
+                            <h3>Type</h3>                            
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(f.type, {'attr': {'class': 'h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.titre) }}</div>
+                        </div>
+                                              
+                                             
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12">                           
+                    <div class="main-card">
+                        <div class="container mt-3">
+                        {# Render the title field #}
+                        <div class="form-group">
+                            {{ form_label(f.titre, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.titre, {'attr': {'class': 'form-input h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.titre) }}</div>
+                        </div>
+                        
+                        {# Render the description field #}
+                        <div class="form-group">
+                            {{ form_label(f.description, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.description, {'attr': {'class': 'form-input h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.description) }}</div>
+                        </div>
+                        
+                        {# Render the place field #}
+                        <div class="form-group">
+                            {{ form_label(f.place, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.place, {'attr': {'class': 'form-input h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.place) }}</div>
+                        </div>
+                        
+                        {# Render the image upload field #}
+                        <div class="form-group">
+                            {{ form_label(f.imageUrl, null, {'label_attr': {'class': 'h_50'}}) }}
+                            {{ form_widget(f.imageUrl) }}
+                            <div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
+                        </div>
+                        <br>
+                        </div>
+                    </div>
+
+                    <div class="loading-btn mb-3">
+                        <button class="process-btn btn-hover" type="button">
+                            {{ form_widget(f.save) }}
+                        </button>
+                    </div>
+                    {{ form_end(f) }}
+                </div>                          
+            </div>                    
+        </div>
+    </div>
+</main>
+{% endblock %}

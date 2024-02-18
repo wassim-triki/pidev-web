@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <!-- Mirrored from www.gambolthemes.net/html-items/new-goeveni/disable_demo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 20:14:38 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9" />
+    <meta name="description" content="Gambolthemes" />
+    <meta name="author" content="Gambolthemes" />
+
+    <title>{% block title %}Goeveni - Event Sharing Social Network Html Template{% endblock %}</title>
+
+
+    {% block css %}
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="{{ asset('front_office/images/fav.png') }}" />
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="{{ asset('front_office/css/responsive.css') }}" rel="stylesheet" />
+    <link href="{{ asset('front_office/css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('front_office/css/datepicker.min.css') }}" rel="stylesheet" />
+
+    <!-- Vendor Stylesheets -->
+    <link
+      href="{{ asset('front_office/vendor/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ asset('front_office/vendor/feather-icons/feather.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ asset('front_office/vendor/fontawesome-free/css/all.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ asset('front_office/vendor/OwlCarousel/assets/owl.carousel.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ asset('front_office/vendor/OwlCarousel/assets/owl.theme.default.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ asset('front_office/vendor/bootstrap-select/css/bootstrap-select.min.css') }}"
+      rel="stylesheet"
+    />
+
+    {% endblock %}
+  </head>
+
+  <body>
+    <!-- Share Model Start -->
+    <div
+      class="modal fade"
+      id="shareModal"
+      tabindex="-1"
+      aria-labelledby="shareModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="shareModalLabel">
+              <span class="model-title-icon"
+                ><i class="feather-share-2"></i
+              ></span>
+              Share Post
+            </h5>
+            <button
+              type="button"
+              class="btn-model-close btn-color"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="feather-x"></i>
+            </button>
+          </div>
+          <div class="modal-body p-0">
+            <div class="share-copy-link share-copy-text">
+              <p>Share this link to invite others</p>
+              <ul>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Facebook"
+                    ><img src="images/share-icons/icon-1.png" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Twitter"
+                    ><img src="images/share-icons/icon-2.png" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Pinterest"
+                    ><img src="images/share-icons/icon-3.png" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="LinkedIn"
+                    ><img src="images/share-icons/icon-4.png" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Whatsapp"
+                    ><img src="images/share-icons/icon-5.png" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Instagram"
+                    ><img src="images/share-icons/icon-6.png" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Copy Link"
+                    ><img src="images/share-icons/icon-7.png" alt=""
+                  /></a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="">
+              <div class="contact-list-area pt-4 pe-4 ps-4">
+                <div class="contact-search-area position-relative">
+                  <input
+                    class="control-input"
+                    type="text"
+                    placeholder="Search People"
+                  />
+                  <i class="feather-search"></i>
+                </div>
+              </div>
+              <div class="contact-list pt-3 p-4">
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img
+                        src="images/homepage/left-side/left-img-1.jpg"
+                        alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Johnson</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img
+                        src="images/homepage/left-side/left-img-2.jpg"
+                        alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Jassica William</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img
+                        src="images/homepage/left-side/left-img-3.jpg"
+                        alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Rock</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img
+                        src="images/homepage/left-side/left-img-4.jpg"
+                        alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Davil Smith</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img
+                        src="images/homepage/left-side/left-img-5.jpg"
+                        alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Ricky Doe</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img src="images/find-peoples/user-6.jpg" alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Johnson Dua</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img src="images/find-peoples/user-7.jpg" alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Albert William</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+                <div class="sugguest-user px-0 py-2 border-top-0">
+                  <div class="sugguest-user-dt">
+                    <a href="user_profile.html"
+                      ><img src="images/find-peoples/user-8.jpg" alt=""
+                    /></a>
+                    <a href="user_profile.html"><h4>Lizzy Smith</h4></a>
+                  </div>
+                  <button
+                    class="request-btn"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Send"
+                  >
+                    <i class="feather-mail"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="co-main-btn cancel-btn" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="main-btn color btn-hover">Share</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Share Model End -->
+    <!-- Report Model Start -->
+    <div
+      class="modal fade"
+      id="reportModal"
+      tabindex="-1"
+      aria-labelledby="reportModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reportModalLabel">
+              <span class="model-title-icon"
+                ><i class="feather-alert-octagon"></i
+              ></span>
+              Report
+            </h5>
+            <button
+              type="button"
+              class="btn-model-close btn-color"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="feather-x"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="event_setting_container">
+              <div class="evnt_cogs_list main-form">
+                <div class="evnt_add_page-dt">
+                  <h6 class="rptitle">What's going on?</h6>
+                  <p>You can report the event after selecting a problem.</p>
+                  <div class="report_options">
+                    <div class="section over-hide z-bigger">
+                      <div class="">
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-1"
+                          value="report_one"
+                        />
+                        <label class="for-checkbox-tools" for="tool-1">
+                          Harassment
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-2"
+                          value="report_two"
+                        />
+                        <label class="for-checkbox-tools" for="tool-2">
+                          Nudity
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-3"
+                          value="report_three"
+                        />
+                        <label class="for-checkbox-tools" for="tool-3">
+                          Spam
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-4"
+                          value="report_four"
+                        />
+                        <label class="for-checkbox-tools" for="tool-4">
+                          Fraud or scam
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-5"
+                          value="report_five"
+                        />
+                        <label class="for-checkbox-tools" for="tool-5">
+                          Fake events
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-6"
+                          value="report_six"
+                        />
+                        <label class="for-checkbox-tools" for="tool-6">
+                          Suicide or self-injury
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-7"
+                          value="report_seven"
+                        />
+                        <label class="for-checkbox-tools" for="tool-7">
+                          Unauthorised sales
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-8"
+                          value="report_eight"
+                        />
+                        <label class="for-checkbox-tools" for="tool-8">
+                          Violence
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-9"
+                          value="report_nine"
+                        />
+                        <label class="for-checkbox-tools" for="tool-9">
+                          Hate speech
+                        </label>
+                        <input
+                          class="checkbox-tools actve12"
+                          type="radio"
+                          name="report"
+                          id="tool-10"
+                          value="report_ten"
+                        />
+                        <label class="for-checkbox-tools" for="tool-10">
+                          Intellectual property
+                        </label>
+                        <div class="report_one report-box">
+                          <h6 class="reprtile10">Who is being harassed?</h6>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="harassed-1"
+                          />
+                          <label class="for-checkbox-tools" for="harassed-1">
+                            Me
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="harassed-2"
+                          />
+                          <label class="for-checkbox-tools" for="harassed-2">
+                            A friend
+                          </label>
+                        </div>
+                        <div class="report_two report-box">
+                          <h6 class="reprtile10">
+                            Help us understand the problem.
+                          </h6>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="nudity-1"
+                          />
+                          <label class="for-checkbox-tools" for="nudity-1">
+                            Adult nudity
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="nudity-2"
+                          />
+                          <label class="for-checkbox-tools" for="nudity-2">
+                            Sexually suggestive
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="nudity-3"
+                          />
+                          <label class="for-checkbox-tools" for="nudity-3">
+                            Sexual activity
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="nudity-4"
+                          />
+                          <label class="for-checkbox-tools" for="nudity-4">
+                            Sexual exploitation
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="nudity-5"
+                          />
+                          <label class="for-checkbox-tools" for="nudity-5">
+                            Sexual services
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="nudity-6"
+                          />
+                          <label class="for-checkbox-tools" for="nudity-6">
+                            Involves a child
+                          </label>
+                        </div>
+                        <div class="report_three report-box"></div>
+                        <div class="report_four report-box"></div>
+                        <div class="report_five report-box">
+                          <h6 class="reprtile10">
+                            Help us understand the problem.
+                          </h6>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="fake-1"
+                          />
+                          <label class="for-checkbox-tools" for="fake-1">
+                            Joke event
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="fake-2"
+                          />
+                          <label class="for-checkbox-tools" for="fake-2">
+                            Misleading event change
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="fake-3"
+                          />
+                          <label class="for-checkbox-tools" for="fake-3">
+                            Pretending to be another event
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="fake-4"
+                          />
+                          <label class="for-checkbox-tools" for="fake-4">
+                            Pretending to be business
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="fake-5"
+                          />
+                          <label class="for-checkbox-tools" for="fake-5">
+                            Pretending to be someone
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="fake-6"
+                          />
+                          <label class="for-checkbox-tools" for="fake-6">
+                            Something else
+                          </label>
+                        </div>
+                        <div class="report_six report-box"></div>
+                        <div class="report_seven report-box">
+                          <h6 class="reprtile10">
+                            Help us understand the problem.
+                          </h6>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="unauthorised-1"
+                          />
+                          <label
+                            class="for-checkbox-tools"
+                            for="unauthorised-1"
+                          >
+                            Buying guns or drugs
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="unauthorised-2"
+                          />
+                          <label
+                            class="for-checkbox-tools"
+                            for="unauthorised-2"
+                          >
+                            Selling guns or drugs
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="unauthorised-3"
+                          />
+                          <label
+                            class="for-checkbox-tools"
+                            for="unauthorised-3"
+                          >
+                            Exchanging guns or drugs
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="unauthorised-4"
+                          />
+                          <label
+                            class="for-checkbox-tools"
+                            for="unauthorised-4"
+                          >
+                            Promoting drug use
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="unauthorised-5"
+                          />
+                          <label
+                            class="for-checkbox-tools"
+                            for="unauthorised-5"
+                          >
+                            Pretending to be someone
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="unauthorised-6"
+                          />
+                          <label
+                            class="for-checkbox-tools"
+                            for="unauthorised-6"
+                          >
+                            Something else
+                          </label>
+                        </div>
+                        <div class="report_eight report-box">
+                          <h6 class="reprtile10">
+                            Help us understand the problem.
+                          </h6>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="violence-1"
+                          />
+                          <label class="for-checkbox-tools" for="violence-1">
+                            Graphic violence
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="violence-2"
+                          />
+                          <label class="for-checkbox-tools" for="violence-2">
+                            Death or severe injury
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="violence-3"
+                          />
+                          <label class="for-checkbox-tools" for="violence-3">
+                            Violent threat
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="violence-4"
+                          />
+                          <label class="for-checkbox-tools" for="violence-4">
+                            Animal abuse
+                          </label>
+                          <input
+                            class="checkbox-tools"
+                            type="radio"
+                            name="nextreport"
+                            id="violence-5"
+                          />
+                          <label class="for-checkbox-tools" for="violence-5">
+                            Something else
+                          </label>
+                        </div>
+                        <div class="report_nine report-box"></div>
+                        <div class="report_ten report-box"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rprtbtm mt-2">
+                    <div class="report-textarea">
+                      <textarea
+                        class="report_textarea_1"
+                        placeholder="Write something..."
+                      ></textarea>
+                    </div>
+                    <div class="rptbttmtext">
+                      <div class="rptbttmicon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                      </div>
+                      <div class="rptbrttext">
+                        <p>
+                          If someone is in immediate danger, call the local
+                          emergency services. Don't wait.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="main-btn cancel" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button class="main-btn color btn-hover">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Report Model End -->
+    <!-- Header Start -->
+    {% include 'components/header.html.twig' %}
+    <!-- Header End -->
+    {% block main %} {% endblock %} {% block footer %}
+    <!-- Footer Start -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-left">
+              <ul>
+                <li><a href="privacy_policy.html">Privacy</a></li>
+                <li><a href="term_conditions.html">Term and Conditions</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact_us.html">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="footer-right">
+              <ul class="copyright-text">
+                <li>
+                  <a href="index.html"
+                    ><img src="images/logo-2.svg" alt=""
+                  /></a>
+                </li>
+                <li>
+                  <div class="ftr-1">
+                    <i class="far fa-copyright"></i> 2022 Goeveni by
+                    <a href="https://themeforest.net/user/gambolthemes"
+                      >Gambolthemes</a
+                    >. All Rights Reserved.
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer End -->
+    {% endblock %}
+    {% block js %}
+    <!-- Scripts js -->
+    <script src="{{ asset('front_office/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{
+        asset('front_office/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      }}"></script>
+    <script src="{{
+        asset('front_office/vendor/bootstrap-select/js/bootstrap-select.min.js')
+      }}"></script>
+    <script src="{{ asset('front_office/vendor/OwlCarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('front_office/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('front_office/js/i18n/datepicker.en.js') }}"></script>
+    <script src="{{ asset('front_office/js/custom.js') }}"></script>
+    {% endblock %}
+  </body>
+
+  <!-- Mirrored from www.gambolthemes.net/html-items/new-goeveni/disable_demo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 20:15:06 GMT -->
+</html>
