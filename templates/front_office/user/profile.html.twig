@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %} {% block title %}Profile{% endblock
+{% extends 'front_office/base.html.twig' %} {% block title %}Profile{% endblock
 %} {% block main %}
     <main class="dashboard-mp">
         <div class="profile-banner">
@@ -175,7 +175,7 @@
                                                         <div class="main-photo">
                                                             <a href="#">
                                                                 <div class="photo-overlay"></div>
-                                                                <img src="images/homepage/center/post-img-1.jpg" alt="">
+                                                                <img src="{{ asset('images/homepage/center/post-img-1.jpg') }}" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="event-body">
@@ -209,7 +209,7 @@
                                                         <div class="main-photo">
                                                             <a href="#">
                                                                 <div class="photo-overlay"></div>
-                                                                <img src="images/homepage/center/post-img-2.jpg" alt="">
+                                                                <img src="{{ asset('images/homepage/center/post-img-2.jpg') }}" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="event-body">
@@ -243,7 +243,7 @@
                                                         <div class="main-photo">
                                                             <a href="#">
                                                                 <div class="photo-overlay"></div>
-                                                                <img src="images/homepage/center/post-img-3.jpg" alt="">
+                                                                <img src="{{ asset('images/homepage/center/post-img-3.jpg') }}" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="event-body">
