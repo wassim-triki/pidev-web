@@ -1,20 +1,76 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+    %} {% block main %}
+<div class="tab-content">
+              <div class="tab-pane fade show active" id="tab-top">
+                <div class="main-posts">
+                  <div class="row">
+                    {% if voucher is empty %}
+                      <p>No vouchers found.</p>
+                    {% else %}
+                      {% for voucher in voucher %}
+                          <div class="col-md-6">
+                              <div class="event-main-post "style=
+                              "width:30%">
+                                  <div class="main-photo" >
+                                      <a href="{{ path('vouchercategory_details', {'id': voucher.id}) }}">
+                                          <div class="photo-overlay"></div>
+                                          <img src="images/homepage/coupons.png" alt="{{ voucher.code }}" style=
+                                          "width:100%"/>
+                                      </a>
+                                      <div class="option-ellipsis">
+                                          <div class="dropdown">
+                                              <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                                  data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                      class="fas fa-ellipsis-v"></i></a>
+                                              <div class="dropdown-menu dropdown-menu-end">
+                                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                                  <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                                      data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="event-body">
+                                      <a href="{{ path('vouchercategory_details', {'id': voucher.id}) }}" class="event-title">{{ voucher.code }}</a>
+                                      <span class="event-type">{{ voucher.value }}</span>
+                                      <span class="event-type">{{ voucher.expiration|date('Y-m-d') }}</span>
+                                        <p class="ingo-counter">
+                                            <span>usage limit : {{ voucher.usageLimit }}</span>
+                                            <span>is valid state: {{ voucher.isValid ? 'Yes' : 'No' }}</span>
+                                            <span>is it belong to user: {{ voucher.isGivenToUser ? 'Yes' : 'No' }}</span>
+                                            <span class="event-type">Category: {{ voucher.category.getTitre() }}</span>
+                                            <span class="event-type">Type: {{ voucher.type }}</span>
+                                            <span class="event-type">User Won: {{ voucher.userWon.getEmail()}}</span>
+                                            <span class="event-type">Market Related: {{ voucher.marketRelated.getName() }}</span>
+                                        </p>
+                                  </div>
+                                  <div class="row" style="width: 100%;">
+                    <div class="col">
+                        <form action="{{ path('vouchercategory_edit', {'id': voucher.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir modifier ce poste?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voucher.id) }}">
+                            <button type="submit" class="btn btn-danger" title="Modifier le poste">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form action="{{ path('vouchercategory_delete', {'id': voucher.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voucher.id) }}">
+                            <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div> 
+                </div>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  {% endif %}
+                
+            </div>
+        </div>
 
-{% block title %}Hello VoucherController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/yassine/pidev-web/src/Controller/VoucherController.php'|file_link(0) }}">src/Controller/VoucherController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/yassine/pidev-web/templates/voucher/index.html.twig'|file_link(0) }}">templates/voucher/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}
