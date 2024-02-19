@@ -99,9 +99,9 @@ class MarketController extends AbstractController
 
 
     #[Route('/deletemarket/{id}', name: 'deletemarket')]
-    public function deleteroom($id,MarketRepository $postRepository,ManagerRegistry $managerRegistry): Response {
+    public function deleteroom($id,MarketRepository $marketRepository,ManagerRegistry $managerRegistry): Response {
         $em = $managerRegistry->getManager();
-        $dataid = $postRepository->find($id);
+        $dataid = $marketRepository->find($id);
         $em->remove($dataid);
         $em->flush();
         return $this->redirectToRoute('showmarket');

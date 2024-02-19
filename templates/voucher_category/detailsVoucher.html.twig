@@ -1,100 +1,3 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Market Details{% endblock %}
-    {% block css %}
-        {{ parent() }}
-        <style>
-            .table {
-                    width: 100%;
-                    border-collapse: collapse;
-            }
-
-            .table th,
-            .table td {
-                padding: 8px;
-                border: none;
-            }
-
-            .table th {
-                background-color: #f2f2f2;
-            }
-
-            .table tbody tr:nth-child(even) {
-                background-color: #f9f9f9;
-                border: none;
-            }
-
-            .table tbody tr:hover {
-                background-color: #e9e9e9;
-                border: none;
-            }
-            
-            .container-custom {
-
-                margin-top: 0%;
-                background-color: dimgray;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-                padding: 5%;
-            }
-            h1,p {
-                color: white;
-            }
-            img {
-                width: 50px;
-                height: 50px;
-                margin-top: 5%;
-            }
-            .container-custom-1{
-                display: flex;
-                justify-content: space-between;
-                align-items: start;
-                width: 100%;
-                height: 100%;
-                padding: 5%;
-            }
-    </style>
-    {% endblock %}
-
-{% block main %}
-    <div class="container-custom">
-        <h1>{{ market.name }} Details :</h1>
-        <p>Region: {{ market.region }}</p>
-        <p>City: {{ market.city }}</p>
-        <p>Zip Code: {{ market.zipCode }}</p>
-        <p>Address: {{ market.address }}</p>
-        
-    </div>
-
-    <div class="container-custom-1">
-        <h2>Vouchers</h2>
-        <a href="{{ path('app_home') }}"><img src="{{ asset('images/fleche-petite-gauche.png') }}" alt=""></a>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="table-header">Code</th>
-                <th class="table-header">Expiration Date</th>
-                <th class="table-header">Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for voucher in market.vouchers %}
-                <tr class="table-row">
-                    <td class="table-data">{{ voucher.code }}</td>
-                    <td class="table-data">{{ voucher.expiration ? voucher.expiration.format('Y-m-d') : '' }}</td>
-                    <td class="table-data">{{ voucher.value }} DT</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
-{% endblock %} #}
-
 {% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
     %} {% block main %}
     <main>
@@ -148,9 +51,9 @@
                               <div class="col-md-6">
                                   <div class="event-main-post">
                                       <div class="main-photo">
-                                          <a href="{{ path('market_details', {'id': market.id}) }}">
+                                          <a href="{{ path('vouchercategory_details', {'id': voucherCategory.id}) }}">
                                               <div class="photo-overlay"></div>
-                                              <img src="{{ asset('images/homepage/center/post-img-7.jpg') }}" alt="{{ market.name }}" />
+                                              <img src="{{ asset('images/homepage/coupons.png') }}" alt="{{ voucherCategory.titre }}" />
                                           </a>
                                           <div class="option-ellipsis">
                                               <div class="dropdown">
@@ -168,12 +71,8 @@
                                           </div>
                                       </div>
                                       <div class="event-body">
-                                          <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name }}</a>
-                                          <span class="event-type">{{ market.address }}</span>
-                                          <p class="ingo-counter">
-                                              <span>{{ market.region }}</span> <!-- Add relevant data here -->
-                                              <span>{{ market.zipCode }}</span> <!-- Add relevant data here -->
-                                          </p>
+                                          <a href="{{ path('vouchercategory_details', {'id': voucherCategory.id}) }}" class="event-title">{{ voucherCategory.titre }}</a>
+                                          <span class="event-type">{{ voucherCategory.discription }}</span>
                                           <!-- Add relevant buttons and functionalities here -->
                                       </div>
                                   </div>

@@ -52,7 +52,7 @@
                                   <div class="main-photo">
                                       <a href="{{ path('market_details', {'id': market.id}) }}">
                                           <div class="photo-overlay"></div>
-                                          <img src="images/homepage/center/post-img-4.jpg" alt="{{ market.name }}" />
+                                          <img src="images/homepage/center/post-img-7.jpg" alt="{{ market.name }}" />
                                       </a>
                                       <div class="option-ellipsis">
                                           <div class="dropdown">
@@ -90,7 +90,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="tab-following">
+      <div class="tab-pane fade" id="tab-following">
         <div class="full-width">
             <div class="no-events">
                 <div class="no-event-icon">
@@ -99,10 +99,8 @@
                 <span>No events found.</span>
             </div>
         </div>
-    </div>
-</div>
-
-            
+        </div>
+      </div>
           </div>
         </div>
         <div
@@ -120,8 +118,8 @@
                   </div>
                 </div>
                 <div class="user-main-details">
-                  <h4>John Doe</h4>
-                  <span><i class="feather-map-pin"></i>India</span>
+                  <h4>Yassine Ben Aoun</h4>
+                  <span><i class="feather-map-pin"></i>Tunisia</span>
                 </div>
                 <ul class="followers-dts">
                   <li>
@@ -154,7 +152,7 @@
                       alt="Music"
                     />Shopping</a
                   >
-                  <a class="category-item" href="{{ path('market_index') }}"
+                  <a class="category-item" href="{{ path('app_voucher_category') }}"
                     ><img
                       src="images/category-icons/bon-de-reduction.png"
                       alt="Classics"
@@ -163,9 +161,11 @@
                 </div>
               </div>
             </div>
+            
+            {# begin voucher extracting from data base :  #}
             <div class="user-data full-width">
               <div class="categories-left-heading">
-                <h3>Peoples</h3>
+                <h3>Your Vouchers</h3>
               </div>
               <div class="sugguest-user">
                 <div class="sugguest-user-dt">
@@ -175,7 +175,7 @@
                   <a href="user_profile.html"><h4>Johnson</h4></a>
                 </div>
                 <button class="request-btn">
-                  <i class="feather-user-plus"></i>
+                  <i class="feather-slack"></i>
                 </button>
               </div>
               <div class="sugguest-user">
@@ -186,7 +186,7 @@
                   <a href="user_profile.html"><h4>Jassica William</h4></a>
                 </div>
                 <button class="request-btn">
-                  <i class="feather-user-plus"></i>
+                  <i class="feather-slack"></i>
                 </button>
               </div>
               <div class="sugguest-user">
@@ -197,7 +197,7 @@
                   <a href="user_profile.html"><h4>Rock</h4></a>
                 </div>
                 <button class="request-btn">
-                  <i class="feather-user-plus"></i>
+                  <i class="feather-slack"></i>
                 </button>
               </div>
               <div class="sugguest-user">
@@ -208,7 +208,7 @@
                   <a href="user_profile.html"><h4>Davil Smith</h4></a>
                 </div>
                 <button class="request-btn">
-                  <i class="feather-user-plus"></i>
+                  <i class="feather-slack"></i>
                 </button>
               </div>
               <div class="sugguest-user">
@@ -219,24 +219,29 @@
                   <a href="user_profile.html"><h4>Ricky Doe</h4></a>
                 </div>
                 <button class="request-btn">
-                  <i class="feather-user-plus"></i>
+                  <i class="feather-slack"></i>
                 </button>
               </div>
             </div>
+            {# end voucher list  #}
           </div>
         </div>
+        {# begin of right side of the site #}
         <div
           class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12"
         >
           <div class="right-side-items mt-0 mt-md-5 mt-lg-5 mt-xl-0">
+            {# POST LOST & FOUND BEGIN #}
             <div class="post-event">
-              <h6>Want to Post Your Event</h6>
+              <h6>Want to Post found or lost objects</h6>
               <p>
-                Post your event on Goeveni for free. Just make an account and
-                add it through the simple form. As simple as that.
+                if you have found or lost somthing just post it here and people will interact with you
               </p>
               <a href="add_new_event.html" class="add-nw-event">Post It Now</a>
             </div>
+            {# POST LOST & FOUND BEGIN #}
+
+            {# begin Explore event #}
             <div class="explore-events">
               <h4>Explore Events</h4>
               <div class="explore-events-dt">
@@ -304,114 +309,7 @@
                 </div>
               </div>
             </div>
-            <div class="w-weather">
-              <div class="weather-top">
-                <div class="weather-left">
-                  <div class="weather-city">Ludhiana</div>
-                  <div class="week-text">Monday</div>
-                  <div class="week-text">14 Oct 2019</div>
-                  <div class="week-text" style="font-size: 18px">
-                    <i class="fas fa-tint"></i> 30%
-                  </div>
-                  <ul>
-                    <li>
-                      <div class="up-down">
-                        <i class="fas fa-long-arrow-alt-up"></i> 18°
-                      </div>
-                    </li>
-                    <li>
-                      <div class="up-down">
-                        <i class="fas fa-long-arrow-alt-down"></i> 25°
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="weather-right">
-                  <i class="feather-sun"></i>
-                  <span>22°</span>
-                </div>
-              </div>
-              <ul class="weekly-weather">
-                <li>
-                  <div class="degree-text">32°</div>
-                  <div class="weather-icon"><i class="fas fa-sun"></i></div>
-                  <div class="day-text">Tue</div>
-                </li>
-                <li>
-                  <div class="degree-text">19°</div>
-                  <div class="weather-icon">
-                    <i class="fa-solid fa-cloud-sun-rain"></i>
-                  </div>
-                  <div class="day-text">Wed</div>
-                </li>
-                <li>
-                  <div class="degree-text">32°</div>
-                  <div class="weather-icon"><i class="fas fa-sun"></i></div>
-                  <div class="day-text">Thu</div>
-                </li>
-                <li>
-                  <div class="degree-text">27°</div>
-                  <div class="weather-icon">
-                    <i class="fas fa-wind"></i>
-                  </div>
-                  <div class="day-text">Fri</div>
-                </li>
-                <li>
-                  <div class="degree-text">22°</div>
-                  <div class="weather-icon">
-                    <i class="fas fa-cloud-showers-heavy"></i>
-                  </div>
-                  <div class="day-text">Sat</div>
-                </li>
-                <li>
-                  <div class="degree-text">12°</div>
-                  <div class="weather-icon">
-                    <i class="fas fa-snowflake"></i>
-                  </div>
-                  <div class="day-text">Sun</div>
-                </li>
-              </ul>
-            </div>
-            <div class="news-data full-width">
-              <div class="categories-left-heading">
-                <h3>News</h3>
-              </div>
-              <div class="categories-items">
-                <div class="news-item">
-                  <div class="news-item-heading">
-                    <img src="images/category-icons/icon-1.png" alt="Music" />
-                    <h6>Music</h6>
-                  </div>
-                  <div class="news-description">
-                    Suspendisse cursus egestas luctus.
-                    <a href="#">https://website.com/news</a>
-                  </div>
-                </div>
-                <div class="news-item">
-                  <div class="news-item-heading">
-                    <img
-                      src="images/category-icons/icon-23.png"
-                      alt="Visual arts"
-                    />
-                    <h6>Art</h6>
-                  </div>
-                  <div class="news-description">
-                    Suspendisse cursus egestas luctus.
-                    <a href="#">https://website.com/news</a>
-                  </div>
-                </div>
-                <div class="news-item">
-                  <div class="news-item-heading">
-                    <img src="images/category-icons/icon-20.png" alt="Sports" />
-                    <h6>Sports</h6>
-                  </div>
-                  <div class="news-description">
-                    Suspendisse cursus egestas luctus.
-                    <a href="#">https://website.com/news</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {# end of explore events and agenda #}
           </div>
         </div>
       </div>
