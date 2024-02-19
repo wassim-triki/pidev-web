@@ -9,24 +9,38 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\MarketRepository;
-
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class HomeController extends AbstractController
 {
     private $managerRegistry;
+    private SessionInterface $session;
+    private TokenStorageInterface $tokenStorage;
 
-    public function __construct(ManagerRegistry $managerRegistry)
+    public function __construct(TokenStorageInterface $tokenStorage, ManagerRegistry $managerRegistry, SessionInterface $session)
     {
+        $this->session = $session;
+        $this->tokenStorage = $tokenStorage;
         $this->managerRegistry = $managerRegistry;
     }
 
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        // hedha kollou bech yetna7aa !
+        $user = $this->fetchUserFromDatabase();
+        $this->storeUserInSession($user);
+        $userEmail = $this->session->get('user_email');
+        $userRoles = $this->session->get('user_roles');
+        $this->authenticateUser($user);
+        // youfa hnee
         // Fetch all markets using ManagerRegistry
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
         
         return $this->render('home/index.html.twig', [
-            'markets' => $markets, // Pass the markets to the template
+            'markets' => $markets,
         ]);
     }
 
@@ -42,4 +56,27 @@ class HomeController extends AbstractController
             'markets' => $markets,
         ]);
     }
+
+    // hedha kollou pour le test
+    private function fetchUserFromDatabase(): ?User
+    {
+        // You can customize this method to fetch a user based on your application's logic
+        return $this->managerRegistry->getRepository(User::class)->findOneBy(['email' => 'user1@gmail.com']);
+    }
+
+    private function storeUserInSession(?User $user): void
+    {
+        if ($user) {
+            $this->session->set('user_email', $user->getEmail());
+            $this->session->set('user_roles', $user->getRoles());
+        }
+    }
+
+    private function authenticateUser(User $user): void
+    {
+        $token = new UsernamePasswordToken($user->getEmail(), null, 'main', $user->getRoles());
+        $this->tokenStorage->setToken($token);
+        $this->session->set('_security_main', serialize($token));
+    }
+    // youfa hne
 }
