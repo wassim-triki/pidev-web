@@ -29,15 +29,19 @@ class Sponsoring
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "PLEASE! The duration of contrat")]
+    #[Assert\NotBlank(message: "PLEASE! check duration of contrat")]
     private ?string $contrat = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: "PLEASE! the discription")]
+    #[Assert\NotBlank(message: "PLEASE! the description")]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'sponsoring', targetEntity: PostGroup::class)]
     private Collection $postgroup;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "PLEASE! check etat")]
+    private ?string $type = null;
 
     public function __construct()
     {
@@ -138,6 +142,18 @@ class Sponsoring
                 $postgroup->setSponsoring(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

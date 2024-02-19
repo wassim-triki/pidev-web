@@ -16,8 +16,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class SponsoringController extends AbstractController
 {
 
-    #[Route('/addform', name: 'addform')]
-    public function addformauthor(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response
+    #[Route('/addformsponsor', name: 'addformsponsor')]
+    public function addformsponsor(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response
     {
         $em = $managerRegistry->getManager();
         $sponsoring = new Sponsoring();
@@ -47,8 +47,11 @@ class SponsoringController extends AbstractController
 
             $em->persist($sponsoring);
             $em->flush();
+            $this->addFlash('success', 'Votre sponsor a été ajouté');
+            
             return $this->redirectToRoute('showdbsponsoring');
         }
+        
         return $this->renderForm('front_office/sponsoring/addform.html.twig', [
             'f' => $form
         ]);
@@ -90,6 +93,7 @@ class SponsoringController extends AbstractController
         if ($form->isSubmitted() and $form->isValid()) {
             $em->persist($dataid);
             $em->flush();
+            $this->addFlash('success', 'Votre sponsor a été modifié');
             return $this->redirectToRoute('showdbsponsoring');
         }
 
@@ -98,12 +102,32 @@ class SponsoringController extends AbstractController
         ]);
     }
     #[Route('/deletesponsor/{id}', name: 'deletesponsor')]
-    public function deletesponsor($id, SponsoringRepository $sponsorRepository, ManagerRegistry $managerRegistry): Response
-    {
-        $em = $managerRegistry->getManager();
-        $dataid = $sponsorRepository->find($id);
-        $em->remove($dataid);
-        $em->flush();
-        return $this->redirectToRoute('showdbsponsoring');
+public function deletesponsor($id, SponsoringRepository $sponsorRepository, ManagerRegistry $managerRegistry): Response
+{
+    $em = $managerRegistry->getManager();
+    $sponsor = $sponsorRepository->find($id);
+    
+    // Check if the sponsor exists
+    if (!$sponsor) {
+        throw $this->createNotFoundException('Sponsor not found');
     }
+    
+    // Get the related post groups
+    $postGroups = $sponsor->getPostGroup();
+    
+    // Remove each related post group
+    foreach ($postGroups as $postGroup) {
+        $em->remove($postGroup);
+    }
+    
+    // Now remove the sponsor
+    $em->remove($sponsor);
+    
+    // Flush changes
+    $em->flush();
+    $this->addFlash('success', 'Votre sponsor a été suprimé');
+    
+    return $this->redirectToRoute('showdbsponsoring');
+}
+
 }

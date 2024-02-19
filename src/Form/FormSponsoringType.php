@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Sponsoring;
+use App\Enum\ContratEnum;
+use App\Enum\TypeetatEnum;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +21,27 @@ class FormSponsoringType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('date')
-            ->add('contrat')
+            ->add('contrat', ChoiceType::class, [
+                'choices' => [
+                '1ANS' => ContratEnum::ANS1->value,
+                '2ANS' => ContratEnum::ANS2->value,
+                '3ANS' => ContratEnum::ANS3->value,
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'label_attr' => ['class' => 'form-label'],
+                'label' => 'Type:',
+                ])
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                'ACTIVE' => TypeetatEnum::ACTIVE->value,
+                'DESACTIVE' => TypeetatEnum::DESACTIVE->value,
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'label_attr' => ['class' => 'form-label'],
+                'label' => 'Type:',
+                ])
             
             ->add('image', FileType::class, [
                 'mapped' => false,

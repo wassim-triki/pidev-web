@@ -3,6 +3,16 @@
 {% block title %}Sponsoring List{% endblock %}
 
 {% block main %}
+<div class="text-center">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
 <div class="container mt-5 mb-5">
     <div class="categories-left-heading border_bottom">
         <h2 class="mb-4">Sponsoring List</h2>						
@@ -38,4 +48,5 @@
         </table>
     </div>
 </div>
+
 {% endblock %}

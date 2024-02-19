@@ -6,6 +6,7 @@ use App\Entity\PostGroup;
 use App\Entity\Sponsoring;
 use App\Form\PostGroupType;
 use App\Repository\PostGroupRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class PostGroupController extends AbstractController
 
 
     #[Route('/addpostgroup/{id}', name: 'addpostgroup')]
-    public function addpostgroup(ManagerRegistry $managerRegistry, Request $request, int $id, Security $security): Response
+    public function addpostgroup(ManagerRegistry $managerRegistry, UserRepository $userRepository,Request $request, int $id, Security $security): Response
     {
         $em = $managerRegistry->getManager();
 
@@ -37,6 +38,8 @@ class PostGroupController extends AbstractController
         // Récupérer l'utilisateur actuellement authentifié et l'associer au post
         $user = $security->getUser();
         $post->setUser($user);
+
+        $postUser = $userRepository->findOneBy(array("id" => $user->getUserIdentifier()));
 
 
         $form = $this->createForm(PostGroupType::class, $post);

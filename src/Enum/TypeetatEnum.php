@@ -2,7 +2,8 @@
 
 namespace App\Enum;
 
-enum TypeEnum: string {
+enum TypeetatEnum: string
+{
     case ACTIVE = 'ACTIVE';
     case DESACTIVE = 'DESACTIVE';
 }
