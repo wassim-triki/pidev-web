@@ -6,6 +6,7 @@ use App\Repository\VoucherCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoucherCategoryRepository::class)]
 class VoucherCategory
@@ -16,9 +17,12 @@ class VoucherCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Description cannot be blank')]
+    #[Assert\Choice(choices: ['purchase', 'discount'], message: 'Invalid category')]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Description cannot be blank')]
     private ?string $discription = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Voucher::class)]

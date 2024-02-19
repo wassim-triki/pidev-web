@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+    %} {% block main %}
+    <div class="row">
+        {%for i in voucher %}
+        <div class="col-md-3">
+            <div class="event-main-post">
+    
+            <center>
+                <div class="event-body">
+                    <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
+                        <span style="color: red;">{{ i.discription() }}</span>
+                    </p>
+                </div>
+                <div class="row">
+            <div class="col">
+                <form action="{{ path('market_edit', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir moddifier ce poste?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
+                    <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </form>
+            </div>
+            {# <div class="col">
+                <form action="{{ path('deletepost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ i.id) }}">
+                    <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </div> #}
+            </div>
+            </center>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
