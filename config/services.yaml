@@ -5,7 +5,11 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     uploads_directory: '%kernel.project_dir%/%env(UPLOADS_DIRECTORY)%'
+    screenshot_directory: '%kernel.project_dir%/public/uploads/screenshots'
+
 services:
+    # config/services.yaml
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -26,5 +30,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    

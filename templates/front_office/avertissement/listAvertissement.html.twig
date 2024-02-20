@@ -1,0 +1,37 @@
+{% extends 'front_office/base.html.twig' %}
+{% block main %}
+    <h1>Liste des Avertissements</h1>
+
+    <table border="2">
+        <thead >
+            <tr>
+                <th>Reported Username</th>
+                <th>Raison</th>
+                <th>screenShot</th>
+                <th>Nombre de Reclamation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avertissement in list %}
+                <tr>
+                    <td>{{ avertissement.ReportedUsername }}</td>
+                    <td>{{ avertissement.raison }}</td>
+                    <td>{{ avertissement.screenShot }}</td>
+                    <td>{{ avertissement.nombreReclamation }}</td>
+
+                    <td>
+                        {% if not avertissement.confirmation         %}
+                            <form action="{{ path('avertissement_confirm', {'id': avertissement.id}) }}" method="post">
+                                <button type="submit">Valider</button>
+                            </form>
+                        {% else %}
+                            Avertissement déjà confirmé
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+    

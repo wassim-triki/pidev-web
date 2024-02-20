@@ -1,0 +1,32 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block title %}Hello SponsoringController!{% endblock %}
+
+{% block main %}
+    <main class="categories-mp">  
+        <div class="main-section">
+            <div class="container">
+                <div class="row">
+                    {% for a in sponsor %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="our-blogs">                                
+                            <div class="blog-img">
+                                <a href="blog_detail_view.html"><img src="{{ ('uploads/' ~ a.image) }}" style="width: 100%; height: 300px;"></a>
+                            </div>
+                            <div class="blog-item1">
+                                <span>{{ a.date | date('Y-m-d') }}</span>
+                                <a href="blog_detail_view.html"><h4>{{ a.name }}</h4></a>                                    
+                                <div class="by-cmmnt">
+                                    <div class="comnt-rght">
+                                        <a href="{{ path('addpostgroup', {'id': a.id}) }}" class="far fa-comment">OPEN</a> 
+                                    </div>
+                                </div> 
+                            </div>                                                              
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'front_office/base.html.twig' %} {% block title %}Register{% endblock
+%} {% block main %}
+   <main class="register-mp">
+      <div class="main-section">
+         <div class="container">
+            <div class="row justify-content-md-center">
+               <div class="col-md-10">
+                  <div class="login-register-bg">
+                     <div class="row no-gutters">
+                        <div class="col-lg-6 auth-left">
+                           <div class="lg-left">
+                              <div class="text-container">
+                                 <div class="lg-logo">
+                                    <a href="index.html"><img src="{{ asset('front_office/images/login-register/logo.svg') }}" alt=""></a>
+                                 </div>
+                                 <div class="lr-text">
+                                    <h2>Register Now</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum blandit felis a hendrerit.</p>
+                                 </div>
+                              </div>
+
+
+                           </div>
+                        </div>
+                        <div class="col-lg-6 auth-right">
+                           <div class="lr-right">
+                              <h4>Sign Up to Goeveni</h4>
+                              <div class="login-register-form">
+{#                                 <form>#}
+{#                                    <div class="form-group">#}
+{#                                       <input class="form-input h_50" type="text" placeholder="Full Name">#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                       <input class="form-input h_50" type="email" placeholder="Email Address">#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                       <input class="form-input h_50" type="password" placeholder="Password">#}
+{#                                    </div>#}
+{#                                    <div class="rgstr-dt-txt">#}
+{#                                       By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookie Policy</a>. You may receive Email notifications from us and can opt out at any time.#}
+{#                                    </div>#}
+{#                                    <button class="login-btn" type="submit">Register Now</button>#}
+{#                                    <div class="login-link">If you have an account? <a href="login.html">Login Now</a></div>#}
+{#                                 </form>#}
+                                 {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
+
+                                 <div class="form-group">
+                                    <div class="user-avatar-img">
+                                       <img id="user-photo-preview" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
+                                       <div class="avatar-img-btn">
+                                          {{ form_widget(registrationForm.photo, {'attr': {'id': 'registrationForm_photo', 'onchange': 'previewImage(event)'}}) }}
+                                          <label for={{ registrationForm.photo.vars.id }} class="avatar-img-btn">
+                                             <i class="feather-camera"></i>
+                                          </label>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    {{ form_widget(registrationForm.username, {'attr': {'class': 'form-input h_50', 'placeholder': 'Username'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.username.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+                                    </div>
+                                 </div>
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-input h_50', 'placeholder': 'Email Address'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.email.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+
+                                    </div>
+                                 </div>
+                                 <div class="form-group mt-2">
+
+                                    {{ form_widget(registrationForm.password, {'attr': {'class': 'form-input h_50', 'placeholder': 'Password'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.password.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+
+                                    </div>
+                                 </div>
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.address, {'attr': {'class': 'form-input h_50', 'placeholder': 'Address'}}) }}
+                                 </div>
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-input h_50', 'placeholder': 'Phone'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.phone.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+                                    </div>
+                                 </div>
+                                 <div class="form-group mt-2">
+{#                             <label>Gender</label>#}
+                                    {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-control form-input h_50'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.gender.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+
+                                    </div>
+                                 </div>
+                                 <div class="rgstr-dt-txt">
+                                    By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookies Policy</a>. You may receive Email notifications from us and can opt out at any time.
+                                 </div>
+                                 {% for flash_message in app.flashes('error') %}
+                                    <div class="alert mt-2 p-2 alert-danger small">
+                                       {{ flash_message }}
+                                    </div>
+                                 {% endfor %}
+                                 {% for flash_message in app.flashes('registered_email') %}
+                                    <div class="alert mt-2 p-2 alert-success small">
+                                       {{ flash_message }}
+                                    </div>
+                                 {% endfor %}
+                                 {{ form_widget(registrationForm) }}
+                                 <div class="login-link mt-1">If you have an account? <a href="{{ path('app_login') }}">Login Now</a></div>
+                                 {{ form_end(registrationForm) }}
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+      </div>
+   </main>
+   <script>
+      function previewImage(event) {
+         var reader = new FileReader();
+         reader.onload = function() {
+            var output = document.getElementById('user-photo-preview');
+            output.src = reader.result;
+         };
+         reader.readAsDataURL(event.target.files[0]);
+      }
+   </script>
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block title %}Hello PostGroupController!{% endblock %}
+
+{% block main %}
+<main class="blog-mp">  
+    <div class="main-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">                              
+                   
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="blog-post-comment">
+                        <div class="blog-comments">
+                            <div class="blog-comment-title">
+                                <h2>FOUND IT HERE</h2>
+                            </div>
+                            {{ form_start(f, {'attr': {'novalidate': 'novalidate', 'class': 'form-group'}}) }}
+                            <div class="blog-post-comment">
+                                <div class="blog-post-bg">
+                                    <div class="commntr-dp">
+                                        <img src="images/event-view/user-1.jpg" alt="">
+                                    </div>
+                                    {{ form_widget(f.contenu, {'attr': {'class': 'bcomment-post col-sm-9','type' : 'text','placeholder': 'write something' }}) }}
+                                    {{ form_widget(f.public ,{'attr': {'class': 'blog-post-btn col-sm-2'}}) }}
+                                </div>
+                            </div>
+                            {{ form_end(f) }}
+                        </div>
+                    </div>
+                    {% for a in showpost %}
+                    <div class="blog-comntd-bg">
+                        
+                            <div class="bcmnt-dt">
+                                <div class="blog-usr-dt">
+                                    <img src="{{ asset('uploads/' ~ a.user.photo) }}">
+                                    <a href="user_profile.html"><h4>{{ a.user.getUsername() }}</h4></a>
+                                    <h6><span style="font-size: x-small; padding-left: 75px;">{{ a.date | date('Y-m-d') }}</span></h6>                                               
+                                </div>
+                                <p>{{ a.contenu }}</p>
+                            </div>
+                        
+                       
+                        <div class="blog-post-reply">
+                            <div class="breply-dp1">
+                                <img src="images/event-view/user-1.jpg" alt="">
+                            </div>
+                            <form>
+                                <input class="breply-post" type="text" placeholder="Write a reply">
+                                <button class="breply-post-btn" type="submit">Reply</button>
+                            </form>
+                        </div>
+                    </div>  
+                    {% endfor %}                      
+                </div>
+            </div>              
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,3 +1,17 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# config/routes.yaml
+front_office:
+  resource: '../src/Controller/FrontOffice'
+  type: annotation
+  prefix: /
+
+back_office:
+  resource: '../src/Controller/BackOffice'
+  type: annotation
+  prefix: /admin
+
+  # config/routes.yaml
+

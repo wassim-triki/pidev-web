@@ -54,11 +54,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     private ?string $emailVerificationToken = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PostGroup::class)]
+    private Collection $postGroups;
 
     public function getEmailVerificationToken(): ?string
     {
@@ -99,6 +102,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
+    private Collection $user;
+
+
+    #[ORM\Column]
+    private ?int $avertissementsCount = null;
+
+    #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
+    private Collection $avertissements;
+
     #[ORM\OneToMany(mappedBy: 'User_id', targetEntity: Question::class)]
     private Collection $questions;
 
@@ -107,6 +120,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->avertissements = new ArrayCollection();
+        $this->postGroups = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->answers = new ArrayCollection();
     }
@@ -275,6 +290,110 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection<int, Post>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(Post $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+            $user->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Post $user): static
+    {
+        if ($this->user->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getUser() === $this) {
+                $user->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+    public function getAvertissementsCount(): ?int
+    {
+        return $this->avertissementsCount;
+    }
+
+    public function setAvertissementsCount(int $avertissementsCount): static
+    {
+        $this->avertissementsCount = $avertissementsCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avertissement>
+     */
+    public function getAvertissements(): Collection
+    {
+        return $this->avertissements;
+    }
+
+    public function addAvertissement(Avertissement $avertissement): static
+    {
+        if (!$this->avertissements->contains($avertissement)) {
+            $this->avertissements->add($avertissement);
+            $avertissement->setF($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvertissement(Avertissement $avertissement): static
+    {
+        if ($this->avertissements->removeElement($avertissement)) {
+            // set the owning side to null (unless already changed)
+            if ($avertissement->getF() === $this) {
+                $avertissement->setF(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostGroup>
+     */
+    public function getPostGroups(): Collection
+    {
+        return $this->postGroups;
+    }
+
+    public function addPostGroup(PostGroup $postGroup): static
+    {
+        if (!$this->postGroups->contains($postGroup)) {
+            $this->postGroups->add($postGroup);
+            $postGroup->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostGroup(PostGroup $postGroup): static
+    {
+        if ($this->postGroups->removeElement($postGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($postGroup->getUser() === $this) {
+                $postGroup->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Question>
      */
     public function getQuestions(): Collection
@@ -333,5 +452,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 }
