@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\FrontOffice;
 
 use App\Entity\Question;
 use App\Form\QuestionType;
@@ -15,7 +15,7 @@ class QuestionController extends AbstractController
     #[Route('/question', name: 'app_question')]
     public function index(): Response
     {
-        return $this->render('question/show.html.twig', [
+        return $this->render('front_office/question/show.html.twig', [
             'controller_name' => 'QuestionController',
         ]);
     }
@@ -25,7 +25,7 @@ class QuestionController extends AbstractController
     public function show(QuestionRepository $qr): Response
     {
          $question= $qr->findAll();
-        return $this->render('question/show.html.twig', [
+        return $this->render('front_office/question/show.html.twig', [
             'questions' => $question
         ]);
     }
@@ -48,7 +48,7 @@ class QuestionController extends AbstractController
             return $this->redirectToRoute('show_questions');
         }
 
-        return $this->render('question/new.html.twig', [
+        return $this->render('front_office/question/new.html.twig', [
             'question' => $question,
             'form' => $form->createView(),
         ]);
@@ -72,7 +72,7 @@ class QuestionController extends AbstractController
             return $this->redirectToRoute('show_questions');
         }
 
-        return $this->renderForm('question/edit.html.twig', [
+        return $this->renderForm('front_office/question/edit.html.twig', [
             'form' => $form
         ]);
     }

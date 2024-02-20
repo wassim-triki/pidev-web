@@ -1,14 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'front_office/base.html.twig' %}
 
 {% block main %}
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card w-50 shadow-lg">
         <div class="card-header bg-warning text-white">
-            <h5 class="mb-0">Ask a question</h5>
+            <h5 class="mb-0">Edit your question</h5>
         </div>
         <div class="card-body">
             {{ form_start(form, {'attr': {'class': 'p-3'}}) }}
-            {{ form_widget(form, {'attr': {'onsubmit': 'showModal(event)'}}) }}
+            {{ form_widget(form) }}
             {{ form_end(form) }}
         </div>
     </div>
@@ -23,7 +23,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Your question has been added successfully!
+                Your question has been updated successfully!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -36,10 +36,11 @@
 
 {% block javascripts %}
 <script>
-    function showModal(event) {
-        event.preventDefault();
+    // Replace 'form' with the ID of your form
+    document.getElementById('form').addEventListener('submit', function() {
+        // Replace 'successModal' with the ID of your modal
         var successModal = new bootstrap.Modal(document.getElementById('successModal'));
         successModal.show();
-    }
+    });
 </script>
 {% endblock %}
