@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Repository\QuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,17 +12,27 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class QuestionController extends AbstractController
 {
-    #[Route('/question', name: 'question')]
+    #[Route('/question', name: 'app_question')]
     public function index(): Response
     {
-        return $this->render('question/index.html.twig', [
+        return $this->render('question/show.html.twig', [
             'controller_name' => 'QuestionController',
         ]);
     }
+
     
+    #[Route('/showquestions', name: 'show_questions')]
+    public function show(QuestionRepository $qr): Response
+    {
+         $question= $qr->findAll();
+        return $this->render('question/show.html.twig', [
+            'questions' => $question
+        ]);
+    }
+
     #[Route('/addquestion', name: 'add_question')]
      
-    public function new(Request $request,ManagerRegistry $managerRegistry): Response
+    public function addquestion(Request $request,ManagerRegistry $managerRegistry): Response
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
@@ -34,7 +45,7 @@ class QuestionController extends AbstractController
             $entityManager->persist($question);
             $entityManager->flush();
 
-            return $this->redirectToRoute('question_index');
+            return $this->redirectToRoute('show_questions');
         }
 
         return $this->render('question/new.html.twig', [
@@ -42,18 +53,7 @@ class QuestionController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * #Route("/question/{id}", name="question_show", methods={"GET"})
-     */
-    #[Route('/questions', name: 'show_questions')]
-    public function show(Question $question): Response
-    {
-        return $this->render('question/show.html.twig', [
-            'question' => $question,
-        ]);
-    }
-
+    
     /**
      * #Route("/question/{id}/edit", name="question_edit", methods={"GET","POST"})
      */
