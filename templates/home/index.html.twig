@@ -43,16 +43,13 @@
               <div class="tab-pane fade show active" id="tab-top">
                 <div class="main-posts">
                   <div class="row">
-                    {% if markets is empty %}
-                      <p>No markets found.</p>
-                    {% else %}
-                      {% for market in markets %}
+                    
                           <div class="col-md-6">
                               <div class="event-main-post">
                                   <div class="main-photo">
-                                      <a href="{{ path('market_details', {'id': market.id}) }}">
+                                      <a href="#">
                                           <div class="photo-overlay"></div>
-                                          <img src="images/homepage/center/post-img-7.jpg" alt="{{ market.name }}" />
+                                          <img src="images/homepage/center/post-img-7.jpg" alt="#" />
                                       </a>
                                       <div class="option-ellipsis">
                                           <div class="dropdown">
@@ -70,23 +67,21 @@
                                       </div>
                                   </div>
                                   <div class="event-body">
-                                      <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name }}</a>
-                                      <span class="event-type">{{ market.address }}</span>
+                                      <a href="#" class="event-title">post.name</a>
+                                      <span class="event-type">post.details</span>
                                       <p class="ingo-counter">
-                                          <span>{{ market.region }}</span> <!-- Add relevant data here -->
-                                          <span>{{ market.zipCode }}</span> <!-- Add relevant data here -->
+                                          <span>post.Details</span> <!-- Add relevant data here -->
+                                          <span>post.details</span> <!-- Add relevant data here -->
                                       </p>
                                       <!-- Add relevant buttons and functionalities here -->
                                   </div>
                               </div>
                           </div>
-                      {% endfor %}
-                  {% endif %}
-                <div class="col-md-12">
-                    <div class="loading-btn">
-                        <button class="process-btn btn-hover" type="button">No More</button>
-                    </div>
-                </div>
+                        <div class="col-md-12">
+                            <div class="loading-btn">
+                                <button class="process-btn btn-hover" type="button">No More</button>
+                            </div>
+                        </div>
             </div>
         </div>
     </div>
@@ -167,61 +162,26 @@
               <div class="categories-left-heading">
                 <h3>Your Vouchers</h3>
               </div>
+              {% if voucher is empty %}
+                <p>No vouchers found.</p>
+              {% else %}
+                {% for voucher in voucher %}
               <div class="sugguest-user">
                 <div class="sugguest-user-dt">
-                  <a href="user_profile.html"
-                    ><img src="images/homepage/left-side/left-img-1.jpg" alt=""
+                  {# {{ path('vouchercategory_details', {'id': voucher.id}) }}#}
+                  <a href="#"
+                    ><img src="images/category-icons/bon-de-reduction.png" alt=""
                   /></a>
-                  <a href="user_profile.html"><h4>Johnson</h4></a>
+                  {# 
+{{ path('vouchercategory_details', {'id': voucher.id}) }}  #}
+                  <a href="#"><h4>{{ voucher.code }}</h4></a>
                 </div>
                 <button class="request-btn">
                   <i class="feather-slack"></i>
                 </button>
               </div>
-              <div class="sugguest-user">
-                <div class="sugguest-user-dt">
-                  <a href="user_profile.html"
-                    ><img src="images/homepage/left-side/left-img-2.jpg" alt=""
-                  /></a>
-                  <a href="user_profile.html"><h4>Jassica William</h4></a>
-                </div>
-                <button class="request-btn">
-                  <i class="feather-slack"></i>
-                </button>
-              </div>
-              <div class="sugguest-user">
-                <div class="sugguest-user-dt">
-                  <a href="user_profile.html"
-                    ><img src="images/homepage/left-side/left-img-3.jpg" alt=""
-                  /></a>
-                  <a href="user_profile.html"><h4>Rock</h4></a>
-                </div>
-                <button class="request-btn">
-                  <i class="feather-slack"></i>
-                </button>
-              </div>
-              <div class="sugguest-user">
-                <div class="sugguest-user-dt">
-                  <a href="user_profile.html"
-                    ><img src="images/homepage/left-side/left-img-4.jpg" alt=""
-                  /></a>
-                  <a href="user_profile.html"><h4>Davil Smith</h4></a>
-                </div>
-                <button class="request-btn">
-                  <i class="feather-slack"></i>
-                </button>
-              </div>
-              <div class="sugguest-user">
-                <div class="sugguest-user-dt">
-                  <a href="user_profile.html"
-                    ><img src="images/homepage/left-side/left-img-5.jpg" alt=""
-                  /></a>
-                  <a href="user_profile.html"><h4>Ricky Doe</h4></a>
-                </div>
-                <button class="request-btn">
-                  <i class="feather-slack"></i>
-                </button>
-              </div>
+              {% endfor %}
+              {% endif %}
             </div>
             {# end voucher list  #}
           </div>
@@ -243,69 +203,49 @@
 
             {# begin Explore event #}
             <div class="explore-events">
-              <h4>Explore Events</h4>
+              <h4>Explore Shop</h4>
               <div class="explore-events-dt">
                 <div class="row g-2">
-                  <div class="col-6">
-                    <a href="#">
-                      <div class="explore-card light-blue">
-                        <div class="explore-item-1">
-                          <div class="explore-icon-bg icon-large-1">
-                            <i class="fas fa-sun"></i>
-                          </div>
-                          <div class="explore-content">
-                            <i class="feather-sun"></i>
-                            <span>Today</span>
-                          </div>
+                  {% if markets is empty %}
+                    <p>No markets found.</p>
+                  {% else %}
+                    {% for market in markets %}
+                      <div class="col-md-6">
+                        <div class="event-main-post">
+                            <div class="main-photo">
+                                <a href="{{ path('market_details', {'id': market.id}) }}">
+                                    <div class="photo-overlay"></div>
+                                    <img src="images/homepage/center/post-img-7.jpg" alt="{{ market.name }}" />
+                                </a>
+                                <div class="option-ellipsis">
+                                    <div class="dropdown">
+                                        <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                class="fas fa-ellipsis-v"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                            <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                            <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                                            <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-body">
+                                <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name }}</a>
+                                <span class="event-type">{{ market.address }}</span>
+                                <p class="ingo-counter">
+                                    <span>{{ market.region }}</span> <!-- Add relevant data here -->
+                                    <span>{{ market.zipCode }}</span> <!-- Add relevant data here -->
+                                </p>
+                                <!-- Add relevant buttons and functionalities here -->
+                            </div>
                         </div>
-                      </div>
-                    </a>
-                  </div>
-                  <div class="col-6">
-                    <a href="#">
-                      <div class="explore-card light-yellow">
-                        <div class="explore-item-1">
-                          <div class="explore-icon-bg icon-large-1">
-                            <i class="feather-sun"></i>
-                          </div>
-                          <div class="explore-content">
-                            <i class="feather-sun"></i>
-                            <span>Tomorrow</span>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <div class="col-6">
-                    <a href="#">
-                      <div class="explore-card dark-blue">
-                        <div class="explore-item-1">
-                          <div class="explore-icon-bg icon-large-1">
-                            <i class="feather-calendar"></i>
-                          </div>
-                          <div class="explore-content">
-                            <i class="feather-calendar"></i>
-                            <span>This Week</span>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <div class="col-6">
-                    <a href="#">
-                      <div class="explore-card light-green">
-                        <div class="explore-item-1">
-                          <div class="explore-icon-bg icon-large-1">
-                            <i class="fas fa-calendar-check"></i>
-                          </div>
-                          <div class="explore-content">
-                            <i class="feather-calendar"></i>
-                            <span>Choose Date</span>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
+                    </div>
+
+                {% endfor %}
+              {% endif %}
                 </div>
               </div>
             </div>

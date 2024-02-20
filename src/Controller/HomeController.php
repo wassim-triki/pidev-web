@@ -13,6 +13,7 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use App\Entity\Voucher;
 class HomeController extends AbstractController
 {
     private $managerRegistry;
@@ -38,9 +39,11 @@ class HomeController extends AbstractController
         // youfa hnee
         // Fetch all markets using ManagerRegistry
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
+        $voucher = $this->managerRegistry->getRepository(Voucher::class)->findAll();
         
         return $this->render('home/index.html.twig', [
             'markets' => $markets,
+            'voucher' => $voucher,
         ]);
     }
 
