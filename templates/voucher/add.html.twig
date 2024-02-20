@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block title %} Add new form to the system {% endblock %}
+    {% block css %}
+        {{ parent() }}
+        <style>
+            .card-body-custom {
+                background-color:#FFAA33;
+                padding: 3%;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+            .container-1 {
+                display: flex ;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .input-style {
+            margin-left: 5%;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        .btn {
+            margin-left: 40%;
+            margin-top: 5%;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+            
+        </style>
+    {% endblock %}
+    {% block main %}
+        {{form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}})}}
+        <main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-header" style="background-color: dimgrey;">
+                        <h4 class="mb-0"style="color:#ffff">New market</h4>
+                    </div>
+                    <div class="container-1">
+                        <div class="card-body-custom">
+                        
+                            <div class="mb-3">
+                                {{ form_label(form.code) }}
+                                <br>
+                                {{ form_widget(form.code, {'attr': {'class': 'input-style'}}) }}
+                                <div style="color: red;margin-left:10%;">{{ form_errors(form.code) }}</div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(form.expiration) }}
+                                <br>
+                                {{ form_widget(form.expiration, {'attr': {'class': 'input-style'}}) }}
+                                <div style="color: red;margin-left:10%;">{{ form_errors(form.expiration) }}</div>
+                            </div>
+                            
+                            
+                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+                            </div>
+                            <img src="{{ asset('images/shop-online.png') }}" alt="img-shop-virtual"style="width:60%">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+        {{form_end(form) }}
+    {% endblock %}
+
+    {% block javascripts %}
+        <script>
+        </script>
+        {% endblock %}

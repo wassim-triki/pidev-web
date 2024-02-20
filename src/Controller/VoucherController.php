@@ -34,20 +34,14 @@ class VoucherController extends AbstractController
         // Create a new Voucher object
         $voucher = new Voucher();
 
-        // Generate voucher code based on the related entities' names and value
-        $marketName = 'SampleMarket'; // Replace with actual market name
-        $categoryName = 'SampleCategory'; // Replace with actual category name
-        $value = $request->request->get('voucher')['value'] ?? null; // Get the value from the form
-
-        $code = hash('sha256', $marketName . $categoryName . $value);
-        $voucher->setCode($code);
-
         // Create and handle the form
         $form = $this->createForm(VoucherType::class, $voucher);
         $form->handleRequest($request);
 
         // Check if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
+            // $code = hash('sha256', $marketName . $categoryName . $value);
+            // $voucher->setCode($code);
             $entityManager = $this->managerRegistry->getManager();
 
             // Persist the new voucher to the database
