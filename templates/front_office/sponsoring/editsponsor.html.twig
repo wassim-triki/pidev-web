@@ -1,9 +1,8 @@
-{% extends 'front_office/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello SponsoringController!{% endblock %}
 
 {% block main %}
-
 <main class="goeveni-mp">	
     <div class="main-section">
         <div class="container mt-5 mb-5">
@@ -28,53 +27,20 @@
                                                             <div class="add-event-cover-image">
                                                                 <div class="upload-cover">
                                                                     <div class="cover-img-btn">
-                                                                    <div class="image-preview">
-                                                                    <img id="sponsor-photo-preview" src="{{ asset('front_office/images/default-photo.png') }}" alt="Default User" style="max-width: 250px; max-height: 250px;" >
-                                                                    </div>
                                                                         {{ form_label(f.image, 'Image of Sponsoring:', {'label_attr': {'class': 'feather-image me-3'}}) }}
-                                                                        {{ form_widget(f.image,{'attr': {'id': 'sponsorForm_photo', 'onchange': 'previewImage(event)'}}) }}
+                                                                        {{ form_widget(f.image) }}
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group mt-3  ">
                                                             {{ form_label(f.name, "Name of Sponsor:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
-                                                            
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(f.name, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
-                                                            <div style="color: red;">{{ form_errors(f.name) }}</div>
                                                         </div>
-                                                        <div class="form-group mt-3  ">
-                                                            {{ form_label(f.description, "Description of Sponsor:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
-                                                            
-                                                            <div class="col-sm-8 ">
-                                                                {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div style="color: red;">{{ form_errors(f.description) }}</div>
-                                                        </div>
-                                                        <div class="form-group mt-3  ">
-                                                            {{ form_label(f.contrat, "contrat of Sponsor:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
-                                                            
-                                                            <div class="col-sm-8 ">
-                                                                {{ form_widget(f.contrat, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div style="color: red;">{{ form_errors(f.contrat) }}</div>
-                                                        </div>
-                                                        <div class="form-group mt-3  ">
-                                                            {{ form_label(f.type, "Etat of Sponsor:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
-                                                            
-                                                            <div class="col-sm-8 ">
-                                                                {{ form_widget(f.type, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                            <div style="color: red;">{{ form_errors(f.contrat) }}</div>
-                                                        </div>
-                                                        
-                                                         
-                                                        
                                                         <div class="form-group mt-5  ">
                                                             {{ form_label(f.date, "Date of Sponsoring:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
-                                                            <div style="color: red;">{{ form_errors(f.date) }}</div>
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(f.date, {'attr': {'class': 'form-control'}}) }}
                                                             </div>

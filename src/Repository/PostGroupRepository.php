@@ -21,6 +21,16 @@ class PostGroupRepository extends ServiceEntityRepository
         parent::__construct($registry, PostGroup::class);
     }
 
+    public function findPostsBySponsoringOrderedByDate($sponsoringId)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.sponsoring = :sponsoringId')
+            ->setParameter('sponsoringId', $sponsoringId)
+            ->orderBy('p.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return PostGroup[] Returns an array of PostGroup objects
 //     */

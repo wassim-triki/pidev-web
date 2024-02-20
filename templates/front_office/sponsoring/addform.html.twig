@@ -28,7 +28,7 @@
                                                                 <div class="upload-cover">
                                                                     <div class="cover-img-btn">
                                                                     <div class="image-preview">
-                                                                    <img id="sponsor-photo-preview" src="{{ asset('front_office/images/default-photo.png') }}" alt="Default User" style="max-width: 250px; max-height: 250px;" >
+                                                                    <img id="sponsor-photo-preview" src="{{ asset('front_office/images/default-photo.png') }}"  style="max-width: 250px; max-height: 250px;" >
                                                                     </div>
                                                                         {{ form_label(f.image, 'Image of Sponsoring:', {'label_attr': {'class': 'feather-image me-3'}}) }}
                                                                         {{ form_widget(f.image,{'attr': {'id': 'sponsorForm_photo', 'onchange': 'previewImage(event)'}}) }}

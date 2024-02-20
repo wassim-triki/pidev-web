@@ -47,13 +47,17 @@ class SponsoringController extends AbstractController
 
             $em->persist($sponsoring);
             $em->flush();
+            
+            
             $this->addFlash('success', 'Votre sponsor a été ajouté');
             
             return $this->redirectToRoute('showdbsponsoring');
+
+            
         }
         
         return $this->renderForm('front_office/sponsoring/addform.html.twig', [
-            'f' => $form
+            'f' => $form,
         ]);
     }
 

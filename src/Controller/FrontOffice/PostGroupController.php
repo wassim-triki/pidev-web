@@ -19,12 +19,12 @@ class PostGroupController extends AbstractController
 
 
     #[Route('/addpostgroup/{id}', name: 'addpostgroup')]
-    public function addpostgroup(ManagerRegistry $managerRegistry, UserRepository $userRepository,Request $request, int $id, Security $security): Response
+    public function addpostgroup(ManagerRegistry $managerRegistry,PostGroupRepository $PostGroupRepository, UserRepository $userRepository, Request $request, int $id, Security $security): Response
     {
         $em = $managerRegistry->getManager();
 
         // Récupérer l'objet Sponsoring associé à l'ID
-        $sponsoring = $this->getDoctrine()->getRepository(Sponsoring::class)->find($id);
+        $sponsoring = $this->getDoctrine()->getRepository(Sponsoring::class)->find($id);;
 
         // Vérifier si le sponsoring existe
         if (!$sponsoring) {
@@ -50,10 +50,12 @@ class PostGroupController extends AbstractController
             $post->setDate($currentDate);
             $em->persist($post);
             $em->flush();
+            return $this->redirectToRoute('addpostgroup', ['id' => $id]);
         }
 
         // Récupérer uniquement les posts associés à ce sponsoring spécifique
-        $showpost = $sponsoring->getPostgroup(); // Utiliser la méthode getPostgroup
+        $showpost = $PostGroupRepository->findPostsBySponsoringOrderedByDate($id);
+        //$showpost = $sponsoring->getPostgroup(); // Utiliser la méthode getPostgroup
 
         return $this->renderForm('front_office/post_group/group.html.twig', [
             'f' => $form,

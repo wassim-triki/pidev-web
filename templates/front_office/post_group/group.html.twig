@@ -26,7 +26,7 @@
                             <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
                         {% endif %}
                                     </div>
-                                    {{ form_widget(f.contenu, {'attr': {'class': 'bcomment-post col-sm-9','type' : 'text','placeholder': 'write something' }}) }}
+                                    {{ form_widget(f.contenu) }}
                                     {{ form_widget(f.public ,{'attr': {'class': 'blog-post-btn col-sm-2'}}) }}
                                 </div>
                             </div>
