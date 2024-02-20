@@ -1,13 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Edit Question</h1>
+{% block main %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card w-50 shadow-lg">
+        <div class="card-header bg-warning text-white">
+            <h5 class="mb-0">Edit your question</h5>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'class': 'p-3'}}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn">{{ button_label|default('Update') }}</button>
-    {{ form_end(form) }}
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your question has been updated successfully!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <a href="{{ path('question_show', {'id': question.id}) }}">show</a>
-    <a href="{{ path('question_index') }}">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    // Replace 'form' with the ID of your form
+    document.getElementById('form').addEventListener('submit', function() {
+        // Replace 'successModal' with the ID of your modal
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    });
+</script>
 {% endblock %}

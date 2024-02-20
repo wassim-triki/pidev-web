@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             {{ form_start(form, {'attr': {'class': 'p-3'}}) }}
-            {{ form_widget(form) }}
+            {{ form_widget(form, {'attr': {'onsubmit': 'showModal(event)'}}) }}
             {{ form_end(form) }}
         </div>
     </div>
@@ -36,11 +36,10 @@
 
 {% block javascripts %}
 <script>
-    // Replace 'form' with the ID of your form
-    document.getElementById('form').addEventListener('submit', function() {
-        // Replace 'successModal' with the ID of your modal
+    function showModal(event) {
+        event.preventDefault();
         var successModal = new bootstrap.Modal(document.getElementById('successModal'));
         successModal.show();
-    });
+    }
 </script>
 {% endblock %}

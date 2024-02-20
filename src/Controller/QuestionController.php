@@ -58,35 +58,32 @@ class QuestionController extends AbstractController
      * #Route("/question/{id}/edit", name="question_edit", methods={"GET","POST"})
      */
     #[Route('/question/{id}/edit', name: 'edit_question')]
-    public function edit(Request $request, Question $question): Response
+    public function editquestion($id, QuestionRepository $qr, Request $req, ManagerRegistry $managerRegistry): Response
     {
-        $form = $this->createForm(QuestionType::class, $question);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('question_index');
+        $em = $managerRegistry->getManager();
+        // var_dump($id) . die();
+        $dataid = $qr->find($id);
+        // var_dump($dataid) . die();
+        $form = $this->createForm(QuestionType::class, $dataid);
+        $form->handleRequest($req);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $em->persist($dataid);
+            $em->flush();
+            return $this->redirectToRoute('show_questions');
         }
 
-        return $this->render('question/edit.html.twig', [
-            'question' => $question,
-            'form' => $form->createView(),
+        return $this->renderForm('question/edit.html.twig', [
+            'form' => $form
         ]);
     }
 
-    /**
-     * #Route("/question/{id}", name="question_delete", methods={"DELETE"})
-     */
-    #[Route('/question/{id}', name: 'delete_question')]
-    public function delete(Request $request, Question $question): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($question);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('question_index');
+    #[Route('/deletequestion/{id}', name: 'delete_question')]
+    public function deletequestion( $id,  QuestionRepository $qr,   ManagerRegistry $managerRegistry): Response
+     {
+        $em = $managerRegistry->getManager();
+        $dataid = $qr->find($id);
+        $em->remove($dataid);
+        $em->flush();
+        return $this->redirectToRoute('show_questions');
     }
 }
