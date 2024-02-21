@@ -1,5 +1,9 @@
 {% extends 'back_office/base.html.twig' %} {% block title %}Dashboard | Users{% endblock
 %}
+
+{% block styles %}
+
+{% endblock %}
 {% block main %}
 
 <div class="content-page">
@@ -54,6 +58,7 @@
                                         <th>Address</th>
                                         <th>Gender</th>
                                         <th>Roles</th>
+                                        <th>Enabled</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -74,11 +79,17 @@
                                             <td>{{ user.gender ? user.gender.value : 'N/A' }}</td>
                                             <td>{{ user.roles | join(', ') }}</td>
                                             <td>
+                                                <input type="checkbox" id="switch{{ user.id }}" {{ user.isEnabled ? 'checked' : '' }} data-switch="success" data-bs-toggle="modal" data-bs-target="#toggleUserModal" data-user-id="{{ user.id }}" data-user-status="{{ user.isEnabled ? 'disable' : 'enable' }}" data-original-state="{{ user.isEnabled ? 'true' : 'false' }}"/>
+
+                                                <label for="switch{{ user.id }}" data-on-label="Yes" data-off-label="No"></label>
+                                            </td>
+
+                                            <td>
                                                 <span class="badge {{ user.isVerified ? 'badge-success-lighten' : 'badge-danger-lighten' }}">{{ user.isVerified ? 'Verified' : 'Not Verified' }}</span>
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
-                                                    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+{#                                                    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>#}
                                                     <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="{{ user.id }}"> <i class="mdi mdi-delete"></i></a>
                                                 </div>
 
@@ -119,6 +130,27 @@
                 </div>
             </div>
         </div>
+        <!-- Enable/Disable User Modal -->
+        <div class="modal fade" id="toggleUserModal" tabindex="-1" aria-labelledby="toggleUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="toggleUserModalLabel">Confirm Action</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to <span id="toggleAction"></span> this user's account?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form id="toggleUserForm" action="" method="POST">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-primary" id="toggleUserButton">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div> <!-- content -->
@@ -149,8 +181,37 @@
             var button = event.relatedTarget;
             var userId = button.getAttribute('data-user-id');
             var form = deleteUserModal.querySelector('#deleteUserForm');
-            form.action = '/admin/delete-user/' + userId;
+            form.action = '/admin/users/'+userId+'/delete' + userId;
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleUserModal = document.getElementById('toggleUserModal');
+            let currentSwitch = null; // Variable to store the current switch
+
+            toggleUserModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                currentSwitch = button; // Store the current switch
+                const userId = button.getAttribute('data-user-id');
+                const userStatus = button.getAttribute('data-user-status');
+                const form = document.getElementById('toggleUserForm');
+                const actionSpan = document.getElementById('toggleAction');
+                const toggleButton = document.getElementById('toggleUserButton');
+
+                form.action = `/admin/users/${userId}/toggle`; // Adjust the URL as needed
+                actionSpan.textContent = userStatus;
+                toggleButton.textContent = userStatus.charAt(0).toUpperCase() + userStatus.slice(1);
+            });
+
+            toggleUserModal.addEventListener('hidden.bs.modal', function () {
+                if (currentSwitch) {
+                    const originalState = currentSwitch.getAttribute('data-original-state') === 'true';
+                    currentSwitch.checked = originalState; // Revert the switch to its original state
+                    currentSwitch = null; // Reset the current switch variable
+                }
+            });
+        });
+
+
     </script>
 
 {% endblock %}

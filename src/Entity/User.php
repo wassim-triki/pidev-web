@@ -54,6 +54,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isEnabled = true;
+
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
+    }
+
+    public function setIsEnabled(bool $isEnabled): self
+    {
+        $this->isEnabled = $isEnabled;
+        return $this;
+    }
+
     #[ORM\Column(type: 'string', length: 180, unique: true,nullable: true)]
     private ?string $emailVerificationToken = null;
 
