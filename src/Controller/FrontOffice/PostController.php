@@ -109,7 +109,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/deletepost/{id}', name: 'deletepost')]
-    public function deleteroom($id, PostRepository $postRepository, ManagerRegistry $managerRegistry): Response
+    public function deletepost($id, PostRepository $postRepository, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
         $dataid = $postRepository->find($id);

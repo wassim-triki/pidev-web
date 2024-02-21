@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Repository\PostRepository;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -15,8 +16,10 @@ use DateTimeZone;
 class JwtTokenService
 {
     private $config;
+    private $postRepository;
 
-    public function __construct()
+
+    public function __construct(PostRepository $postRepository)
     {
         $this->config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText("al9ani"));
 
@@ -25,6 +28,7 @@ class JwtTokenService
             new SignedWith($this->config->signer(), $this->config->signingKey()),
             new ValidAt(new SystemClock(new DateTimeZone(date_default_timezone_get())))
         );
+        $this->postRepository = $postRepository;
     }
 
 
@@ -46,5 +50,18 @@ class JwtTokenService
         $parsedToken = $this->config->parser()->parse($token);
 
         return $this->config->validator()->validate($parsedToken, ...$this->config->validationConstraints());
+    }
+
+    public function getPostStatistics()
+    {
+        $totalPosts = $this->postRepository->count([]);
+        $lostPosts = $this->postRepository->count(['type' => 'Lost']);
+        $foundPosts = $this->postRepository->count(['type' => 'Found']);
+
+        return [
+            'totalPosts' => $totalPosts,
+            'lostPosts' => $lostPosts,
+            'foundPosts' => $foundPosts,
+        ];
     }
 }
