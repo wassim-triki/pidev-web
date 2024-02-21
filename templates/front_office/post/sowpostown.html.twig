@@ -6,7 +6,11 @@
                                                         <div class="main-photo">
                                                             <a href="#">
                                                                 <div class="photo-overlay"></div>
-                                                                <img src="{{ i.ImageUrl }}" alt="">
+                                                                <img
+                                                                  src="{{ asset('uploads/' ~ i.imageUrl) }}"
+                                                                  alt={{ i.imageUrl }}
+                                                                  style="height: 4.5cm;"
+                                                                />
                                                             </a>
                                                         </div>
                                                         <div class="event-body">

@@ -51,7 +51,12 @@ class PostController extends AbstractController
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $typeChoices = [
+            'Lost' => PostTypeEnum::LOST->value,
+            'Found' => PostTypeEnum::FOUND->value,
+        ];
+
+        if ($form->isSubmitted()) {
             $photoFile = $form->get('imageUrl')->getData();
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -74,11 +79,12 @@ class PostController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Post successfully added!');
 
-            return $this->redirectToRoute('some_route'); // Redirect to a route after successful submission
+            return $this->redirectToRoute('showpost'); // Redirect to a route after successful submission
         }
 
         return $this->renderForm('front_office/post/addpost2.html.twig', [
             'f' => $form,
+            'typeChoices' => $typeChoices,
         ]);
     }
 

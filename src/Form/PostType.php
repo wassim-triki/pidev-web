@@ -26,11 +26,13 @@ class PostType extends AbstractType
                     'Lost' => PostTypeEnum::LOST->value,
                     'Found' => PostTypeEnum::FOUND->value,
                 ],
-                'expanded' => true, // Changed to true
+                'expanded' => true,
                 'multiple' => false,
                 'label_attr' => ['class' => 'form-label'],
                 'label' => 'Type:',
+                'data' => PostTypeEnum::LOST->value,
             ])
+
             ->add('imageUrl', FileType::class, [
                 'mapped' => false,
                 'constraints' => [
