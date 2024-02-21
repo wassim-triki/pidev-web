@@ -181,7 +181,7 @@
             var button = event.relatedTarget;
             var userId = button.getAttribute('data-user-id');
             var form = deleteUserModal.querySelector('#deleteUserForm');
-            form.action = '/admin/users/'+userId+'/delete' + userId;
+            form.action = '/admin/users/'+userId+'/delete';
         });
 
         document.addEventListener('DOMContentLoaded', function () {
