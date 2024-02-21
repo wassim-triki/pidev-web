@@ -30,7 +30,9 @@ class VoucherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code')
+            ->add('code',HiddenType::class, [
+                'data' => 'code',
+            ])
             ->add('value')
             ->add('category',ChoiceType::class, [
                 'choices' => $this->getCategory(),
@@ -51,7 +53,6 @@ class VoucherType extends AbstractType
             //$builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
             
         ;
-        var_dump($builder->getData());
     }
 
     public function configureOptions(OptionsResolver $resolver): void

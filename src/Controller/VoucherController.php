@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Voucher;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\VoucherCategory;
-use App\Entity\Market;
 use App\Form\VoucherType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Repository\VoucherRepository;
 class VoucherController extends AbstractController
 {
     private $managerRegistry;
@@ -37,11 +37,10 @@ class VoucherController extends AbstractController
         // Create and handle the form
         $form = $this->createForm(VoucherType::class, $voucher);
         $form->handleRequest($request);
-
         // Check if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->managerRegistry->getManager();
-
+            $voucher->setCode($this->generateRandomString());
             // Persist the new voucher to the database
             $entityManager->persist($voucher);
             $entityManager->flush();
@@ -52,6 +51,60 @@ class VoucherController extends AbstractController
         return $this->render('voucher/add.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/voucher/{id}/edit', name: 'voucher_edit', methods: ['GET', 'POST'])]
+    public function editVoucherCategory(Request $request, Voucher $voucher): Response
+    {
+        $form = $this->createForm(VoucherType::class, $voucher);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->managerRegistry->getManager();
+            $entityManager->persist($voucher);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_voucher');
+        }
+
+        return $this->render('voucher/editVoucher.html.twig', [
+            'voucher' => $voucher,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/voucher/{id}', name: 'voucher_delete', methods: ['post'])]
+    public function deleteVoucher($id, VoucherRepository $voucherRepository, ManagerRegistry $managerRegistry): RedirectResponse
+    {
+        $entityManager = $managerRegistry->getManager();
+        $voucher = $voucherRepository->find($id);
+    
+        if (!$voucher) {
+            throw $this->createNotFoundException('Voucher not found');
+        }
+    
+        $entityManager->remove($voucher);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('app_voucher');
+    }
+    
+    private function generateRandomString($length = 14) {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $code = '';
+        $segments = [6, 4, 6]; // Lengths of segments
+
+        foreach ($segments as $segmentLength) {
+            $segment = '';
+            for ($i = 0; $i < $segmentLength; $i++) {
+                $segment .= $characters[rand(0, strlen($characters) - 1)];
+            }
+            $code .= $segment . '-';
+        }
+
+        // Remove the last hyphen
+        $code = rtrim($code, '-');
+
+        return $code;
     }
 }
 

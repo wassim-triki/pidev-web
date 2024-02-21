@@ -1,40 +1,86 @@
 {% extends 'base.html.twig' %}
-{% block title %}Create New Event{% endblock %}
-{% block main %}
-{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
-
-<main class="py-5">
+{% block title %} Add new form to the system {% endblock %}
+    {% block css %}
+        {{ parent() }}
+        <style>
+            .card-body-custom {
+                background-color:#FFAA33;
+                padding: 3%;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+            .container-1 {
+                display: flex ;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .input-style {
+            margin-left: 5%;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        .btn {
+            margin-left: 40%;
+            margin-top: 5%;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+            
+        </style>
+    {% endblock %}
+    {% block main %}
+        {{form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}})}}
+        <main class="py-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow-lg">
-                    <div class="card-header">
-                        <h4 class="mb-0">New Event</h4>
+                    <div class="card-header" style="background-color: dimgrey;">
+                        <h4 class="mb-0"style="color:#ffff">New market</h4>
                     </div>
-                    <div class="card-body">
-                        {# Render the title field #}
-                        <div class="mb-3">
-                            {{ form_label(form.name) }}
-                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+                    <div class="container-1">
+                        <div class="card-body-custom">
                         
-                        {# Render the description field #}
-                        <div class="mb-3">
-                            {{ form_label(form.address) }}
-                            {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+                            <div class="mb-3">
+                                {{ form_label(form.name) }}
+                                <br>
+                                {{ form_widget(form.name, {'attr': {'class': 'input-style'}}) }}
+                                <div style="color: red;margin-left:10%;">{{ form_errors(form.name) }}</div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(form.region) }}
+                                <br>
+                                {{ form_widget(form.region, {'attr': {'class': 'input-style'}}) }}
+                                <div style="color: red;margin-left:10%;">{{ form_errors(form.region) }}</div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(form.city) }}
+                                <br>
+                                {{ form_widget(form.city,{'attr': {'class': 'input-style'}}) }}
+                                <div style="color: red;margin-left:10%;">{{ form_errors(form.city) }}</div>
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(form.zipCode) }}
+                                <br>
+                                {{ form_widget(form.zipCode,{'attr': {'class': 'input-style'}}) }}
+                                <div style="color: red;margin-left:10%;">{{ form_errors(form.zipCode) }}</div>
+                            </div>
+                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary btn-lg', 'value': 'Edit'}}) }}
+                            </div>
+                            <img src="{{ asset('images/shop-online.png') }}" alt="img-shop-virtual"style="width:60%">
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
     </div>
 </main>
+        {{form_end(form) }}
+    {% endblock %}
 
-{{ form_end(form) }}
-{% endblock %}
-
-{% block javascripts %}
-<script>
-    // Custom JavaScript can be added here, if needed
-</script>
-{% endblock %}
+    {% block javascripts %}
+        <script>
+        </script>
+        {% endblock %}

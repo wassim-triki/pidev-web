@@ -25,7 +25,7 @@ class MarketType extends AbstractType
             ->add('zipCode', TextType::class,[
                     'label' => 'Zip Code',
                 ])
-            ->add('save', SubmitType::class, ['label' => 'Create Market']);
+            ->add('save', SubmitType::class);
     }
     public function configureOptions(OptionsResolver $resolver)
     {

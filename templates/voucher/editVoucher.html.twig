@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SponsoringController!{% endblock %}
+
+{% block main %}
+<main class="goeveni-mp">	
+    <div class="main-section">
+        <div class="container mt-5 mb-5">
+            <div class="row justify-content-md-center">
+                <div class="col-xl-10 col-lg-12 col-md-12"> {# Enlarging the column to col-xl-10 #}
+                    <div class="add-event-tabs">
+                        <div class="tab-content" id="mainTabContent">
+                            <div class="tab-pane fade show active" id="online" role="tabpanel" aria-labelledby="online-tab">
+                                <div class="event-type-dt main-form mt-4">
+                                    <div class="tab-content" id="subTabContent">
+                                        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                                            <div class="col-lg-12 col-md-12"> {# Enlarging the column to col-lg-12 #}
+                                                <div class="main-card" style="max-width: 1000px; padding: 20px 15px 15px 20px;"> {# Adjusted max-width #}
+                                                    <div class="categories-left-heading border_bottom">
+                                                        <h3>Add NEW Voucher</h3>							
+                                                    </div>
+
+                                                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-group'}}) }}
+
+                                                        <div class="form-group mt-3  ">
+                                                            {# {{ form_label(form.code, "Coupon code:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }} #}
+                                                            
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            <div style="color: red;">{{ form_errors(form.code) }}</div>
+                                                        </div>
+                                                        <div class="form-group mt-3  ">
+                                                            {{ form_label(form.value, "Value in Dinar (DT):", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.value, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            <div style="color: red;">{{ form_errors(form.value) }}</div>
+                                                        </div>
+                                                        <div class="form-group mt-3 ">
+                                                            {{ form_label(form.category, "Coupon's category:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            {# <div style="color: red;">{{ form_errors(form.category) }}</div> #}
+                                                        </div>
+                                                        <div class="form-group mt-3  ">
+                                                            {{ form_label(form.type, "Coupon's type:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            {# <div style="color: red;">{{ form_errors(form.type) }}</div> #}
+                                                        </div>
+                                                        
+                                                         
+                                                        
+                                                        <div class="form-group mt-5  ">
+                                                            {{ form_label(form.expiration, "Expiration Date:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            <div style="color: red;">{{ form_errors(form.expiration) }}</div>
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.expiration, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group mt-5  ">
+                                                            {{ form_label(form.usageLimit, "Usage limit:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {# <div style="color: red;">{{ form_errors(form.usageLimit) }}</div> #}
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.usageLimit, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mt-5">
+                                                            {{ form_label(form.isValid, "Is Valid:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {# <div style="color: red;">{{ form_errors(form.isValid) }}</div> #}
+                                                            <div class="col-sm-8">
+                                                                {{ form_widget(form.isValid, {'attr': {'class': 'form-check-input'}}) }}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group mt-5">
+                                                            {{ form_label(form.isGivenToUser, "Is Given to User:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {# <div style="color: red;">{{ form_errors(form.isGivenToUser) }}</div> #}
+                                                            <div class="col-sm-8">
+                                                                {{ form_widget(form.isGivenToUser, {'attr': {'class': 'form-check-input'}}) }}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group mt-3  ">
+                                                            {{ form_label(form.userWon, "Coupon's Owner:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.userWon, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            {# <div style="color: red;">{{ form_errors(form.userWon) }}</div> #}
+                                                        </div>
+                                                        <div class="form-group mt-3  ">
+                                                            {{ form_label(form.marketRelated, "Market:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            
+                                                            <div class="col-sm-8 ">
+                                                                {{ form_widget(form.marketRelated, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                            {# <div style="color: red;">{{ form_errors(form.marketRelated) }}</div> #}
+                                                        </div>
+                                                        
+                                                        
+                                                    </div>
+
+                                                    <div class="form-group row justify-content-center">
+                                                        <div class="col-md-5">
+                                                            {{ form_widget(form.save ,{'attr': {'class': ' main-btn btn-hover h-40 w-100 mt-5'}}) }}
+                                                        </div>
+                                                    </div>
+
+                                                    {{ form_end(form) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+</main>
+   <script>
+      function previewImage(event) {
+         var reader = new FileReader();
+         reader.onload = function() {
+            var output = document.getElementById('sponsor-photo-preview');
+            output.src = reader.result;
+         };
+         reader.readAsDataURL(event.target.files[0]);
+      }
+   </script>
+{% endblock %}
