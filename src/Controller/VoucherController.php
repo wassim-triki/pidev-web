@@ -40,16 +40,12 @@ class VoucherController extends AbstractController
 
         // Check if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
-            // $code = hash('sha256', $marketName . $categoryName . $value);
-            // $voucher->setCode($code);
             $entityManager = $this->managerRegistry->getManager();
 
             // Persist the new voucher to the database
             $entityManager->persist($voucher);
             $entityManager->flush();
-
-            // Redirect to a success page or render a success message
-            return $this->redirectToRoute('voucher_list');
+            return $this->redirectToRoute('app_voucher');
         }
 
         // Render the form template with the form

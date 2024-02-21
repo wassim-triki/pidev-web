@@ -12,6 +12,9 @@ use App\Entity\Market;
 use App\Entity\User;
 use App\Entity\VoucherCategory;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 
 class VoucherType extends AbstractType
@@ -27,24 +30,28 @@ class VoucherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('expiration')
+            ->add('code')
             ->add('value')
-            ->add('usageLimit')
-            ->add('type')
-            ->add('isValid')
-            ->add('isGivenToUser')
             ->add('category',ChoiceType::class, [
                 'choices' => $this->getCategory(),
             ])
+            ->add('type')
+            ->add('expiration')
+            ->add('usageLimit')
+            ->add('isValid')
+            ->add('isGivenToUser')
             ->add('userWon',ChoiceType::class, [
                 'choices' => $this->getUserOne(),
             ])
             ->add('marketRelated',ChoiceType::class, [
                 'choices' => $this->getMarketRelatedChoices(),
             ])
-            ->add('code')
+            
             ->add('save', SubmitType::class, ['label' => 'Create Voucher']);
+            //$builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
+            
         ;
+        var_dump($builder->getData());
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -55,17 +62,17 @@ class VoucherType extends AbstractType
     }
 
     private function getMarketRelatedChoices()
-    {
-        // Fetch choices from the database
-        $choices = $this->entityManager->getRepository(Market::class)->findAll();
+{
+    // Fetch choices from the database
+    $choices = $this->entityManager->getRepository(Market::class)->findAll();
 
-        $formattedChoices = [];
-        foreach ($choices as $choice) {
-            $formattedChoices[$choice->getId()] = $choice->getName();
-        }
-
-        return $formattedChoices;
+    $formattedChoices = [];
+    foreach ($choices as $choice) {
+        $formattedChoices[$choice->getId()] = $choice;
     }
+
+    return $formattedChoices;
+}
 
     private function getUserOne()
     {
@@ -85,7 +92,8 @@ class VoucherType extends AbstractType
         $formattedChoice = null; // Initialize with null, in case user is not found
         if ($userWithReputation !== null) {
             // User found, create a formatted choice
-            $formattedChoice = [$userWithReputation->getId() => $userWithReputation->getUsername()];
+            $id = $userWithReputation->getId();
+            $formattedChoice = [$id => $userWithReputation];
         }
     
         return $formattedChoice;
@@ -98,9 +106,35 @@ class VoucherType extends AbstractType
 
         $formattedChoices = [];
         foreach ($category as $category) {
-            $formattedChoices[$category->getId()] = $category->getTitre();
+            $formattedChoices[$category->getId()] = $category;
         }
 
         return $formattedChoices;
     }
+
+    // public function onPostSubmit(FormEvent $event): void
+    // {
+    //     $voucher = $event->getData();
+    //     $form = $event->getForm();
+
+    //     // Retrieve the selected user email, category title, and market name
+    //     $userEmail = $form->get('userWon')->getData();
+    //     $categoryTitle = $form->get('category')->getData();
+    //     $marketName = $form->get('marketRelated')->getData();
+
+    //     // Find the user, category, and market objects by their respective properties
+    //     $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $userEmail]);
+    //     $category = $this->entityManager->getRepository(VoucherCategory::class)->findOneBy(['titre' => $categoryTitle]);
+    //     $market = $this->entityManager->getRepository(Market::class)->findOneBy(['name' => $marketName]);
+    //     var_dump($user);
+    //     var_dump($category);
+    //     var_dump($market);
+        
+    //     // Set the retrieved objects to the voucher
+    //     $voucher->setUserWon($user);
+    //     $voucher->setCategory($category);
+    //     $voucher->setMarketRelated($market);
+
+    //     // Hash the values and set the code
+    // }
 }

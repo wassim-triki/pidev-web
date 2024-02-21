@@ -37,9 +37,8 @@ class HomeController extends AbstractController
         $userRoles = $this->session->get('user_roles');
         $this->authenticateUser($user);
         // youfa hnee
-        // Fetch all markets using ManagerRegistry
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
-        $voucher = $this->managerRegistry->getRepository(Voucher::class)->findAll();
+        $voucher = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user]);
         
         return $this->render('home/index.html.twig', [
             'markets' => $markets,
