@@ -40,18 +40,21 @@
                                                         <div style="color: red;">{{ form_errors(form.name) }}</div>
 
 													</div>
+                                                    
                                                     <div class="form-group mt-4">	
                                                         {{ form_label(form.region, "Region :", {'label_attr': {'class': 'form-label'}}) }} 
                                                         {{ form_widget(form.region, {'attr': {'class': 'form-input'}}) }}
                                                         <div style="color: red;">{{ form_errors(form.region) }}</div>
 													</div>
+
                                                     <div class="form-group mt-4">	
                                                         {{ form_label(form.city, "City's name:", {'label_attr': {'class': 'form-label'}}) }} 
                                                         {{ form_widget(form.city, {'attr': {'class': 'form-input'}}) }}
                                                         <div style="color: red;">{{ form_errors(form.city) }}</div>
 													</div>
+
                                                     <div class="form-group mt-4">	
-                                                        {{ form_label(form.zipCode, "zip code :", {'label_attr': {'class': 'form-label'}}) }} 
+                                                        {{ form_label(form.zipCode, "zip code :", {'label_attr': {'class': 'form-lable'}}) }} 
                                                         {{ form_widget(form.zipCode, {'attr': {'class': 'form-input'}}) }}
                                                         <div style="color: red;">{{ form_errors(form.zipCode) }}</div>
 													</div>

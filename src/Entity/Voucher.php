@@ -6,6 +6,7 @@ use App\Repository\VoucherRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomAssert;
 
 #[ORM\Entity(repositoryClass: VoucherRepository::class)]
 class Voucher
@@ -19,6 +20,7 @@ class Voucher
     private ?string $code = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[CustomAssert\SameYearAndMonth]
     private ?\DateTimeImmutable $expiration = null;
 
     #[ORM\Column]

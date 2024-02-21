@@ -69,7 +69,7 @@ class VoucherType extends AbstractType
 
     $formattedChoices = [];
     foreach ($choices as $choice) {
-        $formattedChoices[$choice->getId()] = $choice;
+        $formattedChoices[$choice->getName()] = $choice;
     }
 
     return $formattedChoices;
@@ -93,8 +93,8 @@ class VoucherType extends AbstractType
         $formattedChoice = null; // Initialize with null, in case user is not found
         if ($userWithReputation !== null) {
             // User found, create a formatted choice
-            $id = $userWithReputation->getId();
-            $formattedChoice = [$id => $userWithReputation];
+            $email = $userWithReputation->getEmail();
+            $formattedChoice = [$email => $userWithReputation];
         }
     
         return $formattedChoice;
@@ -107,7 +107,7 @@ class VoucherType extends AbstractType
 
         $formattedChoices = [];
         foreach ($category as $category) {
-            $formattedChoices[$category->getId()] = $category;
+            $formattedChoices[$category->getTitre()] = $category;
         }
 
         return $formattedChoices;

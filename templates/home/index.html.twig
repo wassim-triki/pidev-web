@@ -215,7 +215,7 @@
                             <div class="main-photo">
                                 <a href="{{ path('market_details', {'id': market.id}) }}">
                                     <div class="photo-overlay"></div>
-                                    <img src="images/homepage/center/post-img-7.jpg" alt="{{ market.name }}" />
+                                    <img src="{{ asset('uploads/' ~ market.getImage() )}}" alt="{{ market.name }}" />
                                 </a>
                                 <div class="option-ellipsis">
                                     <div class="dropdown">
