@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\MarketType;
 use App\Repository\MarketRepository;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MarketController extends AbstractController
 {
@@ -56,13 +58,32 @@ class MarketController extends AbstractController
     }
 
     #[Route('/market/newmarket', name: 'market_new', methods: ['GET', 'POST'])]
-    public function newMarket(Request $request): Response
+    public function newMarket(Request $request,SluggerInterface $slugger): Response
     {
         $market = new Market();
         $form = $this->createForm(MarketType::class, $market);
         $form->handleRequest($request);
 
+        
+
         if ($form->isSubmitted() && $form->isValid()) {
+             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
+             $photoFile = $form->get('image')->getData(); // Assuming 'photo' is the field name in your form
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    $market->setImage($newFilename);
+                } catch (FileException $e) {
+                    // Handle error
+                }
+            }
             $address = $market->getRegion() . ' - ' . $market->getCity() . ' - ' . $market->getZipCode();
             $market->setAddress($address);
             $entityManager = $this->managerRegistry->getManager();
