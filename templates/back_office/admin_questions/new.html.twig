@@ -1,21 +1,16 @@
-{% extends 'front_office/base.html.twig' %}
+{% extends 'back_office/base.html.twig' %}
 
 {% block main %}
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card w-50 shadow-lg">
-        <div class="card-header bg-warning text-white">
-            <h5 class="mb-0">Ajouter une question</h5>
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Ajouter une réponse</h5>
         </div>
         <div class="card-body">
             {{ form_start(form, {'attr': {'class': 'p-3'}}) }}
-            {{ form_label(form.title, null, {'label_attr': {'class': 'h_50'}}) }}
-            {{ form_widget(form.title) }}
-            <div style="color: red;">{{ form_errors(form.title) }}</div>
             {{ form_label(form.body, null, {'label_attr': {'class': 'h_50'}}) }}
             {{ form_widget(form.body) }}
             <div style="color: red;">{{ form_errors(form.body) }}</div>
-          
-           
         </div>
         {{form_end(form)}}
     </div>
@@ -30,7 +25,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Your question has been added successfully!
+                Your answer has been added successfully!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

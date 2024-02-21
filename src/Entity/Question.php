@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
@@ -16,10 +17,14 @@ class Question
     #[ORM\ManyToOne(inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User_id = null;
-
+    
+    #[Assert\NotBlank(message: "Le titre ne doit pas etre vide!")]
+    #[Assert\Length(min:5,minMessage:"le titre doit avoir un longeur plus que 5 charactères!")]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
-
+    
+    #[Assert\NotBlank(message: "Implementez votre question")]
+    #[Assert\Length(min:10,minMessage:"votre question doit avoir un longueur plus de 10 charactères!")]
     #[ORM\Column(length: 255)]
     private ?string $body = null;
 
