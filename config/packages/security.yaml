@@ -11,15 +11,13 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
         back_office:
             pattern: ^/admin
             provider: app_user_provider
             form_login:
                 login_path: admin_login
                 check_path: admin_login
+                default_target_path: admin_dashboard
                 enable_csrf: true
             logout:
                 path: admin_logout
@@ -28,13 +26,12 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                enable_csrf: true
                 login_path: app_login
                 check_path: app_login
+                default_target_path: app_home
             logout:
                 path: app_logout
                 target: app_login
-            # You can add more security options for the back office as needed
 
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

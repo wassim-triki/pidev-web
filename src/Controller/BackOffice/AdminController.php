@@ -12,7 +12,7 @@ class AdminController extends AbstractController
     public function dashboard()
     {
         // Only allow authenticated users with the ROLE_ADMIN to access this page
-//        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('back_office/dashboard/dashboard.html.twig');
     }
