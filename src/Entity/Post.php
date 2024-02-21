@@ -18,12 +18,12 @@ class Post
     private ?int $id = null;
 
     #[Assert\NotBlank(message: "The titre n'est pas vide")]
-    #[Assert\Length(min:5,minMessage:"le titre doit avoir un longeur plus que 5 charactére")]
+    #[Assert\Length(min: 5, minMessage: "le titre doit avoir un longeur plus que 5 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
     #[Assert\NotBlank(message: "The description n'est pas vide")]
-    #[Assert\Length(min:20,minMessage:"le description doit avoir un longeur plus que 20 charactére")]
+    #[Assert\Length(min: 20, minMessage: "le description doit avoir un longeur plus que 20 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
@@ -32,21 +32,22 @@ class Post
     private ?\DateTimeInterface $date = null;
 
     #[Assert\NotBlank(message: "The type n'est pas vide")]
-    #[ORM\Column(length: 255,enumType:PostTypeEnum::class)]
+    #[ORM\Column(length: 255, enumType: PostTypeEnum::class)]
     private ?PostTypeEnum $type = null;
-    
+
     #[Assert\NotBlank(message: "The image n'est pas vide")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageUrl = null;
 
 
     #[Assert\NotBlank(message: "The place n'est pas vide")]
-    #[Assert\Length(min:5,minMessage:"le place doit avoir un longeur plus que 5 charactére")]
+    #[Assert\Length(min: 5, minMessage: "le place doit avoir un longeur plus que 5 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $place = null;
 
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?User $user = null;
+
 
     public function getId(): ?int
     {
@@ -89,7 +90,8 @@ class Post
         return $this;
     }
 
-    public function getType(): ?string {
+    public function getType(): ?string
+    {
         return $this->type?->value;
     }
 

@@ -75,11 +75,13 @@
                                             <label class="form-label">Title*</label>
                                             {{ form_widget(f.titre, {'attr': {'class': 'form-input', 'placeholder':
                                             'Enter Event title'}}) }}
+                                            <div style="color: red;">{{ form_errors(f.titre) }}</div>
                                         </div>
                                         <div class="form-group mt-4">
                                             <label class="form-label">Description*</label>
                                             {{ form_widget(f.description, {'attr': {'class': 'form-textarea',
                                             'placeholder': 'Description'}}) }}
+                                            <div style="color: red;">{{ form_errors(f.description) }}</div>
                                             <span class="small-des">Provide more information about your event so
                                                 that guests know what to expect.</span>
                                         </div>
@@ -88,6 +90,7 @@
                                             <div class="position-relative">
                                                 {{ form_widget(f.place, {'attr': {'class': 'form-input',
                                                 'placeholder': 'Include a place or address'}}) }}
+                                                <div style="color: red;">{{ form_errors(f.place) }}</div>
                                                 <span class="icon-158"><i class="feather-map-pin"></i></span>
                                             </div>
                                         </div>
