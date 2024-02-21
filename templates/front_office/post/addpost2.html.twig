@@ -1,0 +1,260 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block title %}Ajouter Post{% endblock %}
+
+{% block main %}
+
+<!-- Body Start -->
+<main class="goeveni-mp">
+    {% for flashMessage in app.flashes('success') %}
+    <div class="alert alert-success" role="alert">
+        {{ flashMessage }}
+    </div>
+    {% endfor %}
+    <div class="main-section">
+        {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-xl-6 col-lg-10 col-md-12">
+                    <div class="form-group d-none">
+                        {{ form_widget(f.type) }}
+                    </div>
+
+                    <ul class="nav nav-pills nav-fill p-2 goeveni-tab mt-4 mt-xl-0" id="mainTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="lost-tab" data-toggle="pill" href="#lost"
+                                onclick="setType('Lost')">Lost</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="found-tab" data-toggle="pill" href="#found"
+                                onclick="setType('Found')">Found</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <div class="main-card p-4">
+                        <div class="add-event-cover-image">
+                            <div class="upload-cover">
+                                <div class="cover-img-btn">
+                                    <div class="image-preview">
+                                        <img id="sponsor-photo-preview"
+                                            src="{{ asset('front_office/images/default-photo.png') }}"
+                                            style="max-width: 250px; max-height: 250px;">
+                                    </div>
+                                    {{ form_label(f.imageUrl, 'Image of Post:', {'label_attr': {'class': 'feather-image
+                                    me-3'}}) }}
+                                    {{ form_widget(f.imageUrl,{'attr': {'id': 'PostForm_photo', 'onchange':
+                                    'previewImage(event)'}}) }}
+                                    <div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-form">
+                        <div class="form-group mt-4">
+                            <label class="form-label">Event Titre*</label>
+                            {{ form_widget(f.titre, {'attr': {'class': 'form-input h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.titre) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Date Objet Lost/Found *</label>
+                                    <input class="search-form-input datepicker-here" data-language='en' type="text"
+                                        placeholder="Select Date">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group mt-3 clock-icon">
+                                    <label class="form-label">Time*</label>
+                                    <select class="selectpicker" data-size="5" data-live-search="true">
+                                        <option value="">12:00 AM</option>
+                                        <option value="">12:15 AM</option>
+                                        <option value="">12:30 AM</option>
+                                        <option value="">12:45 AM</option>
+                                        <option value="">01:00 AM</option>
+                                        <option value="">01:15 AM</option>
+                                        <option value="">01:30 AM</option>
+                                        <option value="">01:45 AM</option>
+                                        <option value="">02:00 AM</option>
+                                        <option value="">02:15 AM</option>
+                                        <option value="">02:30 AM</option>
+                                        <option value="">02:45 AM</option>
+                                        <option value="">03:00 AM</option>
+                                        <option value="">03:15 AM</option>
+                                        <option value="">03:30 AM</option>
+                                        <option value="">03:45 AM</option>
+                                        <option value="">04:00 AM</option>
+                                        <option value="">04:15 AM</option>
+                                        <option value="">04:30 AM</option>
+                                        <option value="">04:45 AM</option>
+                                        <option value="">05:00 AM</option>
+                                        <option value="">05:15 AM</option>
+                                        <option value="">05:30 AM</option>
+                                        <option value="">05:45 AM</option>
+                                        <option value="">06:00 AM</option>
+                                        <option value="">06:15 AM</option>
+                                        <option value="">06:30 AM</option>
+                                        <option value="">06:45 AM</option>
+                                        <option value="">07:00 AM</option>
+                                        <option value="">07:15 AM</option>
+                                        <option value="">07:30 AM</option>
+                                        <option value="">07:45 AM</option>
+                                        <option value="">08:00 AM</option>
+                                        <option value="">08:15 AM</option>
+                                        <option value="">08:30 AM</option>
+                                        <option value="">08:45 AM</option>
+                                        <option value="">09:00 AM</option>
+                                        <option value="">09:15 AM</option>
+                                        <option value="">09:30 AM</option>
+                                        <option value="">09:45 AM</option>
+                                        <option value="" selected>10:00 AM</option>
+                                        <option value="">10:15 AM</option>
+                                        <option value="">10:30 AM</option>
+                                        <option value="">10:45 AM</option>
+                                        <option value="">11:00 AM</option>
+                                        <option value="">11:15 AM</option>
+                                        <option value="">11:30 AM</option>
+                                        <option value="">11:45 AM</option>
+                                        <option value="">12:00 PM</option>
+                                        <option value="">12:15 PM</option>
+                                        <option value="">12:30 PM</option>
+                                        <option value="">12:45 PM</option>
+                                        <option value="">01:00 PM</option>
+                                        <option value="">01:15 PM</option>
+                                        <option value="">01:30 PM</option>
+                                        <option value="">01:45 PM</option>
+                                        <option value="">02:00 PM</option>
+                                        <option value="">02:15 PM</option>
+                                        <option value="">02:30 PM</option>
+                                        <option value="">02:45 PM</option>
+                                        <option value="">03:00 PM</option>
+                                        <option value="">03:15 PM</option>
+                                        <option value="">03:30 PM</option>
+                                        <option value="">03:45 PM</option>
+                                        <option value="">04:00 PM</option>
+                                        <option value="">04:15 PM</option>
+                                        <option value="">04:30 PM</option>
+                                        <option value="">04:45 PM</option>
+                                        <option value="">05:00 PM</option>
+                                        <option value="">05:15 PM</option>
+                                        <option value="">05:30 PM</option>
+                                        <option value="">05:45 PM</option>
+                                        <option value="">06:00 PM</option>
+                                        <option value="">06:15 PM</option>
+                                        <option value="">06:30 PM</option>
+                                        <option value="">06:45 PM</option>
+                                        <option value="">07:00 PM</option>
+                                        <option value="">07:15 PM</option>
+                                        <option value="">07:30 PM</option>
+                                        <option value="">07:45 PM</option>
+                                        <option value="">08:00 PM</option>
+                                        <option value="">08:15 PM</option>
+                                        <option value="">08:30 PM</option>
+                                        <option value="">08:45 PM</option>
+                                        <option value="">09:00 PM</option>
+                                        <option value="">09:15 PM</option>
+                                        <option value="">09:30 PM</option>
+                                        <option value="">09:45 PM</option>
+                                        <option value="">10:00 PM</option>
+                                        <option value="">10:15 PM</option>
+                                        <option value="">10:30 PM</option>
+                                        <option value="">10:45 PM</option>
+                                        <option value="">11:00 PM</option>
+                                        <option value="">11:15 PM</option>
+                                        <option value="">11:30 PM</option>
+                                        <option value="">11:45 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="form-label">Category*</label>
+                            <select class="selectpicker" data-width="100%" data-size="5">
+                                <option value="">Visual arts</option>
+                                <option value="">Social Issues</option>
+                                <option value="">Comedy</option>
+                                <option value="">Crafts</option>
+                                <option value="">Dance</option>
+                                <option value="">Drinks</option>
+                                <option value="">TV and films</option>
+                                <option value="">Fitness & workouts</option>
+                                <option value="">Foods</option>
+                                <option value="">Games</option>
+                                <option value="">Gardening</option>
+                                <option value="">Health & Medical</option>
+                                <option value="">Home and garden</option>
+                                <option value="">Classics</option>
+                                <option value="">Music and audio</option>
+                                <option value="">Professional networking</option>
+                                <option value="">Parties</option>
+                                <option value="">Religions</option>
+                                <option value="">Shopping</option>
+                                <option value="">Sports</option>
+                                <option value="">Theatre</option>
+                                <option value="">Healthy living and self-care</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="form-label">Location*</label>
+                            <div class="position-relative">
+                                {{ form_widget(f.place, {'attr': {'class': 'form-input h_50'}}) }}
+                                <div style="color: red;">{{ form_errors(f.place) }}</div>
+                                <span class="icon-158"><i class="feather-map-pin"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <label class="form-label">Description*</label>
+                            {{ form_widget(f.description, {'attr': {'class': 'form-input h_50'}}) }}
+                            <div style="color: red;">{{ form_errors(f.description) }}</div>
+                        </div>
+                        {{ form_widget(f.save) }}
+                    </div>
+                </div>
+                <div class="tab-content" id="mainTabContent">
+                    <div class="tab-pane fade" id="in-person" role="tabpanel" aria-labelledby="in-person-tab">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    {{ form_end(f) }}
+    </div>
+</main>
+<!-- Body End -->
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('sponsor-photo-preview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    document.querySelectorAll('#mainTab .nav-link').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            console.log('Tab clicked'); // For debugging purposes
+            var value = this.getAttribute('data-value');
+            var typeInput = document.querySelector('#{{ f.type.vars.id }}');
+            typeInput.value = value;
+            // Optionally, update the active class on the tabs
+            document.querySelector('#mainTab .nav-link.active').classList.remove('active');
+            this.classList.add('active');
+        });
+    });
+
+    function setType(typeValue) {
+        var typeField = document.querySelector('#{{ f.type.vars.id }}');
+        typeField.value = typeValue;
+        // Update the active class on the tabs
+        document.querySelector('#mainTab .nav-link.active').classList.remove('active');
+        document.getElementById(typeValue.toLowerCase() + '-tab').classList.add('active');
+    }
+
+
+</script>
+
+
+{% endblock %}

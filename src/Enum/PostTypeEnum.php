@@ -2,6 +2,6 @@
 namespace App\Enum;
 
 enum PostTypeEnum: string {
-    case LOST = 'lost';
-    case FOUND = 'found';
+    case LOST = 'Lost';
+    case FOUND = 'Found';
 }

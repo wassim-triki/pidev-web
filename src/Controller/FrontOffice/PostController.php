@@ -4,15 +4,18 @@ namespace App\Controller\FrontOffice;
 
 
 use App\Entity\Post;
+use App\Enum\PostTypeEnum;
 use App\Form\PostType;
 use App\Form\ProfilePictureType;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class PostController extends AbstractController
 {
@@ -28,37 +31,57 @@ class PostController extends AbstractController
     public function showpost(PostRepository $postRepository): Response
     {
         $post = $postRepository->findAll();
-        return $this->render('front_office/post/showpost.html.twig', [
+        return $this->render('front_office/post/showtest.html.twig', [
             'post' => $post
         ]);
     }
 
-    
+
 
     #[Route('/addpost', name: 'addpost')]
-    public function addpost(ManagerRegistry $managerRegistry, Request $req): Response
+    public function addpost(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response
     {
-        if(!$this->getUser()){
+        if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
         $em = $managerRegistry->getManager();
-        $user= $this->getUser();
+        $user = $this->getUser();
         $post = new Post();
         $post->setDate(new \DateTime());
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($req);
-        if ($form->isSubmitted() and $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('imageUrl')->getData();
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    $post->setImageUrl($newFilename);
+                } catch (FileException $e) {
+                    // Handle error
+                }
+            }
+
             $post->setUser($user);
             $em->persist($post);
             $em->flush();
-            dump($post);
             $this->addFlash('success', 'Post successfully added!');
 
+            return $this->redirectToRoute('some_route'); // Redirect to a route after successful submission
         }
-        return $this->renderForm('front_office/post/addpost.html.twig', [
-            'f' => $form
+
+        return $this->renderForm('front_office/post/addpost2.html.twig', [
+            'f' => $form,
         ]);
     }
+
 
     #[Route('/editpost/{id}', name: 'editpost')]
     public function editcar($id, PostRepository $postRepository, Request $req, ManagerRegistry $managerRegistry): Response
@@ -80,7 +103,8 @@ class PostController extends AbstractController
     }
 
     #[Route('/deletepost/{id}', name: 'deletepost')]
-    public function deleteroom($id,PostRepository $postRepository,ManagerRegistry $managerRegistry): Response {
+    public function deleteroom($id, PostRepository $postRepository, ManagerRegistry $managerRegistry): Response
+    {
         $em = $managerRegistry->getManager();
         $dataid = $postRepository->find($id);
         $em->remove($dataid);
@@ -92,20 +116,19 @@ class PostController extends AbstractController
     #[Route('/go', name: 'go')]
     public function go(PostRepository $postRepository): Response
     {
-        return $this->render('test.html.twig', [
-        ]);
+        return $this->render('test.html.twig', []);
     }
 
     #[Route('/user/{username}/posts', name: 'showpostid')]
-    public function showpostid( $username,PostRepository $postRepository,UserRepository $userRepository): Response
+    public function showpostid($username, PostRepository $postRepository, UserRepository $userRepository): Response
     {
-        $user=$userRepository->findOneBy(['username'=>$username]);
+        $user = $userRepository->findOneBy(['username' => $username]);
         $listpost = $postRepository->findByUser($user);
-        
-         // Create the profile picture form
-         $profilePictureForm = $this->createForm(ProfilePictureType::class);
 
-         $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
+        // Create the profile picture form
+        $profilePictureForm = $this->createForm(ProfilePictureType::class);
+
+        $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
         return $this->render('front_office/post/sowpostown.html.twig', [
             'a' => $listpost,
             'user' => $user,

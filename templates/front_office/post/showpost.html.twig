@@ -20,8 +20,8 @@
                                 <a href="event_detail_view.html">
                                   <div class="photo-overlay"></div>
                                   <img
-                                    src="{{ i.ImageUrl }}"
-                                    alt="" 
+                                    src="{{ asset('uploads/' ~ i.imageUrl)  }}"
+                                    alt="{{ i.imageUrl }}"
                                     style="height: 8.5cm;"
                                   />
                                 </a>

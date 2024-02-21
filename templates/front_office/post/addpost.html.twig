@@ -5,10 +5,10 @@
 {% block main %}
 <main class="discussion-mp"> 
     {% for flashMessage in app.flashes('success') %}
-                    <div class="alert alert-success" role="alert">
-                    {{ flashMessage }}
-                    </div>
-                    {% endfor %}   
+        <div class="alert alert-success" role="alert">
+        {{ flashMessage }}
+        </div>
+    {% endfor %}   
     <div class="main-section">
         <div class="container">
             <div class="row justify-content-md-center">
@@ -18,10 +18,38 @@
                         <div class="categories-left-heading border_bottom">
                             <h3>Type</h3>                            
                         </div>
-                        <div class="form-group">
+                        {# <div class="form-group">
+
                             {{ form_widget(f.type, {'attr': {'class': 'h_50'}}) }}
                             <div style="color: red;">{{ form_errors(f.titre) }}</div>
-                        </div>
+                        </div> #}
+
+<div class="form-group">
+    <ul class="nav nav-pills nav-fill p-2 goeveni-tab mt-4 mt-xl-0" id="mainTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="online-tab" data-bs-toggle="tab" href="#online" role="tab" aria-controls="online" aria-selected="true"><i class="feather-globe"></i>Online</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="in-person-tab" data-bs-toggle="tab" href="#in-person" role="tab" aria-controls="in-person" aria-selected="false"><i class="feather-users"></i>In Person</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-2">
+        <div class="tab-pane fade show active" id="online" role="tabpanel" aria-labelledby="online-tab">
+            {% set typeField = form_widget(f.type, {'attr': {'class': 'h_50'}}) %}
+            {{ typeField }}
+        </div>
+        <div class="tab-pane fade" id="in-person" role="tabpanel" aria-labelledby="in-person-tab">
+            {% if not typeField is defined %}
+                {% set typeField = form_widget(f.type, {'attr': {'class': 'h_50'}}) %}
+            {% endif %}
+            {{ typeField }}
+        </div>
+    </div>
+
+    <div style="color: red;">{{ form_errors(f.titre) }}</div>
+</div>
+
                                               
                                              
                     </div>
@@ -50,13 +78,22 @@
                             <div style="color: red;">{{ form_errors(f.place) }}</div>
                         </div>
                         
-                        {# Render the image upload field #}
-                        <div class="form-group">
-                            {{ form_label(f.imageUrl, null, {'label_attr': {'class': 'h_50'}}) }}
-                            {{ form_widget(f.imageUrl) }}
-                            <div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
-                        </div>
-                        <br>
+
+                        <div class="main-card p-4">
+                                                            <div class="add-event-cover-image">
+                                                                <div class="upload-cover">
+                                                                    <div class="cover-img-btn">
+                                                                    <div class="image-preview">
+                                                                    <img id="sponsor-photo-preview" src="{{ asset('front_office/images/default-photo.png') }}"  style="max-width: 250px; max-height: 250px;" >
+                                                                    </div>
+                                                                        {{ form_label(f.imageUrl, 'Image of Post:', {'label_attr': {'class': 'feather-image me-3'}}) }}
+                                                                        {{ form_widget(f.imageUrl,{'attr': {'id': 'PostForm_photo', 'onchange': 'previewImage(event)'}}) }}
+                                                                         <div style="color: red;">{{ form_errors(f.imageUrl) }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                         </div>
                     </div>
 
@@ -71,4 +108,14 @@
         </div>
     </div>
 </main>
+<script>
+      function previewImage(event) {
+         var reader = new FileReader();
+         reader.onload = function() {
+            var output = document.getElementById('sponsor-photo-preview');
+            output.src = reader.result;
+         };
+         reader.readAsDataURL(event.target.files[0]);
+      }
+   </script>
 {% endblock %}

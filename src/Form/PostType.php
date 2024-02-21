@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class PostType extends AbstractType
 {
@@ -21,24 +22,38 @@ class PostType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('type', ChoiceType::class, [
-            'choices' => [
-            'Lost' => PostTypeEnum::LOST->value,
-            'Found' => PostTypeEnum::FOUND->value,
-            ],
-            'expanded' => false,
-            'multiple' => false,
-            'label_attr' => ['class' => 'form-label'],
-            'label' => 'Type:',
+                'choices' => [
+                    'Lost' => PostTypeEnum::LOST->value,
+                    'Found' => PostTypeEnum::FOUND->value,
+                ],
+                'expanded' => true, // Changed to true
+                'multiple' => false,
+                'label_attr' => ['class' => 'form-label'],
+                'label' => 'Type:',
             ])
             ->add('imageUrl', FileType::class, [
-                'label' => 'Image',
-                'required' => true,
-                'data_class' => null,  // Set data_class to null
-            ])            
-            ->add('place')           
-            ->add('save', SubmitType::class);
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file',
+                    ])
+                ],
+            ])
+            ->add('place')
+            ->add('save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'main-btn btn-hover h-40 w-100 mt-37 mb-3'
+                ],
+                'label' => 'Save'
+            ]);
             // In your form type class
-            
+
 
         ;
     }
