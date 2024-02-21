@@ -45,6 +45,10 @@ class HomeController extends AbstractController
             'voucher' => $voucher,
         ]);
     }
+    #[ROute('/profile', name: 'profile')]
+    public function profile() : Response {
+        return $this->render('frontOffice/profile.html.twig');
+    }
 
     #[Route('/search', name: 'search_market')]
     public function search(Request $request, MarketRepository $marketRepository): Response
