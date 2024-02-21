@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VoucherRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoucherRepository::class)]
 class Voucher
@@ -21,9 +22,14 @@ class Voucher
     private ?\DateTimeImmutable $expiration = null;
 
     #[ORM\Column]
+
+    #[Assert\Regex(pattern: "/^\d+$/", message: "Usage limit must be a digit")]
+    #[Assert\NotBlank(message: "The name must not be blank")]
     private ?float $value = null;
 
     #[ORM\Column]
+    #[Assert\EqualTo(value: 1, message: "Usage limit must be greater than 1")]
+    #[Assert\Regex(pattern: "/^\d+$/", message: "Usage limit must be a digit")]
     private ?int $usageLimit = null;
 
     #[ORM\ManyToOne(inversedBy: 'vouchers')]

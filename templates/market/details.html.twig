@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
     %} {% block main %}
-    <main>
+    {# <main>
       <div class="main-section">
         <div class="container">
           <div class="row">
@@ -91,5 +91,128 @@
         </div>
     </div>
     </main>
-    {% endblock %}
+    {% endblock %}  #}
+
+    <div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-md-12">
+						<div class="main-card" style="margin-left: 30%; margin-top:10%;">
+							<div class="event-detail-content" >
+								<div class="event-main-img">
+									<img src="{{ asset('images/shop.png')}}" alt="">
+									<div class="event-date">
+								</div>
+								<div class="event-title-dts">
+									<span class="evnt_time txtbold">{{ market.name }}</span>
+									<h3 class="event-heading-title text-left">{{ market.address }}</h3>
+								</div>
+								<div class="d-md-flex d-block align-self-center p-20">
+									
+									<div class="ms-auto mt-4 mt-md-0 mt-lg-0 mt-xl-0">
+										<ul class="egroup-btns">
+											<li><a class="main--btn view-hover" href="#"><i class="feather-star me-2"></i>Interested</a></li>
+											<li><a class="main--btn view-hover" href="#"><i class="feather-check-circle me-2"></i>Going</a></li>
+											<li><a class="m-share-btn view-hover" href="#shareModal" data-bs-toggle="modal" role="button"><i class="feather-share-2"></i></a></li>
+											<li> 
+												<div class="view-ellipsis">
+													<div class="dropdown">
+														<a class="ellipsis-btn dropdown-toggle-no-caret view-hover"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="feather-more-vertical"></i></a>
+														<div class="dropdown-menu dropdown-menu-end">
+															<a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+															<a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>											
+															<a class="post-link-item" href="user_profile.html"><i class="feather-user icon-mr1"></i>User Profile</a>
+															<a class="post-link-item" href="#reportModal" data-bs-toggle="modal" role="button"><i class="feather-flag icon-mr1"></i>Report</a>																									
+														</div>		
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="main-card mt-30">
+
+
+							<div class="categories-left-heading border_bottom">
+								<h3>Details</h3>							
+							</div>
+							<div class="evntdt99 p-20">
+								<div class="mndtlist alrspndpple gowthfdsbtn">
+									<div class="evntflldt4 flxcntr">
+										<div class="hhttd14s">
+											<i class="feather-users"></i>
+										</div>
+										<div class="ttlpple">
+											<span>{{ market.region }}</span>
+										</div>
+									</div>
+								</div>
+								<div class="mndtlist">
+									<div class="evntflldt4 flxcntr">
+										<div class="hhttd14s">
+											<i class="feather-map-pin"></i>
+										</div>
+										<div class="ttlpple">
+											<a href="#">{{ market.city }}</a>
+										</div>
+									</div>
+								</div>
+								<div class="mndtlist">
+									<div class="evntflldt4">
+										<div class="hhttd14s">
+											<i class="feather-clock"></i>
+										</div>
+										<div class="ttlpple">
+											<span>OPEN 08:30 AM - 23:00</span>
+										</div>
+									</div>
+								</div>
+								<div class="mndtlist">
+									<div class="evntflldt4">
+										<div class="hhttd14s">
+											<i class="feather-film"></i>
+										</div>
+										<div class="ttlpple">
+											<span>{{ market.zipCode }}</span>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="tagtlist">
+									<ul class="taglst17">
+										<li>
+											<form action="{{ path('market_edit', {'id': market.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir modifier ce poste?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ market.id) }}">
+                                                <button type="submit" class="btn btn-danger" title="Modifier le poste">
+                                                    <i class="fas fa-edit" ></i>
+                                                </button>
+                                            </form>
+										</li>
+										<li>
+											<form action="{{ path('deletemarket', {'id': market.id}) }}" method="post"           onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ market.id) }}">
+                                                <button type="submit" class="btn btn-danger" title="Supprimer le poste">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+										</li>
+                                        <li>
+                                            <div class="col-lg-2 col-md-12 col-sm-12">
+                                    <a href="{{ path('app_home') }}" id="search-btn" class="search-btn" style="width: 50%; height: 50%;">
+                                        <img src="{{ asset('images/fleche-petite-gauche.png') }}" alt="" style="width:30%">
+                                    </a>
+                                </div>
+                                        </li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div> 
+		{% endblock %} 
     
