@@ -1,4 +1,4 @@
-{% extends 'back_office/base.html.twig' %} {% block title %}Dashboard{% endblock
+{% extends 'back_office/base.html.twig' %} {% block title %}Dashboard | Users{% endblock
 %}
 {% block main %}
 
@@ -16,10 +16,10 @@
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                                <li class="breadcrumb-item active">Customers</li>
+                                <li class="breadcrumb-item active">Users</li>
                             </ol>
                         </div>
-                        <h4 class="page-title">Customers</h4>
+                        <h4 class="page-title">Users</h4>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col-sm-5">
-                                    <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Customers</a>
+                                    <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add User</a>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="text-sm-end">
@@ -47,6 +47,7 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Picture</th>
                                         <th>Username</th>
                                         <th>Email</th>
                                         <th>Phone</th>
@@ -63,6 +64,8 @@
                                             <td>{{ user.id }}</td>
                                             <td class="table-user">
                                                 <img src="{{ user.photo ? asset('uploads/' ~ user.photo) : asset('/images/default-user.png') }}" alt="table-user" class="me-2 rounded-circle">
+                                            </td>
+                                            <td class="table-user">
                                                 {{ user.username }}
                                             </td>
                                             <td>{{ user.email }}</td>
@@ -74,8 +77,11 @@
                                                 <span class="badge {{ user.isVerified ? 'badge-success-lighten' : 'badge-danger-lighten' }}">{{ user.isVerified ? 'Verified' : 'Not Verified' }}</span>
                                             </td>
                                             <td>
-                                                <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="{{ user.id }}"> <i class="mdi mdi-delete"></i></a>
+                                                <div class="d-flex justify-content-between">
+                                                    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                    <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="{{ user.id }}"> <i class="mdi mdi-delete"></i></a>
+                                                </div>
+
 
                                             </td>
                                         </tr>
