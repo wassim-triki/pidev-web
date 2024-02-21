@@ -20,7 +20,7 @@ class PostAdminController extends AbstractController
     }
 
 
-    #[Route('/showpostByAdmin', name: 'showpostByAdmin')]
+    #[Route('/posts', name: 'posts')]
     public function showpostByAdmin(JwtTokenService $postStatisticsService, PostRepository $postRepository): Response
     {
         $post = $postRepository->findAll();
