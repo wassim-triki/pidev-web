@@ -2,6 +2,7 @@
 
 namespace App\Controller\BackOffice;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,5 +16,20 @@ class AdminController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('back_office/dashboard/dashboard.html.twig');
+    }
+
+    #[Route('/users', name: 'admin_users')]
+    public function users(UserRepository $userRepository)
+    {
+        // Only allow authenticated users with the ROLE_ADMIN to access this page
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // Fetch all users from the database
+        $users = $userRepository->findAll();
+
+        // Pass the users to the Twig template
+        return $this->render('back_office/users/users.html.twig', [
+            'users' => $users,
+        ]);
     }
 }
