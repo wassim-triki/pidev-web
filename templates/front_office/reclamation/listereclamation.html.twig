@@ -1,40 +1,99 @@
 {% extends 'front_office/base.html.twig' %}
 {% block main %}
-    <h1>Liste Reclamation</h1>
 
-    <table border="2">
-        <thead>
-            <tr>
-                <td>Subject</td>
-                <th>Reported Username</th>
-                <th>Description</th>
-                <th>TypeReclamation</th>
-                <th>screenShot</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for r in list %}
-                <tr>
-                    <td>{{ r.subject }}</td>
-                    <td>{{ r.ReportedUsername }}</td>
-                    <td>{{ r.description }}</td>
-                    <td>{{ r.TypeReclamation }}</td>
-                    <td>{{ r.screenShot }}</td>
-                    
+<style>
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
 
-                    <td>
-                      
-                            <form action="{{ path('editreclamation', {'id': r.id}) }}" method="post">
-                                <button type="submit">modifier</button>
-                            </form>
-                            <form action="{{ path('deletereclamation', {'id': r.id}) }}" method="post">
-                                <button type="submit">supprimer</button>
-                            </form>
-                       
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    .btn-edit,
+    .btn-delete {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-edit {
+        background-color: #4CAF50; /* Green */
+        color: white;
+    }
+
+    .btn-delete {
+        background-color: #f44336; /* Red */
+        color: white;
+    }
+
+    .btn-edit:hover,
+    .btn-delete:hover {
+        opacity: 0.8;
+    }
+</style>
+<h1 style="font-size: 32px; color: #333; margin-bottom: 20px; text-align: center; text-transform: uppercase; font-weight: bold;">Liste des Réclamations</h1>
+
+
+
+    <main class="discussion-mp">	
+			<div class="main-section">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="checkout-heading">
+																
+							</div>
+							<div class="table-responsive table-brder">
+                              
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col" style="font-size:16px; font-weight:500;">Subject</th>
+											<th scope="col" style="font-size:16px; font-weight:500;">ReportedUsername</th>
+											<th scope="col" style="font-size:16px; font-weight:500;">Description</th>
+											<th scope="col" style="font-size:16px; font-weight:500;">TypeReclamation</th>
+                                            <th scope="col" style="font-size:16px; font-weight:500;">screenShot</th>
+                                            <th scope="col" style="font-size:16px; font-weight:500;">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+                                        {% for r in list %}
+										<tr>
+											<td>{{ r.subject }}</td>
+											<td>{{ r.ReportedUsername }}</td>
+                                            <td>{{ r.description }}</td>
+                                            <td>{{ r.TypeReclamation }}</td>
+                                            <td>{{ r.screenShot }}</td>
+                                            
+                                                <td class="action-buttons">
+                                                    <form action="{{ path('editreclamation', {'id': r.id}) }}" method="post">
+                                                        <button type="submit" class="btn-edit">Modifier</button>
+                                                    </form>
+                                                    <form  id="delete-form-{{ r.id }}"  action="{{ path('deletereclamation', {'id': r.id}) }}" method="post">
+                                                        <button type="button" class="btn-delete" onclick="confirmDelete('{{r.id}}')">Supprimer</button>
+                                                    </form>
+                                                    <script>
+                                                     
+                                                    </script>
+                                                </td>
+                                            
+										</tr>
+                                        {% endfor %}									
+									</tbody>
+								</table>
+							</div>
+						
+						</div>											
+					</div>					
+				</div>
+			</div>
+		</main>
+        
+        <script>
+            function confirmDelete(id) {
+                if (confirm("Êtes-vous sûr de vouloir supprimer cette réclamation ?")) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            }
+        </script>
+      
 {% endblock %}

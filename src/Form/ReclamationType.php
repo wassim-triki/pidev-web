@@ -45,6 +45,7 @@ class ReclamationType extends AbstractType
         ])
         ->add('save', SubmitType::class, [
             'label' => 'save',
+            'attr' => ['class' => 'send-m-btn'],
         ]);
 }
 

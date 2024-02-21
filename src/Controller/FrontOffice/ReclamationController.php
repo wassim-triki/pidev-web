@@ -28,9 +28,9 @@ class ReclamationController extends AbstractController
     $form->handleRequest($req);
 
     if ($form->isSubmitted() && $form->isValid()) {
+
          /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
          $photoFile = $form->get('screenShot')->getData(); // Assuming 'photo' is the field name in your form
-
          if ($photoFile) {
              $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
              // Use the slugger to create a safe filename
@@ -43,10 +43,12 @@ class ReclamationController extends AbstractController
                      $newFilename
                  );
                  $reclamation->setScreenShot($newFilename); // Assuming you store just the filename; adjust if storing paths
-             } catch (FileException $e) {
+                 
+                } catch (FileException $e) {
                  // ... handle exception if something happens during file upload
              }
          }
+         
         $entityManager->persist($reclamation);
  
 
@@ -58,7 +60,7 @@ class ReclamationController extends AbstractController
             $avertissement->setReportedUsername($reclamation->getReportedUsername());
             $avertissement->setRaison($reclamation->getTypeReclamation());
             $avertissement->setScreenShot($reclamation->getScreenShot());
-            $avertissement->setNombreReclamation(1);
+            
        
         
 
@@ -114,12 +116,11 @@ class ReclamationController extends AbstractController
                  // ... handle exception if something happens during file upload
              }
          }
-           
+       
         $em->persist($reclamation);
-        // var_dump($reclamation->getScreenShot());
-        // die();
+       
         $em->flush();
-       return $this->redirect('listreclamation');
+        return $this->redirectToRoute('listreclamation');
         }
         return $this->renderForm('front_office/reclamation/ajoutReclamation.html.twig', [
             'f' => $form,

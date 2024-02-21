@@ -64,4 +64,20 @@ class AvertissementController extends AbstractController
         $this->addFlash('success', 'Avertissement confirmé avec succès.');
         return $this->redirectToRoute('listAvertissement');
 }
+    #[Route('/avertissement/delete/{id}', name: 'avertissement_delete')]
+    public function deleteAvertissement(
+        int $id,
+        AvertissementRepository $avertissementRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $avertissement = $avertissementRepository->find($id);
+    
+    
+    
+        $entityManager->remove($avertissement);
+        $entityManager->flush();
+    
+        $this->addFlash('success', 'Avertissement supprimé avec succès.');
+        return $this->redirectToRoute('listAvertissement');
+    }
 }

@@ -112,6 +112,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->avertissements = new ArrayCollection();
+        $this->setAvertissementsCount(0);
     }
 
     public function getId(): ?string
