@@ -69,4 +69,8 @@ class RegistrationFormType extends AbstractType
             'validation_groups' => ['Default', 'registration'], // Include 'registration' group
         ]);
     }
+
+
+
+
 }
