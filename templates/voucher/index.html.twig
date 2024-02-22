@@ -28,9 +28,14 @@
                                     </button>
                                 </div>
                                 <div class="col-lg-2 col-md-12 col-sm-12">
-                                    <a href="{{ path('app_home') }}" id="search-btn" class="search-btn" style="width: 50%; height: 50%;">
+                                    <a href="{{ path('admin_dashboard') }}" id="search-btn" class="search-btn" style="width: 50%; height: 50%;">
                                         <img src="{{ asset('images/fleche-petite-gauche.png') }}" alt="" style="width:10%">
                                     </a>
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12" style="background-color: coral; width:10%">
+                                    <a href="{{ path('voucher_add') }}" style="width: 100%; height: 100%; margin-left:50%">
+                                        <i class="feather-save"></i>
+                                    </a> 
                                 </div>
                             </div>
                         </div>
@@ -50,7 +55,7 @@
                                   <div class="main-photo" >
                                       <a href="{{ path('vouchercategory_details', {'id': voucher.id}) }}">
                                           <div class="photo-overlay"></div>
-                                          <img src="images/homepage/coupons.png" alt="{{ voucher.code }}" style=
+                                          <img src="images/coupon.jpeg" alt="{{ voucher.code }}" style=
                                           "width:100%"/>
                                       </a>
                                       <div class="option-ellipsis">

@@ -19,7 +19,7 @@ class Market
     #[Assert\NotBlank(message: "The name must not be blank")]
     #[Assert\Length(min:2,minMessage:"the market name must be at least 2 characters long")]
     #[ORM\Column(length: 50)]
-    private ?string $name = null;
+    private ?string $name = null;   
     
     #[ORM\Column(length: 255)]
     private ?string $address = null;

@@ -51,8 +51,8 @@ class HomeController extends AbstractController
     public function profile() : Response {
         $user = $this->fetchUserFromDatabase();
         $this->storeUserInSession($user);
-        $userEmail = $this->session->get('user_email');
-        $userRoles = $this->session->get('user_roles');
+        // $userEmail = $this->session->get('user_email');
+        // $userRoles = $this->session->get('user_roles');
         $this->authenticateUser($user);
         if($user){
             $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user->getId()]);

@@ -699,18 +699,16 @@
 		</main>
 		<script>
 		function useVoucher(url) {
-			// Make an AJAX request to update the voucher's isValid property
 			fetch(url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Requested-With': 'XMLHttpRequest',
-					'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' // Replace "use_voucher" with the name of your route for updating vouchers
+					'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' 
 				}
 			})
 			.then(response => {
 				if (response.ok) {
-					// Redirect to the confirm_voucher route
                 	window.location.href = '{{ path('confirm_voucher') }}'; reloading
 				} else {
 					console.error('Failed to update voucher');

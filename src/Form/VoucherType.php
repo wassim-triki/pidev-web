@@ -13,8 +13,7 @@ use App\Entity\User;
 use App\Entity\VoucherCategory;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 
 class VoucherType extends AbstractType
@@ -39,7 +38,10 @@ class VoucherType extends AbstractType
             ])
             ->add('type')
             ->add('expiration')
-            ->add('usageLimit')
+            ->add('usageLimit', NumberType::class, [
+                'data' => 1, // Set default value to 1
+                'disabled' => true, // Disable the field
+            ])
             ->add('isValid')
             ->add('isGivenToUser')
             ->add('userWon',ChoiceType::class, [

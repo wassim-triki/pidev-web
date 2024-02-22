@@ -40,6 +40,7 @@ class VoucherController extends AbstractController
         // Check if the form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->managerRegistry->getManager();
+            $voucher->setUsageLimit(1);
             $voucher->setCode($this->generateRandomString());
             // Persist the new voucher to the database
             $entityManager->persist($voucher);
