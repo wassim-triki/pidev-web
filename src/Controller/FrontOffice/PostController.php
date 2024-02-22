@@ -79,7 +79,7 @@ class PostController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Post successfully added!');
 
-            return $this->redirectToRoute('showpost'); // Redirect to a route after successful submission
+            return $this->redirectToRoute('addpost'); // Redirect to a route after successful submission
         }
 
         return $this->renderForm('front_office/post/addpost2.html.twig', [
@@ -90,7 +90,7 @@ class PostController extends AbstractController
 
 
     #[Route('/editpost/{id}', name: 'editpost')]
-    public function editcar($id, PostRepository $postRepository, Request $req, ManagerRegistry $managerRegistry): Response
+    public function editpost($id, PostRepository $postRepository, Request $req, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
         $dataid = $postRepository->find($id);

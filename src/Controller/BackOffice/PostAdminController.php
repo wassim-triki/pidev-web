@@ -40,7 +40,7 @@ class PostAdminController extends AbstractController
         $em->remove($dataid);
         $em->flush();
         $this->addFlash('echec', 'Post successfully deleted!');
-        return $this->redirectToRoute('showpostByAdmin');
+        return $this->redirectToRoute('posts');
     }
 
     #[Route('/statistics', name: 'post_statistics')]
