@@ -30,6 +30,8 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+
+        $userHaveSession = $this->session->get('user_email');
         // hedha kollou bech yetna7aa !
         $user = $this->fetchUserFromDatabase();
         $this->storeUserInSession($user);
@@ -45,9 +47,27 @@ class HomeController extends AbstractController
             'voucher' => $voucher,
         ]);
     }
-    #[ROute('/profile', name: 'profile')]
+    #[Route('/profile', name: 'profile')]
     public function profile() : Response {
-        return $this->render('frontOffice/profile.html.twig');
+        $user = $this->fetchUserFromDatabase();
+        $this->storeUserInSession($user);
+        $userEmail = $this->session->get('user_email');
+        $userRoles = $this->session->get('user_roles');
+        $this->authenticateUser($user);
+        if($user){
+            $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user->getId()]);
+    
+            // Count the number of vouchers
+            $voucherCount = count($vouchers);
+            return $this->render('frontOffice/profile.html.twig', [
+                'voucherCount' => $voucherCount,
+                'vouchers' => $vouchers,
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('app_loggin');
+        }
+        
     }
 
     #[Route('/search', name: 'search_market')]
@@ -61,6 +81,12 @@ class HomeController extends AbstractController
         return $this->render('market/search_results.html.twig', [
             'markets' => $markets,
         ]);
+    }
+
+    #[Route('/loggin', name: 'app_loggin')]
+    public function loggin(): Response
+    {
+        return $this->render('frontOffice/loggin.html.twig');
     }
 
     // hedha kollou pour le test

@@ -74,6 +74,9 @@
 										<li class="nav-item">
 											<a class="nav-link" id="events-tab" data-bs-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false"><i class="feather-calendar"></i>Events</a>
 										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="events-tab" data-bs-toggle="tab" href="#voucher" role="tab" aria-controls="events" aria-selected="false"><i class="feather-dollar-sign"></i>Vouchers</a>
+										</li>
 									</ul>
 								</div>
 								<div class="tab-content" id="myTabContent">
@@ -107,8 +110,8 @@
 												<div class="col-lg-6 col-xl-3 col-md-6 col-12">
 													<div class="dash-step">
 														<i class="feather-tag"></i>
-														<h6 class="dash-step-title">Ticket Click</h6>
-														<span class="count-1">12</span>
+														<h6 class="dash-step-title">Your Vouchers</h6>
+														<span class="count-1">{{ voucherCount }}</span>
 														<span class="count-2">+10 last 30 days</span>														
 													</div>
 												</div>
@@ -119,6 +122,7 @@
 												<h4>Events</h4>
 												<a href="add_new_event.html" class="main-btn btn-hover h_40 ms-auto">Create</a>
 											</div>
+											
 											<div class="events-dash-options main-form">
 												<div class="row g-2">
 													<div class="col-lg-4 col-md-4 col-12">
@@ -462,6 +466,7 @@
 											</div>
 										</div>
 									</div>
+									{# begin event div #}
 									<div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
 										<div class="main-card mt-4 mb-0">
 											<div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4">
@@ -607,6 +612,84 @@
 											</div>
 										</div>
 									</div>
+								{# end events div #}
+								{# begin voucher div #}
+								<div class="tab-pane fade" id="voucher" role="tabpanel" aria-labelledby="events-tab">
+										<div class="main-card mt-4 mb-0">
+											<div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4">
+												<h4>Events</h4>
+												<a href="add_new_event.html" class="main-btn btn-hover h_40 ms-auto">Create</a>
+											</div>
+											<div class="events-dash-options main-form">
+												<div class="row g-2">
+													<div class="col-lg-4 col-md-4 col-12">
+														<div class="event-search-dash">
+															<div class="position-relative">
+																<input class="form-input" type="text" placeholder="Search event">
+																<span class="icon-158"><i class="feather-search"></i></span>
+															</div>
+														</div>
+													</div>
+													<div class="col-lg-3 col-md-4 col-12">
+														<select class="selectpicker" data-width="100%">
+															<option value="publish-event">Unused Voucher</option>
+															<option value="draft-event">Used Voucher</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="all-dash-events">
+												<div class="row">	
+													{% if vouchers is empty %}
+														<p>No vouchers found.</p>
+													  {% else %}
+														{% for voucher in vouchers %} 
+													<div class="col-xl-4 col-lg-12 col-md-6 col-12">
+														<div class="event-main-post">
+															<div class="main-photo">
+																<a href="#">
+																	<div class="photo-overlay"></div>
+																	<img src="images/coupon.jpeg" alt="">
+																</a>
+															</div>											
+															<div class="event-body">
+																<a href="event_detail_view.html" class="event-title"><i class="feather-dollar-sign me-3"></i>{{voucher.value}} DT</a>
+																<div class="dash-counter-block">	
+																	<p class="dash-event-counter">
+																		<span class="h-color"><i class="feather-lock me-2"></i>{{voucher.code}}</span>
+																	</p>
+																	<p class="dash-event-counter">
+																		<span class="h-color"><i class="feather-users me-2"></i>{{voucher.userWon.getEmail()}}</span>
+																	<p class="dash-event-counter">
+																		<span class="h-color"><i class="feather-star me-2"></i>{{voucher.category.getTitre()}}</span>
+																	</p>
+																	<p class="dash-event-counter">
+																		<span class="h-color"><i class="feather-tag me-2"></i>{{voucher.marketRelated.getName()}}</span>
+																	</p>
+																	<p class="dash-event-counter">
+																		<span class="h-color"><i class="feather-activity me-2"></i>{{voucher.isValid ? 'yes' : 'no'}}</span>
+																	</p>
+																</div>
+																<div class="group-btns">
+																	<button class="interest-btn btn-hover w-100"onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id}) }}')"><i class="feather-pocket me-2"></i>USE</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												{% endfor %}
+											{% endif %}
+													<div class="col-12">
+														<div class="loading-btn mb-0">
+															<button class="process-btn btn-hover" type="button">
+																No More Events
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								{# end voucher div #}
 								</div>
 							</div>
 						</div>
@@ -614,8 +697,29 @@
 				</div>
 			</div>
 		</main>
-		
 		<script>
+		function useVoucher(url) {
+			// Make an AJAX request to update the voucher's isValid property
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' // Replace "use_voucher" with the name of your route for updating vouchers
+				}
+			})
+			.then(response => {
+				if (response.ok) {
+					// Redirect to the confirm_voucher route
+                	window.location.href = '{{ path('confirm_voucher') }}'; reloading
+				} else {
+					console.error('Failed to update voucher');
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
+		}
 			function submitProfilePictureForm() {
 				document.getElementById('profile-picture-form').submit();
 			}

@@ -106,5 +106,32 @@ class VoucherController extends AbstractController
 
         return $code;
     }
+
+    #[Route('/confirm-voucher',name: 'confirm_voucher')]
+    public function confirmVoucher(Request $request): Response
+    {
+        return $this->render('frontOffice/confirmVoucher.html.twig');
+    }
+
+    #[Route('/use-voucher/{voucherId}', name: 'use_voucher', methods: ['POST'])]
+    public function useVoucher(Request $request, $voucherId): Response {
+        // Retrieve the voucher entity from the database
+        $entityManager = $this->managerRegistry->getManager();
+        $voucher = $entityManager->getRepository(Voucher::class)->find($voucherId);
+        
+        // Check if the voucher exists
+        if (!$voucher) {
+            throw $this->createNotFoundException('Voucher not found');
+        }
+        
+        // Update the isValid property to 0
+        $voucher->setIsValid(false); // Assuming `false` means invalid in your database
+        
+        // Persist the changes to the database
+        $entityManager->flush();
+        
+        // Return a JSON response indicating success
+        return $this->json(['success' => true]);
+    }
 }
 
