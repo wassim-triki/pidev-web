@@ -1,0 +1,39 @@
+{# templates/front_office/post_group/editpost.html.twig #}
+
+{% extends 'front_office/base.html.twig' %}
+
+{% block main %}
+    {{ parent() }}
+
+    {# Modal pour afficher l'alerte #}
+    <div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPostModalLabel">Édition du post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% if app.flashes('success') %}
+                        <div class="alert alert-success" role="alert">
+                            {{ app.flashes('success')[0] }}
+                        </div>
+                    {% endif %}
+                    
+                    {# Formulaire d'édition du post #}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# JavaScript pour afficher automatiquement la modal lors de l'affichage de la page #}
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            $('#editPostModal').modal('show');
+        });
+    </script>
+{% endblock %}

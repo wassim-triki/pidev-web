@@ -33,7 +33,7 @@ class PostGroupController extends AbstractController
 
         // Créer un nouveau post
         $post = new PostGroup();
-        $post->setSponsoring($sponsoring); // Associer le sponsoring au post
+        $post->setSponsoring($sponsoring); // Un nouveau post est créé et associé au sponsoring récupéré.
 
         // Récupérer l'utilisateur actuellement authentifié et l'associer au post
         $user = $security->getUser();
@@ -55,11 +55,13 @@ class PostGroupController extends AbstractController
 
         // Récupérer uniquement les posts associés à ce sponsoring spécifique
         $showpost = $PostGroupRepository->findPostsBySponsoringOrderedByDate($id);
-        //$showpost = $sponsoring->getPostgroup(); // Utiliser la méthode getPostgroup
+        //$showpost = $sponsoring->getPostgroup(); 
+        $sponsoringImage = $sponsoring->getImage();
 
         return $this->renderForm('front_office/post_group/group.html.twig', [
             'f' => $form,
-            'showpost' => $showpost
+            'showpost' => $showpost,
+            'sponsoringImage' => $sponsoringImage
         ]);
     }
 
@@ -77,10 +79,49 @@ class PostGroupController extends AbstractController
     }
 
 
+    #[Route('/editpost/{id}', name: 'editpost')]
+public function editpostgroup($id, PostGroupRepository $PostGroupRepository, Request $request, ManagerRegistry $managerRegistry): Response
+{
+    $em = $managerRegistry->getManager();
+    
+    // Récupérer le post à éditer
+    $post = $PostGroupRepository->find($id);
 
+    // Vérifier si le post existe
+    if (!$post) {
+        throw $this->createNotFoundException('Post non trouvé pour l\'ID ' . $id);
+    }
+
+    // Créer le formulaire d'édition du post
+    $form = $this->createForm(PostGroupType::class, $post);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->flush();
+        $this->addFlash('success', 'Le post a été modifié avec succès.');
+
+        return $this->redirectToRoute('showsponsor');
+    }
+
+    return $this->render('front_office/post_group/editpost.html.twig', [
+        'form' => $form->createView(),
+        'postId' => $id, // Passer l'ID du post à la vue
+    ]);
+}
+
+    
 
     #[Route('/deletepost/{id}', name: 'deletepost')]
     public function deletepost($id, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
+    {
+        $em = $managerRegistry->getManager();
+        $dataid = $PostGroupRepository->find($id);
+        $em->remove($dataid);
+        $em->flush();
+        return $this->redirectToRoute('showsponsor');
+    }
+    #[Route('/deletepostAdmin/{id}', name: 'deletepostAdmin')]
+    public function deletepostAdmin($id, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
         $dataid = $PostGroupRepository->find($id);

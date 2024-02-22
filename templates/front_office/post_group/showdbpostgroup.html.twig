@@ -1,6 +1,6 @@
 {% extends 'front_office/base.html.twig' %}
 
-{% block title %}Sponsoring List{% endblock %}
+{% block title %}Posts List{% endblock %}
 
 {% block main %}
 <div class="container mt-5 mb-5">
@@ -26,7 +26,7 @@
                     <td>{{ a.contenu }}</td>
                     <td>{{ a.sponsoring.id }}</td>
                     <td>
-                        <a href="{{ path('deletepost', {'id': a.id}) }}" class="btn btn-danger">Delete</a> {# Red color for Delete #}
+                        <a href="{{ path('deletepostAdmin', {'id': a.id}) }}" class="btn btn-danger">Delete</a> {# Red color for Delete #}
                     </td>
                 </tr>
                 {% endfor %}

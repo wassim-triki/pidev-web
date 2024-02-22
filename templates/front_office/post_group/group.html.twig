@@ -13,10 +13,18 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="blog-post-comment">
                         <div class="blog-comments">
+                            
                             <div class="blog-comment-title">
                                 <h2>FOUND IT HERE</h2>
                             </div>
+                            
+                            <div class="blog-main-img" >
+                                <img src="{{ asset('uploads/' ~ sponsoringImage) }}" style="max-width: 960px; max-height: 330px;" alt="">
+                            </div>
+                            
+                            
                             {{ form_start(f, {'attr': {'novalidate': 'novalidate', 'class': 'form-group'}}) }}
+                           
                             <div class="blog-post-comment">
                                 <div class="blog-post-bg">
                                     <div class="commntr-dp">
@@ -34,9 +42,21 @@
                         </div>
                     </div>
                     {% for a in showpost %}
+                    
                     <div class="blog-comntd-bg">
-                        
+                        <!-- Dropdown à droite pour Delete -->
+    <div class="dropdown edit-delete-dropdown" style="padding-left: 933px;">
+        <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+            <li><a class="dropdown-item" href="{{ path('editpost', {'id': a.id}) }}">Edit</a></li>
+            <li><a class="dropdown-item" href="{{ path('deletepost', {'id': a.id}) }}">Delete</a></li>
+        </ul>
+    </div>
                             <div class="bcmnt-dt">
+                            
+                            
                                 <div class="blog-usr-dt">
                                                    {% if a.user.photo %}
                             <img class="user-photo" src="{{ asset('uploads/' ~ a.user.photo) }}" alt="User Photo">
@@ -48,7 +68,7 @@
                                 </div>
                                 <p>{{ a.contenu }}</p>
                             </div>
-                        
+ 
                        
                         <div class="blog-post-reply">
                             <div class="breply-dp1">
@@ -60,10 +80,12 @@
                             </div>
                             <form>
                                 <input class="breply-post" type="text" placeholder="Write a reply">
+                                
                                 <button class="breply-post-btn" type="submit">Reply</button>
                             </form>
                         </div>
                     </div>  
+                    
                     {% endfor %}                      
                 </div>
             </div>              
