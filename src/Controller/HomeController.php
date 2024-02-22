@@ -14,17 +14,21 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use App\Entity\Voucher;
+use Doctrine\ORM\EntityManagerInterface;
 class HomeController extends AbstractController
 {
     private $managerRegistry;
     private SessionInterface $session;
     private TokenStorageInterface $tokenStorage;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(TokenStorageInterface $tokenStorage, ManagerRegistry $managerRegistry, SessionInterface $session)
+
+    public function __construct(TokenStorageInterface $tokenStorage, ManagerRegistry $managerRegistry, EntityManagerInterface $entityManager, SessionInterface $session)
     {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->managerRegistry = $managerRegistry;
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/', name: 'app_home')]
@@ -55,7 +59,15 @@ class HomeController extends AbstractController
         // $userRoles = $this->session->get('user_roles');
         $this->authenticateUser($user);
         if($user){
-            $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user->getId()]);
+            $vouchers = $this->entityManager->createQueryBuilder()
+            ->select('v')
+            ->from(Voucher::class, 'v')
+            ->where('v.userWon = :userId')
+            ->andWhere('v.isValid = :isValid')
+            ->setParameter('userId', $user->getId())
+            ->setParameter('isValid', true) // Assuming isValid is a boolean property
+            ->getQuery()
+            ->getResult();
     
             // Count the number of vouchers
             $voucherCount = count($vouchers);

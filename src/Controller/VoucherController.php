@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\VoucherType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Repository\VoucherRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 class VoucherController extends AbstractController
 {
     private $managerRegistry;
@@ -133,6 +134,48 @@ class VoucherController extends AbstractController
         
         // Return a JSON response indicating success
         return $this->json(['success' => true]);
+    }
+
+    #[Route('/filter-vouchers', name: 'filter_vouchers')]
+    public function filterVouchers(Request $request)
+    {
+        $filter = $request->query->get('filter');
+
+        // Get the entity manager from the manager registry
+        $entityManager = $this->managerRegistry->getManager();
+
+        // Fetch vouchers based on the selected filter
+        if ($filter === 'used') {
+            $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => false]);
+        } else {
+            $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => true]);
+        }
+
+        // Render the voucher listing template with the filtered vouchers
+        return $this->render('voucher/voucher_listing.html.twig', [
+            'vouchers' => $vouchers
+        ]);
+    }
+
+    #[Route('/search-vouchers-by-category', name: 'search_vouchers_by_category')]
+    public function searchVouchersByCategory(Request $request): JsonResponse
+    {
+        $category = $request->query->get('category');
+
+        // Perform the search for vouchers by category
+        $entityManager = $this->managerRegistry->getManager();
+        $vouchers = $entityManager->getRepository(Voucher::class)->findByCategory($category);
+
+        // Serialize the vouchers to JSON format
+        $data = [];
+        foreach ($vouchers as $voucher) {
+            $data[] = [
+                'value' => $voucher->getValue(),
+                // Add other voucher properties as needed
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 }
 

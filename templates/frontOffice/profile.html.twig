@@ -625,26 +625,28 @@
 													<div class="col-lg-4 col-md-4 col-12">
 														<div class="event-search-dash">
 															<div class="position-relative">
-																<input class="form-input" type="text" placeholder="Search event">
-																<span class="icon-158"><i class="feather-search"></i></span>
-															</div>
+															<input id="voucherCategorySearch" class="form-input" type="text" placeholder="Search Voucher By category">
+															<span class="icon-158"><i class="feather-search"></i></span>
+														</div>
 														</div>
 													</div>
 													<div class="col-lg-3 col-md-4 col-12">
-														<select class="selectpicker" data-width="100%">
-															<option value="publish-event">Unused Voucher</option>
-															<option value="draft-event">Used Voucher</option>
+														<select class="selectpicker" data-width="100%" onchange="filterVouchers(this.value)">
+															<option value="unused">Unused Voucher</option>
+															<option value="used">Used Voucher</option>
 														</select>
 													</div>
 												</div>
 											</div>
+											<div id="filteredVouchersContainer" class="row"></div>
+											<div id="searchResultsContainer" class="row"></div>
 											<div class="all-dash-events">
 												<div class="row">	
 													{% if vouchers is empty %}
 														<p>No vouchers found.</p>
 													  {% else %}
-														{% for voucher in vouchers %} 
-													<div class="col-xl-4 col-lg-12 col-md-6 col-12">
+														{% for voucher in vouchers %}
+													<div class="col-xl-4 col-lg-12 col-md-6 col-12" >
 														<div class="event-main-post">
 															<div class="main-photo">
 																<a href="#">
@@ -667,7 +669,7 @@
 																		<span class="h-color"><i class="feather-tag me-2"></i>{{voucher.marketRelated.getName()}}</span>
 																	</p>
 																	<p class="dash-event-counter">
-																		<span class="h-color"><i class="feather-activity me-2"></i>{{voucher.isValid ? 'yes' : 'no'}}</span>
+																		<span class="h-color"><i class="feather-activity me-2"></i>{{voucher.isValid ? 'not Used yet' : 'Used'}}</span>
 																	</p>
 																</div>
 																<div class="group-btns">
@@ -718,6 +720,62 @@
 				console.error('Error:', error);
 			});
 		}
+
+		function filterVouchers(filter) {
+			// Send AJAX request to fetch vouchers based on the selected filter
+			$.ajax({
+				url: "{{ path('filter_vouchers') }}",
+				type: "GET",
+				data: { filter: filter },
+				success: function(response) {
+					// Replace the voucher listing with the updated vouchers
+					$('#filteredVouchersContainer').html(response);
+				}
+			});
+    	}
+
+		function searchVouchersByCategory() {
+    // Get the search input value
+    var searchInput = document.getElementById("voucherCategorySearch").value;
+
+    // Send AJAX request to fetch vouchers based on the category search
+    $.ajax({
+        url: "{{ path('search_vouchers_by_category') }}",
+        type: "GET",
+        data: { category: searchInput },
+        success: function(response) {
+            // Replace the voucher listing with the updated vouchers
+            $('#filteredVouchersContainer').html(response);
+        }
+    });
+}
+
+// Event listener for the keyup event on the search input field
+$('#voucherCategorySearch').on('keyup', function(event) {
+    // Check if the Enter key was pressed (key code 13)
+    if (event.keyCode === 13) {
+        // Call the search function when Enter key is pressed
+        searchVouchersByCategory();
+    }
+});
+
+		function triggerSearch() {
+        // Get the search input value
+        var searchInput = document.getElementById("voucherCategorySearch").value;
+
+        // Trigger the search function only if the search input is not empty
+        if (searchInput.trim() !== '') {
+            searchVouchersByCategory();
+        }
+    }
+
+    // Event listener for the keyup event on the search input field
+    $('#voucherCategorySearch').on('keyup', function() {
+        // Call the triggerSearch function when the user finishes typing
+        triggerSearch();
+    });
+
+
 			function submitProfilePictureForm() {
 				document.getElementById('profile-picture-form').submit();
 			}
