@@ -45,15 +45,18 @@
                     
                     <div class="blog-comntd-bg">
                         <!-- Dropdown à droite pour Delete -->
+                        {% if app.user == a.user %}
     <div class="dropdown edit-delete-dropdown" style="padding-left: 933px;">
         <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-ellipsis-v"></i>
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
-            <li><a class="dropdown-item" href="{{ path('editpost', {'id': a.id}) }}">Edit</a></li>
-            <li><a class="dropdown-item" href="{{ path('deletepost', {'id': a.id}) }}">Delete</a></li>
+           <li><a class="dropdown-item" href="{{ path('editpost', {'id': a.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce post?')">Edit</a></li>
+            <li><a class="dropdown-item" href="{{ path('deletepost', {'id': a.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post?')">Delete</a></li>
+
         </ul>
     </div>
+    {% endif %}
                             <div class="bcmnt-dt">
                             
                             

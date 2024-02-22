@@ -50,13 +50,14 @@ class PostGroupController extends AbstractController
             $post->setDate($currentDate);
             $em->persist($post);
             $em->flush();
+            $this->addFlash('success', 'Votre poste a été ajouté');
             return $this->redirectToRoute('addpostgroup', ['id' => $id]);
         }
-
+ //$showpost = $sponsoring->getPostgroup(); 
+ $sponsoringImage = $sponsoring->getImage();
         // Récupérer uniquement les posts associés à ce sponsoring spécifique
         $showpost = $PostGroupRepository->findPostsBySponsoringOrderedByDate($id);
-        //$showpost = $sponsoring->getPostgroup(); 
-        $sponsoringImage = $sponsoring->getImage();
+       
 
         return $this->renderForm('front_office/post_group/group.html.twig', [
             'f' => $form,
@@ -118,15 +119,8 @@ public function editpostgroup($id, PostGroupRepository $PostGroupRepository, Req
         $dataid = $PostGroupRepository->find($id);
         $em->remove($dataid);
         $em->flush();
+        $this->addFlash('success', 'Votre post a été suprimé');
         return $this->redirectToRoute('showsponsor');
     }
-    #[Route('/deletepostAdmin/{id}', name: 'deletepostAdmin')]
-    public function deletepostAdmin($id, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
-    {
-        $em = $managerRegistry->getManager();
-        $dataid = $PostGroupRepository->find($id);
-        $em->remove($dataid);
-        $em->flush();
-        return $this->redirectToRoute('showdbpostgroup');
-    }
+  
 }

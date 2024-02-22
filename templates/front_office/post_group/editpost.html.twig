@@ -14,11 +14,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {% if app.flashes('success') %}
-                        <div class="alert alert-success" role="alert">
-                            {{ app.flashes('success')[0] }}
-                        </div>
-                    {% endif %}
+                   
                     
                     {# Formulaire d'édition du post #}
                     {{ form_start(form) }}
