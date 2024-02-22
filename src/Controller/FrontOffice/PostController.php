@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Enum\PostTypeEnum;
 use App\Form\PostType;
 use App\Form\ProfilePictureType;
+use App\Form\SearchPostType;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,8 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class PostController extends AbstractController
 {
@@ -27,12 +31,39 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/showpost', name: 'showpost')]
-    public function showpost(PostRepository $postRepository): Response
+    #[Route('/search', name: 'post_search')]
+    public function search(Request $request, PostRepository $postRepository)
     {
-        $post = $postRepository->findAll();
+        $form = $this->createForm(SearchPostType::class);
+        $form->handleRequest($request);
+
+        $posts = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $posts = $postRepository->findByTitle($data['search']);
+        }
+
+        return $this->render('front_office/post/showtest2.html.twig', [
+            'form' => $form->createView(),
+            'posts' => $posts,
+        ]);
+    }
+
+    #[Route('/showpost', name: 'showpost')]
+    public function showpost(Request $request, PostRepository $postRepository): Response
+    {
+        $form = $this->createForm(SearchPostType::class);
+        $form->handleRequest($request);
+        $posts = [];
+        $posts = $postRepository->findAll();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $posts = $postRepository->findByTitle($data['search']);
+        }
         return $this->render('front_office/post/showtest.html.twig', [
-            'post' => $post
+            'form' => $form->createView(),
+            'post' => $posts
         ]);
     }
 
@@ -73,13 +104,12 @@ class PostController extends AbstractController
                     // Handle error
                 }
             }
-
             $post->setUser($user);
             $em->persist($post);
             $em->flush();
             $this->addFlash('success', 'Post successfully added!');
-
             return $this->redirectToRoute('addpost'); // Redirect to a route after successful submission
+
         }
 
         return $this->renderForm('front_office/post/addpost2.html.twig', [
