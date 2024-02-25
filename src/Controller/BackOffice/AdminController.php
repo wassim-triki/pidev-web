@@ -6,6 +6,8 @@ use App\Entity\Voucher; // Assuming you have a Voucher entity
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\MarketRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends AbstractController
 {
@@ -22,13 +24,12 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dash/voucher-list', name: 'admin-voucher-list')]
-    public function voucherList()
+    public function voucherList(MarketRepository $marketRepository): Response
     {
-        // Fetch voucher details from database
-        $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findAll();
-
-        return $this->render('backOffice/Dashboard/crm-orders-list.html.twig', [
-            'vouchers' => $vouchers,
-        ]);
+         // Fetch voucher details from the database
+         $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findAll();
+         return $this->render('backOffice/Dashboard/crm-orders-list.html.twig', [
+             'vouchers' => $vouchers,
+         ]);
     }
 }

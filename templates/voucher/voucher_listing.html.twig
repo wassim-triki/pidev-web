@@ -1,4 +1,6 @@
-{% if vouchers is empty %}
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+    %} {% block main %}
+		{% if vouchers is empty %}
     <p>No vouchers found.</p>
 {% else %}
     {% for voucher in vouchers %} 
@@ -36,3 +38,4 @@
 	</div>
     {% endfor %}
 {% endif %}
+{% endblock %}
