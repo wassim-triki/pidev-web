@@ -74,7 +74,7 @@ class VoucherController extends AbstractController
         ]);
     }
 
-    #[Route('/voucher/{id}', name: 'voucher_delete', methods: ['post'])]
+    #[Route('/voucher/{id}', name: 'voucher_delete', methods: ['GET','post'])]
     public function deleteVoucher($id, VoucherRepository $voucherRepository, ManagerRegistry $managerRegistry): RedirectResponse
     {
         $entityManager = $managerRegistry->getManager();
@@ -87,7 +87,7 @@ class VoucherController extends AbstractController
         $entityManager->remove($voucher);
         $entityManager->flush();
     
-        return $this->redirectToRoute('app_voucher');
+        return $this->redirectToRoute('admin-voucher-list');
     }
     
     private function generateRandomString($length = 14) {
