@@ -12,6 +12,7 @@ use App\Form\MarketType;
 use App\Repository\MarketRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MarketController extends AbstractController
 {
@@ -90,7 +91,7 @@ class MarketController extends AbstractController
             $entityManager->persist($market);
             $entityManager->flush();
 
-            return $this->redirectToRoute('showmarket');
+            return $this->redirectToRoute('admin-market-list');
         }
 
         return $this->render('market/newMarket.html.twig', [
@@ -100,16 +101,33 @@ class MarketController extends AbstractController
     }
 
     #[Route('/market/{id}', name: 'market_edit', methods: ['GET', 'POST'])]
-    public function editMarket(Request $request, Market $market): Response
+    public function editMarket(Request $request, Market $market, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(MarketType::class, $market);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
+            $photoFile = $form->get('image')->getData(); // Assuming 'photo' is the field name in your form
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    $market->setImage($newFilename);
+                } catch (FileException $e) {
+                    // Handle error
+                }
+            }
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->flush();
 
-            return $this->redirectToRoute('showmarket', ['id' => $market->getId()]);
+            return $this->redirectToRoute('admin-market-list', ['id' => $market->getId()]);
         }
 
         return $this->render('market/editMarket.html.twig', [
@@ -125,12 +143,30 @@ class MarketController extends AbstractController
         $dataid = $marketRepository->find($id);
         $em->remove($dataid);
         $em->flush();
-        return $this->redirectToRoute('showmarket');
+        return $this->redirectToRoute('admin-market-list');
     }
 
     #[Route('/back-to-index', name: 'back_to_index')]
     public function backToIndex(): Response
     {
         return $this->redirectToRoute('showmarket');
+    }
+
+    #[Route('/market-details/{id}', name: 'market_details')]
+    public function details($id, EntityManagerInterface $entityManager): Response
+    {
+        // Fetch voucher details from the database
+        $market = $entityManager->getRepository(Market::class)->find($id);
+
+        // Check if voucher exists
+        if (!$market) {
+            // Return error response if voucher is not found
+            return new Response('Market not found', Response::HTTP_NOT_FOUND);
+        }
+
+        // Render the Twig template with voucher details
+        return $this->render('backOffice/Dashboard/dash-market-listing.html.twig', [
+            'market' => $market,
+        ]);
     }
 }

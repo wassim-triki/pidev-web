@@ -2,12 +2,13 @@
 
 namespace App\Controller\BackOffice;
 
-use App\Entity\Voucher; // Assuming you have a Voucher entity
+use App\Entity\Voucher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MarketRepository;
 use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Market;
 
 class AdminController extends AbstractController
 {
@@ -30,6 +31,16 @@ class AdminController extends AbstractController
          $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findAll();
          return $this->render('backOffice/Dashboard/crm-voucher-list.html.twig', [
              'vouchers' => $vouchers,
+         ]);
+    }
+
+    #[Route('/dash/market-list', name: 'admin-market-list')]
+    public function marketList(): Response
+    {
+         // Fetch voucher details from the database
+         $market = $this->managerRegistry->getRepository(Market::class)->findAll();
+         return $this->render('backOffice/Dashboard/crm-market-list.html.twig', [
+             'markets' => $market,
          ]);
     }
 }

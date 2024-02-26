@@ -179,21 +179,21 @@ class VoucherController extends AbstractController
         return new JsonResponse($data);
     }
     #[Route('/voucher-details/{id}', name: 'voucher_details')]
-public function details($id, EntityManagerInterface $entityManager): Response
-{
-    // Fetch voucher details from the database
-    $voucher = $entityManager->getRepository(Voucher::class)->find($id);
+    public function details($id, EntityManagerInterface $entityManager): Response
+    {
+        // Fetch voucher details from the database
+        $voucher = $entityManager->getRepository(Voucher::class)->find($id);
 
-    // Check if voucher exists
-    if (!$voucher) {
-        // Return error response if voucher is not found
-        return new Response('Voucher not found', Response::HTTP_NOT_FOUND);
+        // Check if voucher exists
+        if (!$voucher) {
+            // Return error response if voucher is not found
+            return new Response('Voucher not found', Response::HTTP_NOT_FOUND);
+        }
+
+        // Render the Twig template with voucher details
+        return $this->render('backOffice/Dashboard/dash-voucher-listing.html.twig', [
+            'voucher' => $voucher,
+        ]);
     }
-
-    // Render the Twig template with voucher details
-    return $this->render('backOffice/Dashboard/dash-voucher-listing.html.twig', [
-        'voucher' => $voucher,
-    ]);
-}
 }
 
