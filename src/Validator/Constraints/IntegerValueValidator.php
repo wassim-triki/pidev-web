@@ -7,7 +7,7 @@ class IntegerValueValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if ($value !== null && !is_int($value)) {
+        if (!is_float($value) && !is_numeric($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $value)
                 ->addViolation();

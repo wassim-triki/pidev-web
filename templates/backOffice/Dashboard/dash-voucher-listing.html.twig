@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Voucher Details{% endblock %}
-    
+
 {% block header %}
 {% endblock %}
 
@@ -37,6 +37,9 @@
                             <p class="dash-event-counter">
                                 <span class="h-color"><i class="feather-activity me-2"></i>{{ voucher.isValid ? 'not Used yet' : 'Used' }}</span>
                             </p>
+                            <div>
+                                {# <img src="{{ path('generate_qr_code', {'voucherId': voucher.id}) }}" alt="QR Code"> #}
+                            </div>
                         </div>
                     </div>
                 </div>

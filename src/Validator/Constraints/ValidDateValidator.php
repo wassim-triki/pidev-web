@@ -10,7 +10,7 @@ class ValidDateValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $currentDate = new \DateTime();
-        if ($value > $currentDate) {
+        if ($value < $currentDate) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
         }

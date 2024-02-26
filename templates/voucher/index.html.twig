@@ -1,117 +1,45 @@
-{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
-    %} {% block main %}
-        <div class="center-section">
-                    <div class="main-search-bar">
-                    <h2>VOucher Details</h2>
-                    <form id="search-form" method="GET">
-                        <div class="main-search-inputs main-form">
-                            <div class="row g-4">
-                                <div class="col-lg-5 col-md-12 col-sm-12">
-                                    <input
-                                        class="search-form-input"
-                                        type="text"
-                                        name="name"
-                                        placeholder="Search voucher by value"
-                                    />
-                                </div>
-                                <div class="col-lg-5 col-md-12 col-sm-12">
-                                    <input
-                                        class="search-form-input"
-                                        type="text"
-                                        name="region"
-                                        placeholder="Search Voucher by user"
-                                    />
-                                </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12">
-                                    <button id="search-btn" class="search-btn" type="submit">
-                                        <i class="feather-search"></i><span>Search</span>
-                                    </button>
-                                </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12">
-                                    <a href="{{ path('admin_dashboard') }}" id="search-btn" class="search-btn" style="width: 50%; height: 50%;">
-                                        <img src="{{ asset('images/fleche-petite-gauche.png') }}" alt="" style="width:10%">
-                                    </a>
-                                </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12" style="background-color: coral; width:10%">
-                                    <a href="{{ path('voucher_add') }}" style="width: 100%; height: 100%; margin-left:50%">
-                                        <i class="feather-save"></i>
-                                    </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    </div>
-<div class="tab-content">
-              <div class="tab-pane fade show active" id="tab-top">
-                <div class="main-posts">
-                  <div class="row">
-                    {% if voucher is empty %}
-                      <p>No vouchers found.</p>
-                    {% else %}
-                      {% for voucher in voucher %}
-                          <div class="col-md-6">
-                              <div class="event-main-post "style=
-                              "width:30%">
-                                  <div class="main-photo" >
-                                      <a href="{{ path('vouchercategory_details', {'id': voucher.id}) }}">
-                                          <div class="photo-overlay"></div>
-                                          <img src="images/coupon.jpeg" alt="{{ voucher.code }}" style=
-                                          "width:100%"/>
-                                      </a>
-                                      <div class="option-ellipsis">
-                                          <div class="dropdown">
-                                              <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
-                                                  data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                      class="fas fa-ellipsis-v"></i></a>
-                                              <div class="dropdown-menu dropdown-menu-end">
-                                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
-                                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
-                                                  <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
-                                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
-                                                      data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="event-body">
-                                      <a href="" class="event-title">{{ voucher.code }}</a>
-                                      <span class="event-type">{{ voucher.value }}</span>
-                                      <span class="event-type">{{ voucher.expiration|date('Y-m-d') }}</span>
-                                        <p class="ingo-counter">
-                                            <span>usage limit : {{ voucher.usageLimit }}</span>
-                                            <span>is valid state: {{ voucher.isValid ? 'Yes' : 'No' }}</span>
-                                            <span>is it belong to user: {{ voucher.isGivenToUser ? 'Yes' : 'No' }}</span>
-                                            <span class="event-type">Category: {{ voucher.category.getTitre() }}</span>
-                                            <span class="event-type">Type: {{ voucher.type }}</span>
-                                            <span class="event-type">User Won: {{ voucher.userWon.getEmail()}}</span>
-                                            <span class="event-type">Market Related: {{ voucher.marketRelated.getName() }}</span>
-                                        </p>
-                                  </div>
-                                  <div class="row" style="width: 100%;">
-                    <div class="col">
-                        <form action="{{ path('voucher_edit', {'id': voucher.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir modifier ce poste?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voucher.id) }}">
-                            <button type="submit" class="btn btn-danger" title="Modifier le poste">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <div class="col">
-                        <form action="{{ path('voucher_delete', {'id': voucher.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voucher.id) }}">
-                            <button type="submit" class="btn btn-danger" title="Supprimer le poste">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </div> 
-                </div>
-                              </div>
-                          </div>
-                      {% endfor %}
-                  {% endif %}
-                
-            </div>
-        </div>
+{% extends 'base.html.twig' %}
 
-{% endblock %}
+	
+
+{% block main %}
+<main class="categories-mp">	
+    <div class="main-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">							
+                    <div class="categories-heading text-center">
+                        <h2 class="mt-3 mb-4">Our Vouchers</h2>
+                    </div>							
+                </div>
+                {% if voucher is empty %}
+                    <p>No vouchers found.</p>
+                {% else %}
+                    {% for voucher in voucher %} 
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <a href="explore.html" class="our-category-card">
+                        <div class="categry-item1">
+                            <div class="cate-icon">
+                                <img src="images/category-icons/bon-de-reduction.png" style="width:30px;height:30px;" alt="">
+                            </div>
+                            <span class="event-type">{{voucher.value}}DT</span>
+                            <span class="event-type">{{voucher.code}}</span>
+                            <span class="event-type">usage : {{voucher.isValid ? 'valid' : 'non valid'}}</span>
+                            <span class="event-type">usage number :{{voucher.usageLimit}}</span>
+                            <span class="event-type">{{ voucher.expiration ? voucher.expiration.format('Y-m-d ') : '' }}</span>
+                            <span class="event-type">{{voucher.userWon.getEmail()}}</span>
+                            <span class="event-type">{{voucher.marketRelated.getName()}}</span>
+                            <span class="event-type">{{voucher.category.getTitre()}}</span>
+
+
+
+                        </div>								
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+            </div>			
+        </div>
+    </div>
+</main>
+    {% endblock %}

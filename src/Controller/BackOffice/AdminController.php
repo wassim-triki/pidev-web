@@ -28,7 +28,7 @@ class AdminController extends AbstractController
     {
          // Fetch voucher details from the database
          $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findAll();
-         return $this->render('backOffice/Dashboard/crm-orders-list.html.twig', [
+         return $this->render('backOffice/Dashboard/crm-voucher-list.html.twig', [
              'vouchers' => $vouchers,
          ]);
     }
