@@ -25,7 +25,7 @@ class VoucherController extends AbstractController
     #[Route('/voucher', name: 'app_voucher')]
     public function index(): Response
     {
-        return $this->render('voucher/index.html.twig', [
+        return $this->render('frontOffice/error404.html.twig', [
             'voucher' => $this->managerRegistry->getRepository(Voucher::class)->findAll(),
         ]);
     }

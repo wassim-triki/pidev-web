@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MarketRepository;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Market;
+use App\Entity\VoucherCategory;
 
 class AdminController extends AbstractController
 {
@@ -41,6 +42,16 @@ class AdminController extends AbstractController
          $market = $this->managerRegistry->getRepository(Market::class)->findAll();
          return $this->render('backOffice/Dashboard/crm-market-list.html.twig', [
              'markets' => $market,
+         ]);
+    }
+
+    #[Route('/dash/category-list', name: 'admin-category-list')]
+    public function categoryList(): Response
+    {
+         // Fetch voucher details from the database
+         $category = $this->managerRegistry->getRepository(VoucherCategory::class)->findAll();
+         return $this->render('backOffice/Dashboard/crm-category-list.html.twig', [
+             'category' => $category,
          ]);
     }
 }

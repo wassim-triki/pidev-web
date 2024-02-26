@@ -26,7 +26,7 @@ class MarketController extends AbstractController
     #[Route('/market', name: 'market_index')]
     public function index(): Response
     {
-        return $this->render('market/showMarket.html.twig', [
+        return $this->render('frontOffice/error404.html.twig', [
             'markets' => $this->managerRegistry->getRepository(Market::class)->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class MarketController extends AbstractController
     public function showMarket(MarketRepository $marketRepository): Response
     {
         $market = $marketRepository->findAll();
-        return $this->render('market/showMarket.html.twig', [
+        return $this->render('frontOffice/error404.html.twig', [
             'markets' => $market
         ]);
     }

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\VoucherCategoryType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Repository\VoucherCategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class VoucherCategoryController extends AbstractController
 {
@@ -27,7 +28,7 @@ class VoucherCategoryController extends AbstractController
     #[Route('/vouchercategory', name: 'app_voucher_category')]
     public function index(): Response
     {
-        return $this->render('voucher_category/index.html.twig', [
+        return $this->render('frontOffice/error404.html.twig', [
             'voucher' => $this->managerRegistry->getRepository(VoucherCategory::class)->findAll(),
         ]);
     }
@@ -44,7 +45,7 @@ class VoucherCategoryController extends AbstractController
             $entityManager->persist($voucherCategory);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_voucher_category');
+            return $this->redirectToRoute('admin-category-list');
         }
 
         return $this->render('voucher_category/newVoucherCategory.html.twig', [
@@ -63,7 +64,7 @@ class VoucherCategoryController extends AbstractController
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($voucherCategory);
             $entityManager->flush();
-            return $this->redirectToRoute('app_voucher_category');
+            return $this->redirectToRoute('admin-category-list');
         }
 
         return $this->render('voucher_category/editVoucherCategory.html.twig', [
@@ -72,7 +73,7 @@ class VoucherCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/voucher_category/{id}', name: 'vouchercategory_delete', methods: ['post'])]
+    #[Route('/voucher_category/{id}', name: 'vouchercategory_delete', methods: ['GET','post'])]
     public function deleteVoucherCategory($id, VoucherCategoryRepository $voucherCategoryRepository, ManagerRegistry $managerRegistry): RedirectResponse
     {
         $entityManager = $managerRegistry->getManager();
@@ -85,7 +86,7 @@ class VoucherCategoryController extends AbstractController
         $entityManager->remove($voucherCategory);
         $entityManager->flush();
     
-        return $this->redirectToRoute('app_voucher_category');
+        return $this->redirectToRoute('admin-category-list');
     }
 
     #[Route('/voucher_category/{id}/details', name: 'vouchercategory_details')]
@@ -96,6 +97,24 @@ class VoucherCategoryController extends AbstractController
 
         return $this->render('voucher_category/detailsVoucher.html.twig', [
             'voucherCategory' => $voucherCategory,
+        ]);
+    }
+
+    #[Route('/category-details/{id}', name: 'category_details')]
+    public function details($id, EntityManagerInterface $entityManager): Response
+    {
+        // Fetch voucher details from the database
+        $category = $entityManager->getRepository(VoucherCategory::class)->find($id);
+
+        // Check if voucher exists
+        if (!$category) {
+            // Return error response if voucher is not found
+            return new Response('Category not found', Response::HTTP_NOT_FOUND);
+        }
+
+        // Render the Twig template with voucher details
+        return $this->render('backOffice/Dashboard/dash-category-listing.html.twig', [
+            'category' => $category,
         ]);
     }
 
