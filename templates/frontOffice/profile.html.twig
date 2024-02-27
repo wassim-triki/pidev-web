@@ -639,7 +639,6 @@
 												</div>
 											</div>
 											<div id="filteredVouchersContainer" class="row"></div>
-											<div id="searchResultsContainer" class="row"></div>
 											<div class="all-dash-events">
 												<div class="row">	
 													{% if vouchers is empty %}
@@ -711,7 +710,7 @@
 				})
 				.then(response => {
 					if (response.ok) {
-						// Redirect to the confirm_voucher route with the voucher ID
+						sendEmail()
 						window.location.href = '{{ path('confirm_voucher', {'id': 'VOUCHER_ID'}) }}'.replace('VOUCHER_ID', voucherId);
 					} else {
 						console.error('Failed to update voucher');
@@ -719,6 +718,25 @@
 				})
 				.catch(error => {
 					console.error('Error:', error);
+				});
+			}
+
+			function sendEmail() {
+				fetch('{{ path('send_email') }}', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'X-CSRF-Token': '{{ csrf_token("send_email") }}'
+					}
+				})
+				.then(response => {
+					if (!response.ok) {
+						console.error('Failed to send email');
+					}
+				})
+				.catch(error => {
+					console.error('Error sending email:', error);
 				});
 			}
 
@@ -737,7 +755,7 @@
 			});
     	}
 
-		function searchVouchersByCategory() {
+	function searchVouchersByCategory() {
     // Get the search input value
     var searchInput = document.getElementById("voucherCategorySearch").value;
 

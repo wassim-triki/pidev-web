@@ -22,3 +22,5 @@
 ### BASH script to run and stop server ###
 server.sh
 gittoken
+
+/src/qrcodes/

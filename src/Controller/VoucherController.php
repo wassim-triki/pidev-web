@@ -14,6 +14,9 @@ use App\Repository\VoucherRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\Service\QRCodeGenerator;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 class VoucherController extends AbstractController
 {
     private $managerRegistry;
@@ -114,12 +117,25 @@ class VoucherController extends AbstractController
     }
 
     #[Route('/confirm-voucher/{id}',name: 'confirm_voucher')]
-    public function confirmVoucher($id, VoucherRepository $voucherRepository,QRCodeGenerator $qrcode): Response
+    public function confirmVoucher($id, VoucherRepository $voucherRepository,QRCodeGenerator $qrcode, MailerInterface $mailer): Response
     {
+
+        
         $qr = null;
         $voucher = $voucherRepository->find($id);
         $qr=$qrcode->generateQRCode($voucher);
-    
+
+        $email = (new Email())
+        ->from('AL9ANI@al9ani-administration.com')
+        ->to('mohamedyassine.benaoun@esprit.tn')
+        ->subject('[ Voucher Confirmation ]')
+        ->text('your voucher has been confirmed you can use it now! scan the qr code below')
+        ->html('<p>your voucher is confirmed!</p>' . '<img src="' . $qr . '">');
+        try {
+            $mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+            $errorMessage = $e->getMessage();
+        }
         if (!$voucher) {
             throw $this->createNotFoundException('Voucher not found');
         }

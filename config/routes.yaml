@@ -1,4 +1,3 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-# routes.yaml
+send_email:
+    path: '/send-email'
+    controller: 'App\Controller\MailerController::sendEmail'
