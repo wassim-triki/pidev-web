@@ -2,8 +2,10 @@
 
 namespace App\Controller\FrontOffice;
 
+use App\Entity\Postcommentaire;
 use App\Entity\PostGroup;
 use App\Entity\Sponsoring;
+use App\Form\FormCommentaireType;
 use App\Form\PostGroupType;
 use App\Repository\PostGroupRepository;
 use App\Repository\UserRepository;
@@ -122,5 +124,10 @@ public function editpostgroup($id, PostGroupRepository $PostGroupRepository, Req
         $this->addFlash('success', 'Votre post a été suprimé');
         return $this->redirectToRoute('showsponsor');
     }
+
+    
+   
+
+    
   
 }

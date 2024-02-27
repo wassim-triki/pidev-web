@@ -112,10 +112,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
     private Collection $avertissements;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Postcommentaire::class)]
+    private Collection $postcommentaires;
+
     public function __construct()
     {
         $this->avertissements = new ArrayCollection();
         $this->postGroups = new ArrayCollection();
+        $this->postcommentaires = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -379,6 +383,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($postGroup->getUser() === $this) {
                 $postGroup->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Postcommentaire>
+     */
+    public function getPostcommentaires(): Collection
+    {
+        return $this->postcommentaires;
+    }
+
+    public function addPostcommentaire(Postcommentaire $postcommentaire): static
+    {
+        if (!$this->postcommentaires->contains($postcommentaire)) {
+            $this->postcommentaires->add($postcommentaire);
+            $postcommentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostcommentaire(Postcommentaire $postcommentaire): static
+    {
+        if ($this->postcommentaires->removeElement($postcommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($postcommentaire->getUser() === $this) {
+                $postcommentaire->setUser(null);
             }
         }
 

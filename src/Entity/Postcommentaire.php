@@ -17,9 +17,20 @@ class Postcommentaire
     #[ORM\Column(type: Types::TEXT)]
     private ?string $commentaire = null;
 
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $likes = 0; // Add this property to track the number of likes
+
+        
+    #[ORM\Column(type: "array")]
+    private array $likedBy = [];
+
+
     #[ORM\ManyToOne(inversedBy: 'postcommentaires')]
     #[ORM\JoinColumn(nullable: false)]
     private ?PostGroup $postgroup = null;
+
+    #[ORM\ManyToOne(inversedBy: 'postcommentaires')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -38,6 +49,30 @@ class Postcommentaire
         return $this;
     }
 
+    public function getLikes(): int // Add this method to retrieve the number of likes
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): static // Add this method to set the number of likes
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function incrementLikes(): void // Add this method to increment the number of likes
+    {
+        $this->likes++;
+    }
+
+    public function decrementLikes(): void // Add this method to decrement the number of likes
+    {
+        if ($this->likes > 0) {
+            $this->likes--;
+        }
+    }
+
     public function getPostgroup(): ?PostGroup
     {
         return $this->postgroup;
@@ -48,5 +83,32 @@ class Postcommentaire
         $this->postgroup = $postgroup;
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+    public function getLikedBy(): ?array
+    {
+        return $this->likedBy;
+    }
+
+    public function setLikedBy(array $likedBy): self
+    {
+        $this->likedBy = $likedBy;
+
+        return $this;
+    }
+    public function isLikedByUser(User $user): bool
+    {
+        return in_array($user->getUserIdentifier(), $this->likedBy);
     }
 }

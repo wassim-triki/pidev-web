@@ -14,7 +14,7 @@ class FormCommentaireType extends AbstractType
     {
         $builder
             ->add('commentaire')
-            ->add('postgroup')
+           
             ->add('Replay',SubmitType::class)
 
         ;
