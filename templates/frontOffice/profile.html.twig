@@ -25,7 +25,7 @@
 							<div class="col-xl-4 col-lg-5 col-md-12">
 								<div class="main-card user-left-dt">
 									<div class="user-avatar-img">
-										<img src="images/my-dashboard/my-dp.jpg" alt="">
+										<img src="{{asset('images/my-dashboard/my-dp.jpg')}}" alt="">
 										<div class="avatar-img-btn">
 											<input type="file" id="avatar-img">
 											<label for="avatar-img"><i class="feather-camera"></i></label>
@@ -674,9 +674,6 @@
 																</div>
 																<div class="group-btns">
 																	<button class="interest-btn btn-hover w-100" onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id, 'voucherCode': voucher.code, 'voucherValue': voucher.value}) }}', {{ voucher.id }})"><i class="feather-pocket me-2"></i>USE</button>
-
-
-
 																</div>
 															</div>
 														</div>

@@ -38,6 +38,11 @@
 									<img src="{{qrcode}}" alt="">
 								{% endif %}
 								<p class="sms">Ticket details are sent to you in sms & email. Thanks!</p>
+									<div class="group-btns">
+										<button class="interest-btn btn-hover w-100" onclick="goToProfile()">
+											<i class="feather-link me-2"></i>Go back to profile
+										</button>
+									</div>
 							</div>															
 						</div>															
 					</div>											
@@ -45,5 +50,12 @@
 			</div>
 		</div>
 </main>
+
+<script>
+    function goToProfile() {
+        // Change the window location to the profile page
+        window.location.href = '/profile';
+    }
+</script>
 
 {% endblock %}
