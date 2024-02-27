@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PostcommentaireRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostcommentaireRepository::class)]
 class Postcommentaire
@@ -15,6 +16,8 @@ class Postcommentaire
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "le commentaire n'est pas vide")]
+    #[Assert\Length(min: 2, minMessage: "le commentaire doit avoir un longeur plus que 2 charactéres")]
     private ?string $commentaire = null;
 
     #[ORM\Column(type: Types::INTEGER)]

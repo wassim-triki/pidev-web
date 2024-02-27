@@ -34,6 +34,7 @@
                                     </div>
                                     {{ form_widget(f.contenu) }}
                                     {{ form_widget(f.public, {'attr': {'class': 'blog-post-btn col-sm-2'}}) }}
+                                    <div style="color: red;">{{ form_errors(f.contenu) }}</div>
                                 </div>
                             </div>
                             {{ form_end(f) }}

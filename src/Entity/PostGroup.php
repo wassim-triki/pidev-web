@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostGroupRepository::class)]
 class PostGroup extends AbstractController
@@ -21,6 +22,8 @@ class PostGroup extends AbstractController
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "le contenu n'est pas vide")]
+    #[Assert\Length(min: 5, minMessage: "le contenu doit avoir un longeur plus que 5 charactéres")]
     private ?string $contenu = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

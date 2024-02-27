@@ -19,6 +19,7 @@ class Sponsoring
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "PLEASE! Enter name ")]
+    #[Assert\Length(min: 5, minMessage: "le contenu doit avoir un longeur plus que 5 charactéres")]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -34,6 +35,7 @@ class Sponsoring
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "PLEASE! the description")]
+    #[Assert\Length(min: 20, minMessage: "le contenu doit avoir un longeur plus que 20 charactéres")]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'sponsoring', targetEntity: PostGroup::class)]
