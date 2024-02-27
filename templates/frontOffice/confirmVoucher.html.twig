@@ -34,7 +34,9 @@
 								<h4>Congratulations {{voucher.userWon.Email}} !!!</h4>
 								<span>You just have used your voucher </span>
 								<p>Scan QRCode at {{voucher.marketRelated.name}} to take you phisical coupons there !</p>
-								<img src="{{asset('images/event-view/qr.svg')}}" alt="">
+								{% if qrcode %}
+									<img src="{{qrcode}}" alt="">
+								{% endif %}
 								<p class="sms">Ticket details are sent to you in sms & email. Thanks!</p>
 							</div>															
 						</div>															

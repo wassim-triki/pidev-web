@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Repository\VoucherRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Controller\Service\QRCodeGenerator;
 class VoucherController extends AbstractController
 {
     private $managerRegistry;
@@ -64,6 +65,8 @@ class VoucherController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->managerRegistry->getManager();
+            $voucher->setUsageLimit(1);
+            $voucher->setCode($this->generateRandomString());
             $entityManager->persist($voucher);
             $entityManager->flush();
             return $this->redirectToRoute('admin-voucher-list');
@@ -111,14 +114,20 @@ class VoucherController extends AbstractController
     }
 
     #[Route('/confirm-voucher/{id}',name: 'confirm_voucher')]
-    public function confirmVoucher($id, VoucherRepository $voucherRepository): Response
+    public function confirmVoucher($id, VoucherRepository $voucherRepository,QRCodeGenerator $qrcode): Response
     {
+        $qr = null;
         $voucher = $voucherRepository->find($id);
+        $qr=$qrcode->generateQRCode($voucher);
     
         if (!$voucher) {
             throw $this->createNotFoundException('Voucher not found');
         }
-        return $this->render('frontOffice/confirmVoucher.html.twig',['voucher' => $voucher]);
+        return $this->render('frontOffice/confirmVoucher.html.twig',
+        [
+            'voucher' => $voucher,
+            'qrcode' => $qr
+        ]);
     }
 
     #[Route('/use-voucher/{voucherId}', name: 'use_voucher', methods: ['POST'])]
