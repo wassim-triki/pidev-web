@@ -655,7 +655,7 @@
 																</a>
 															</div>											
 															<div class="event-body">
-																<a href="{{path('confirm_voucher')}}" class="event-title"><i class="feather-dollar-sign me-3"></i>{{voucher.value}} DT</a>
+																<a href="#" class="event-title"><i class="feather-dollar-sign me-3"></i>{{voucher.value}} DT</a>
 																<div class="dash-counter-block">	
 																	<p class="dash-event-counter">
 																		<span class="h-color"><i class="feather-lock me-2"></i>{{voucher.code}}</span>
@@ -673,7 +673,10 @@
 																	</p>
 																</div>
 																<div class="group-btns">
-																	<button class="interest-btn btn-hover w-100"onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id}) }}')"><i class="feather-pocket me-2"></i>USE</button>
+																	<button class="interest-btn btn-hover w-100" onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id, 'voucherCode': voucher.code, 'voucherValue': voucher.value}) }}', {{ voucher.id }})"><i class="feather-pocket me-2"></i>USE</button>
+
+
+
 																</div>
 															</div>
 														</div>
@@ -700,26 +703,29 @@
 			</div>
 		</main>
 		<script>
-		function useVoucher(url) {
-			fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-					'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' 
-				}
-			})
-			.then(response => {
-				if (response.ok) {
-                	window.location.href = '{{ path('confirm_voucher') }}'; reloading
-				} else {
-					console.error('Failed to update voucher');
-				}
-			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
-		}
+			function useVoucher(url, voucherId) {
+				fetch(url, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' 
+					}
+				})
+				.then(response => {
+					if (response.ok) {
+						// Redirect to the confirm_voucher route with the voucher ID
+						window.location.href = '{{ path('confirm_voucher', {'id': 'VOUCHER_ID'}) }}'.replace('VOUCHER_ID', voucherId);
+					} else {
+						console.error('Failed to update voucher');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+			}
+
+			
 
 		function filterVouchers(filter) {
 			// Send AJAX request to fetch vouchers based on the selected filter

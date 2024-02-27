@@ -47,7 +47,7 @@ class VoucherController extends AbstractController
             // Persist the new voucher to the database
             $entityManager->persist($voucher);
             $entityManager->flush();
-            return $this->redirectToRoute('app_voucher');
+            return $this->redirectToRoute('admin-voucher-list');
         }
 
         // Render the form template with the form
@@ -66,7 +66,7 @@ class VoucherController extends AbstractController
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($voucher);
             $entityManager->flush();
-            return $this->redirectToRoute('app_voucher');
+            return $this->redirectToRoute('admin-voucher-list');
         }
 
         return $this->render('voucher/editVoucher.html.twig', [
@@ -110,10 +110,15 @@ class VoucherController extends AbstractController
         return $code;
     }
 
-    #[Route('/confirm-voucher',name: 'confirm_voucher')]
-    public function confirmVoucher(Request $request): Response
+    #[Route('/confirm-voucher/{id}',name: 'confirm_voucher')]
+    public function confirmVoucher($id, VoucherRepository $voucherRepository): Response
     {
-        return $this->render('frontOffice/confirmVoucher.html.twig');
+        $voucher = $voucherRepository->find($id);
+    
+        if (!$voucher) {
+            throw $this->createNotFoundException('Voucher not found');
+        }
+        return $this->render('frontOffice/confirmVoucher.html.twig',['voucher' => $voucher]);
     }
 
     #[Route('/use-voucher/{voucherId}', name: 'use_voucher', methods: ['POST'])]

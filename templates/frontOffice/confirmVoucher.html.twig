@@ -1,49 +1,40 @@
-{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
-    %} {% block main %}
-		<!-- Title Bar Start -->
-		<div class="title-bar">			
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<ol class="title-bar-text">
-							<li class="breadcrumb-item"><a href="index.html">Home</a></li>							
-							<li class="breadcrumb-item active" aria-current="page">Order Confirmed</li>
-						</ol>
-					</div>		
-				</div>		
-			</div>		
-		</div>
+{% extends 'base.html.twig' %} 
+	{% block title %}Confirme Voucher{% endblock
+    %} 
+	{% block main %}
+		
 		<main class="discussion-mp">	
 			<div class="main-section">
 				<div class="container">
 					<div class="row justify-content-md-center">
 						<div class="col-lg-6 col-md-8">
 							<div class="checkout-heading text-center">
-								<h2 class="mt-3">Order Confirmed</h2>								
+								<h2 class="mt-3">Voucher Confirmed</h2>								
 							</div>
 							<div class="confirm-order">
 							<div class="checkout-dt1">
 								<div class="check-img">
-									<img src="images/event-view/checkout-img.jpg" alt="">
+									<img src="{{asset('images/event-view/checkout-img.jpg')}}" alt="">
 								</div>
 								<div class="evnt-dt-ckot1">
-									<h4>voucherDetails.code</h4>
-									<div class="ctgory1">Club</div>
-									<div class="date-tme1">Friday, 23 Dec 2018 | 2.00 PM to 9.00 PM</div>
-									<div class="lctn-dt1"><i class="feather-map-pin"></i> India</div>
+									<div class="lctn-dt1"><h4><i class="feather-lock"></i>{{voucher.code}}></h4></div>
+									<div class="lctn-dt1"><i class="feather-tag"></i>{{voucher.category.getTitre()}}</div>
+									<div class="lctn-dt1"><i class="feather-shopping-cart"></i>{{voucher.marketRelated.getName()}}</div>
+									<div class="lctn-dt1"><i class="feather-dollar-sign"></i>{{voucher.value}} DT</div>
+									<div class="lctn-dt1"><i class="feather-user"></i>{{voucher.userWon.Email}}</div>
 								</div>									
 							</div>
 							<div class="confirm-tickets">
-								<div class="vip-left1">Booked Tickets :</div>
-								<div class="vip-left">0 VIP</div>
+								<div class="vip-left1">Validity : </div>
+								<div class="vip-left">{{voucher.isValid ? 'not Used yet' : 'Used'}}</div>
 								<div class="css-dot">,</div>
-								<div class="general-left">0 General</div>
+								<div class="general-left">limite Usage : {{voucher.usageLimit}}</div>
 							</div>
 							<div class="congrats">
-								<h4>Congratulations!!!</h4>
-								<span>Your ticket has been booked.</span>
-								<p>Scan OR Code at the event place.</p>
-								<img src="images/event-view/qr.svg" alt="">
+								<h4>Congratulations {{voucher.userWon.Email}} !!!</h4>
+								<span>You just have used your voucher </span>
+								<p>Scan QRCode at {{voucher.marketRelated.name}} to take you phisical coupons there !</p>
+								<img src="{{asset('images/event-view/qr.svg')}}" alt="">
 								<p class="sms">Ticket details are sent to you in sms & email. Thanks!</p>
 							</div>															
 						</div>															
