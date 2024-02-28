@@ -130,7 +130,26 @@ class VoucherController extends AbstractController
         ->to('mohamedyassine.benaoun@esprit.tn')
         ->subject('[ Voucher Confirmation ]')
         ->text('your voucher has been confirmed you can use it now! scan the qr code below')
-        ->html('<p>your voucher is confirmed!</p>' . '<img src="' . $qr . '">');
+        ->html('
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);">
+                <p>Your voucher is confirmed! 🚀 </p>
+                <h4>You can use it now! Scan the QR code below</h4>
+                <br>
+                <h5>Coupon Information:</h5>
+                <p style="color:#ffff">User: ' . $voucher->getUserWon()->getEmail() . '</p>
+                <p style="color:#ffff">Shop Name: ' . $voucher->getMarketRelated()->getName() . '</p>
+                <p style="color:#ffff">Value: ' . $voucher->getValue() . '</p>
+                <a href="http://127.0.0.1:8000/profile" style="text-decoration: none;">
+                    <button style="background-color: #051937; color: #fff; border-radius: 10%; padding: 10px 20px; cursor: pointer; border: none;">
+                        Go to Profile
+                    </button>
+                </a>
+                <br>
+                <img style="width:200px; height:200px;" src="' . $qr . '" alt="QR Code">
+                <br>
+            </div>
+            
+        ');
         try {
             $mailer->send($email);
         } catch (TransportExceptionInterface $e) {

@@ -681,8 +681,9 @@
 											{% endif %}
 													<div class="col-12">
 														<div class="loading-btn mb-0">
-															<button class="process-btn btn-hover" type="button">
-																No More Events
+															<button class="process-btn btn-hover" type="button" onclick="reloadProfilePage()">
+																<i class="feather-loader me-2"></i>
+																hot Reload
 															</button>
 														</div>
 													</div>
@@ -699,6 +700,10 @@
 			</div>
 		</main>
 		<script>
+
+		function reloadProfilePage() {
+    		window.location.href = 'http://127.0.0.1:8000/profile';
+		}
 			function useVoucher(url, voucherId) {
 				fetch(url, {
 					method: 'POST',

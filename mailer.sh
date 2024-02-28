@@ -1,3 +1,3 @@
 #!/bin/bash
 #mailer async activator :
-php bin/console messenger:consume async
+php bin/console messenger:consume async $1
