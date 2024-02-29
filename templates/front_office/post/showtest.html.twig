@@ -1,5 +1,7 @@
 {% extends 'front_office/base.html.twig' %}
 {% block main %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 <main>
   <div class="main-section">
     <div class="container">
@@ -11,13 +13,14 @@
               <div class="main-search-inputs">
                 <div class="row g-3">
                   <div class="col-lg-5 col-md-12 col-sm-12">
-                  </div>
-                  <div class="col-lg-2 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label for="search">Search:</label>
                       <input class="form-control form-control-navbar" id="searchInput" type="search"
-                        placeholder="Search" aria-label="Search">
+                        placeholder="Search" aria-label="Search" style="width: 300PX;">
                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12">
+
                   </div>
                 </div>
               </div>
@@ -96,14 +99,8 @@
                       </div>
                       {% endfor %}
 
-                      <div class="col-md-12">
-                        <div class="loading-btn">
-                          <button class="process-btn btn-hover" type="button">
-                            <i class="fa-solid fa-spinner fa-spin"></i>
-                            Loading...
-                          </button>
-                        </div>
-                      </div>
+                      {{ knp_pagination_render(post) }}
+
                     </div>
                     <div class="row">
                       <div class="search-results" id="new" style="display: none;">

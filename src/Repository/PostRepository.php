@@ -6,6 +6,8 @@ use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @extends ServiceEntityRepository<Post>
@@ -47,7 +49,6 @@ class PostRepository extends ServiceEntityRepository
                 case 'titre':
                     $query->setParameter('titre', '%' . $value . '%');
                     break;
-                    // Add more cases for other fields as needed
             }
         }
 
@@ -62,6 +63,7 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
     //    /**
     //     * @return Post[] Returns an array of Post objects

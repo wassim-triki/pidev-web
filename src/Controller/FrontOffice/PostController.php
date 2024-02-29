@@ -11,9 +11,10 @@ use App\Form\SearchPostType;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -37,9 +38,14 @@ class PostController extends AbstractController
 
 
     #[Route('/showpost', name: 'showpost')]
-    public function showpost(Request $request, PostRepository $postRepository): Response
+    public function showpost(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response
     {
         $post = $postRepository->findAll();
+        $post = $paginator->paginate(
+            $post, /* query NOT result */
+            $request->query->getInt('page', 1),
+            6
+        );
         return $this->render('front_office/post/showtest.html.twig', [
             'post' => $post
         ]);
