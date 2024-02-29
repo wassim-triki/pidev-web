@@ -5,6 +5,7 @@ namespace App\Controller\BackOffice;
 use App\Entity\Sponsoring;
 use App\Form\FormSponsoringType;
 use App\Repository\SponsoringRepository;
+use App\Service\JwtTokenService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -14,7 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SponsoringAdminController extends AbstractController
-{     
+{
+    #[Route('/posts', name: 'posts')]
+    public function showSponsorByAdmin(JwtTokenService $sponsorStatisticsService, SponsoringRepository $postRepository): Response
+    {
+        $statistics = $sponsorStatisticsService->getSponsorStatistics();
+        return $this->render('back_office\dashboard\dashboard.html.twig', [
+            'statistics' => $statistics
+        ]);
+    }
+
+
     #[Route('/addformsponsor', name: 'addformsponsor')]
     public function addformsponsor(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response
     {
@@ -46,23 +57,21 @@ class SponsoringAdminController extends AbstractController
 
             $em->persist($sponsoring);
             $em->flush();
-            
-            
-            $this->addFlash('success', 'Votre sponsor a été ajouté');
-            
-            return $this->redirectToRoute('showdbsponsoring');
 
-            
+
+            $this->addFlash('success', 'Votre sponsor a été ajouté');
+
+            return $this->redirectToRoute('showdbsponsoring');
         }
-        
+
         return $this->renderForm('back_office/sponsoring/addform.html.twig', [
             'f' => $form,
         ]);
     }
 
-   
-        
-    
+
+
+
 
     #[Route('/showdbsponsoring', name: 'showdbsponsoring')]
     public function showdbsponsoring(SponsoringRepository $sponsorRepository, Request $request): Response
@@ -75,7 +84,7 @@ class SponsoringAdminController extends AbstractController
         ]);
     }
 
-  
+
 
 
     #[Route('/editsponsor/{id}', name: 'editsponsor')]
@@ -99,32 +108,31 @@ class SponsoringAdminController extends AbstractController
         ]);
     }
     #[Route('/deletesponsor/{id}', name: 'deletesponsor')]
-public function deletesponsor($id, SponsoringRepository $sponsorRepository, ManagerRegistry $managerRegistry): Response
-{
-    $em = $managerRegistry->getManager();
-    $sponsor = $sponsorRepository->find($id);
-    
-    // Check if the sponsor exists
-    if (!$sponsor) {
-        throw $this->createNotFoundException('Sponsor not found');
-    }
-    
-    // Get the related post groups
-    $postGroups = $sponsor->getPostGroup();
-    
-    // Remove each related post group
-    foreach ($postGroups as $postGroup) {
-        $em->remove($postGroup);
-    }
-    
-    // Now remove the sponsor
-    $em->remove($sponsor);
-    
-    // Flush changes
-    $em->flush();
-    $this->addFlash('success', 'Votre sponsor a été suprimé');
-    
-    return $this->redirectToRoute('showdbsponsoring');
-}
+    public function deletesponsor($id, SponsoringRepository $sponsorRepository, ManagerRegistry $managerRegistry): Response
+    {
+        $em = $managerRegistry->getManager();
+        $sponsor = $sponsorRepository->find($id);
 
+        // Check if the sponsor exists
+        if (!$sponsor) {
+            throw $this->createNotFoundException('Sponsor not found');
+        }
+
+        // Get the related post groups
+        $postGroups = $sponsor->getPostGroup();
+
+        // Remove each related post group
+        foreach ($postGroups as $postGroup) {
+            $em->remove($postGroup);
+        }
+
+        // Now remove the sponsor
+        $em->remove($sponsor);
+
+        // Flush changes
+        $em->flush();
+        $this->addFlash('success', 'Votre sponsor a été suprimé');
+
+        return $this->redirectToRoute('showdbsponsoring');
+    }
 }

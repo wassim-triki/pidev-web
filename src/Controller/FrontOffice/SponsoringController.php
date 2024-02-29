@@ -23,7 +23,7 @@ class SponsoringController extends AbstractController
     #[Route('/showsponsor', name: 'showsponsor')]
     public function showsponsor(SponsoringRepository $sponsorRepository, Request $request): Response
     {
-        $sponsor = $sponsorRepository->findAll();
+        $sponsor = $sponsorRepository->findActiveSponsors();
 
 
         return $this->renderForm('front_office/sponsoring/showsponsor.html.twig', [

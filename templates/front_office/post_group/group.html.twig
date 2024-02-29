@@ -40,6 +40,8 @@
                             {{ form_end(f) }}
 
                             {% for post in showpost %}
+
+
                                 <div class="blog-comntd-bg">
                                     {% if app.user == post.user %}
                                         <div class="dropdown edit-delete-dropdown" style="padding-left: 933px;">
@@ -47,12 +49,14 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="{{ path('editpost', {'id': post.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce post?')">Edit</a></li>
-                                                <li><a class="dropdown-item" href="{{ path('deletepost', {'id': post.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post?')">Delete</a></li>
+                                                <li><a class="dropdown-item" href="{{ path('editpost', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce post?')">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ path('deletepost', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post?')">Delete</a></li>
                                             </ul>
                                         </div>
                                     {% endif %}
+                                    
                                     <div class="bcmnt-dt">
+                                       
                                         <div class="blog-usr-dt">
                                             {% if post.user.photo is defined and post.user.photo %}
                                                 <img class="user-photo" src="{{ asset('uploads/' ~ post.user.photo) }}" alt="User Photo">
@@ -63,7 +67,15 @@
                                             <h6><span style="font-size: x-small; padding-left: 75px;">{{ post.date | date('Y-m-d') }}</span></h6>
                                         </div>
                                         <p>{{ post.contenu }}</p>
+                                        
+                                        
+                                        
+
                                     </div>
+                                    {# -------------------------- Share ------------------------------------  #}
+                                    <div class="sharethis-inline-share-buttons"></div>
+                                    {# -------------------------- Share ------------------------------------  #}
+                                
                                     <div class="blog-post-reply">
                                         <div class="breply-dp1">
                                             {% if app.user.photo %}
@@ -72,7 +84,7 @@
                                                 <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
                                             {% endif %}
                                         </div>
-                                        <form method="POST" action="{{ path('commentaire_add', {'id': post.id}) }}">
+                                        <form method="POST" action="{{ path('commentaire_add',{'idpost': post.id,'id':id}) }}">
                                             <input class="breply-post" type="text" name="contenu" placeholder="Write a reply">
                                             <button class="breply-post-btn" type="submit">Reply</button>
                                         </form>
@@ -90,8 +102,8 @@
                                             <!-- Bouton de suppression -->
                                            {% if app.user == commentaire.user %}
                                            <div class="comment-links"  >
-                                               <a class="btn btn-link  " href="{{ path('commentaire_edit',  {'id': post.id, 'commentId': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce commentaire?')">✏️</a>
-                                               <a class="btn btn-link" href="{{ path('commentaire_delete',  {'id': post.id, 'commentId': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">🗑️</a>
+                                               <a class="btn btn-link  " href="{{ path('commentaire_edit',  {'id': id,'idpost': post.id, 'commentId': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce commentaire?')">✏️</a>
+                                               <a class="btn btn-link" href="{{ path('commentaire_delete',  {'id': id,'idpost': post.id, 'commentId': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">🗑️</a>
                                            </div>
                                            {% endif %}
                                              
@@ -99,7 +111,7 @@
                                                 {% if commentaire.isLikedByUser(app.user) %}
                                                     <button class="like-button breply-post-btn col-sm-9 " data-comment-id="{{ commentaire.id }}" onclick="dislikeComment(this.dataset.commentId)">👎 </button>
                                                 {% else %}
-                                                    <button class="like-button breply-post-btn col-sm-9 "  data-comment-id="{{ commentaire.id }}" onclick="likeComment(this.dataset.commentId)">👍 </button>
+                                                    <button class="like-button  breply-post-btn col-sm-9 "  data-comment-id="{{ commentaire.id }}" onclick="likeComment(this.dataset.commentId)">👍 </button>
                                                 {% endif %}
                                                 
                                             </div>
@@ -165,38 +177,18 @@
                 // Mettre à jour le nombre de likes affiché
                 var likeCountElement = document.querySelector('.like-count[data-comment-id="' + commentId + '"]');
                 likeCountElement.textContent = data.likes;
+                location.reload();
             })
             .catch(function(error) {
                 console.error('Erreur :', error);
             });
+
+
         });
     });
-    function dislikeComment(commentId) {
-        fetch('/dislike-comment/' + commentId, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            // Ajouter tout autre en-tête nécessaire ou jetons CSRF
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('La réponse du réseau n\'est pas valide.');
-            return response.json();
-        })
-        .then(data => {
-            // Mettre à jour l'interface utilisateur pour refléter le "dislike" du commentaire
-            const button = document.querySelector(`button[data-comment-id='${commentId}']`);
-            button.innerText = 'Like'; // Change le texte du bouton de "Dislike" à "Like"
-            button.setAttribute('onclick', `likeComment(${commentId})`); // Change l'attribut onclick pour appeler la fonction likeComment
-            const likedMessage = button.previousElementSibling; // Récupère l'élément précédent du bouton (le message "Vous avez aimé ce commentaire.")
-            likedMessage.remove(); // Supprime le message "Vous avez aimé ce commentaire."
-            // Mettre à jour le nombre de likes si nécessaire
-            const likeCount = document.querySelector(`.like-count[data-comment-id='${commentId}']`);
-            likeCount.innerText = data.likes;
-        })
-        .catch(error => {
-            console.error('Un problème est survenu lors de votre opération fetch :', error);
-        });
-    }
     
+   
 </script>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=64065d7b567fbf001a2d5d17&product=inline-share-buttons&source=platform" async="async"></script>
 
 {% endblock %}

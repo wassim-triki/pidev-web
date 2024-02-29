@@ -2,12 +2,14 @@
 
 namespace App\Service;
 
+use App\Repository\SponsoringRepository as RepositorySponsoringRepository;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Validation\Constraint\ValidAt;
+use src\Repository\SponsoringRepository;
 
 use DateTimeZone;
 
@@ -15,8 +17,9 @@ use DateTimeZone;
 class JwtTokenService
 {
     private $config;
+    private $SponsoringRepository;
 
-    public function __construct()
+    public function __construct(RepositorySponsoringRepository $SponsoringRepository)
     {
         $this->config = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText("al9ani"));
 
@@ -25,6 +28,20 @@ class JwtTokenService
             new SignedWith($this->config->signer(), $this->config->signingKey()),
             new ValidAt(new SystemClock(new DateTimeZone(date_default_timezone_get())))
         );
+        $this->SponsoringRepository = $SponsoringRepository;
+    }
+
+    public function getSponsorStatistics()
+    {
+        $totalSponsor = $this->SponsoringRepository->count([]);
+        $activeSponsor = $this->SponsoringRepository->count(['type' => 'ACTIVE']);
+        $desactiveSponsor = $this->SponsoringRepository->count(['type' => 'DESACTIVE']);
+
+        return [
+            'totalSponsor' => $totalSponsor,
+            'activeSponsor' => $activeSponsor,
+            'desactiveSponsor' => $desactiveSponsor,
+        ];
     }
 
 

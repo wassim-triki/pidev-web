@@ -45,4 +45,18 @@ class SponsoringRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+/**
+     * Récupère tous les sponsors actifs.
+     *
+     * @return Sponsoring[] Returns an array of Sponsoring objects
+     */
+    public function findActiveSponsors(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.type = :type')
+            ->setParameter('type', 'ACTIVE')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

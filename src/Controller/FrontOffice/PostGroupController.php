@@ -15,13 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use \ConsoleTVs\Profanity\Builder;
 
 class PostGroupController extends AbstractController
 {
 
 
     #[Route('/addpostgroup/{id}', name: 'addpostgroup')]
-    public function addpostgroup(ManagerRegistry $managerRegistry,PostGroupRepository $PostGroupRepository, UserRepository $userRepository, Request $request, int $id, Security $security): Response
+    public function addpostgroup(ManagerRegistry $managerRegistry, PostGroupRepository $PostGroupRepository, UserRepository $userRepository, Request $request, int $id, Security $security): Response
     {
         $em = $managerRegistry->getManager();
 
@@ -48,6 +49,15 @@ class PostGroupController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /*
+            $dictionaryPath = '/path/to/dictionary/file.txt';
+
+            // Set the dictionary for the Builder class
+            Builder::setDictionary($dictionaryPath);
+            */
+            $content = $post->getContenu();
+            $cleanedContenu = \ConsoleTVs\Profanity\Builder::blocker($content)->filter();
+            $post->setContenu($cleanedContenu);
             $currentDate = new \DateTime();
             $post->setDate($currentDate);
             $em->persist($post);
@@ -55,16 +65,17 @@ class PostGroupController extends AbstractController
             $this->addFlash('success', 'Votre poste a été ajouté');
             return $this->redirectToRoute('addpostgroup', ['id' => $id]);
         }
- //$showpost = $sponsoring->getPostgroup(); 
- $sponsoringImage = $sponsoring->getImage();
+        //$showpost = $sponsoring->getPostgroup(); 
+        $sponsoringImage = $sponsoring->getImage();
         // Récupérer uniquement les posts associés à ce sponsoring spécifique
         $showpost = $PostGroupRepository->findPostsBySponsoringOrderedByDate($id);
-       
+
 
         return $this->renderForm('front_office/post_group/group.html.twig', [
             'f' => $form,
             'showpost' => $showpost,
-            'sponsoringImage' => $sponsoringImage
+            'sponsoringImage' => $sponsoringImage,
+            'id' => $id
         ]);
     }
 
@@ -82,52 +93,48 @@ class PostGroupController extends AbstractController
     }
 
 
-    #[Route('/editpost/{id}', name: 'editpost')]
-public function editpostgroup($id, PostGroupRepository $PostGroupRepository, Request $request, ManagerRegistry $managerRegistry): Response
-{
-    $em = $managerRegistry->getManager();
-    
-    // Récupérer le post à éditer
-    $post = $PostGroupRepository->find($id);
-
-    // Vérifier si le post existe
-    if (!$post) {
-        throw $this->createNotFoundException('Post non trouvé pour l\'ID ' . $id);
-    }
-
-    // Créer le formulaire d'édition du post
-    $form = $this->createForm(PostGroupType::class, $post);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em->flush();
-        $this->addFlash('success', 'Le post a été modifié avec succès.');
-
-        return $this->redirectToRoute('showsponsor');
-    }
-
-    return $this->render('front_office/post_group/editpost.html.twig', [
-        'form' => $form->createView(),
-        'postId' => $id, // Passer l'ID du post à la vue
-    ]);
-}
-
-    
-
-    #[Route('/deletepost/{id}', name: 'deletepost')]
-    public function deletepost($id, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
+    #[Route('/addpostgroup/{id}/{idpost}', name: 'editpost')]
+    public function editpostgroup($idpost, $id, PostGroupRepository $PostGroupRepository, Request $request, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
-        $dataid = $PostGroupRepository->find($id);
+
+        // Récupérer le post à éditer
+        $post = $PostGroupRepository->find($idpost);
+
+        // Vérifier si le post existe
+        if (!$post) {
+            throw $this->createNotFoundException('Post non trouvé pour l\'ID ' . $idpost);
+        }
+
+        // Créer le formulaire d'édition du post
+        $form = $this->createForm(PostGroupType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', 'Le post a été modifié avec succès.');
+
+
+            return $this->redirectToRoute('addpostgroup', ['id' => $id]);
+        }
+
+        return $this->render('front_office/post_group/editpost.html.twig', [
+            'form' => $form->createView(),
+            'postId' => $idpost,
+            'id' => $id // Passer l'ID du post à la vue
+        ]);
+    }
+
+
+
+    #[Route('/addpostgroup/{id}/{idpost}/delete', name: 'deletepost')]
+    public function deletepost($id, $idpost, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
+    {
+        $em = $managerRegistry->getManager();
+        $dataid = $PostGroupRepository->find($idpost);
         $em->remove($dataid);
         $em->flush();
         $this->addFlash('success', 'Votre post a été suprimé');
-        return $this->redirectToRoute('showsponsor');
+        return $this->redirectToRoute('addpostgroup', ['id' => $id]);
     }
-
-    
-   
-
-    
-  
 }

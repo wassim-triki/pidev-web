@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <br>
             <div class="row justify-content-center">
-                <div class="col-xl-14 col-lg-12 order-lg-2 order-xl-1"> <!-- J'ai ajusté la largeur de la colonne à col-xl-10 -->
+                <div class="col-xl-14 col-lg-12 order-lg-1 order-xl-1"> <!-- J'ai ajusté la largeur de la colonne à col-xl-10 -->
                     <div class="card">
                         <div class="card-body pt-2">
                             <div class="table-responsive">
@@ -49,6 +49,11 @@
                                                 <h5 class="font-14 my-1 fw-normal">Duration contrat</h5>
                                                 <span class="text-muted font-13">{{ i.Contrat }}</span>
                                             </td>
+                                            <td>
+                                                <h5 class="font-14 my-1 fw-normal">Etat</h5>
+                                                <span class="text-muted font-13">{{ i.type }}</span>
+                                            </td>
+                                            
                                           
                                             <td>
                                                 <a href="{{ path('editsponsor', {'id': i.id}) }}" class="btn btn-link" style="font-size: 24px;" onclick="return confirm('Are you sure you want to delete this post?');">

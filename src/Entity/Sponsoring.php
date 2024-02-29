@@ -35,7 +35,7 @@ class Sponsoring
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "PLEASE! the description")]
-    #[Assert\Length(min: 20, minMessage: "le contenu doit avoir un longeur plus que 20 charactéres")]
+    #[Assert\Length(min: 10, minMessage: "la description doit avoir un longeur plus que 10 charactéres")]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'sponsoring', targetEntity: PostGroup::class)]
