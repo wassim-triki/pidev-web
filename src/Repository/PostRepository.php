@@ -31,11 +31,34 @@ class PostRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Post::class);
     }
-    public function findByTitle($titre)
+
+    public function advancedSearch(array $criteria)
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery('
+        SELECT p
+        FROM App\Entity\Post p
+        WHERE p.titre LIKE :titre
+    ');
+
+        foreach ($criteria as $field => $value) {
+            switch ($field) {
+                case 'titre':
+                    $query->setParameter('titre', '%' . $value . '%');
+                    break;
+                    // Add more cases for other fields as needed
+            }
+        }
+
+        return $query->getResult();
+    }
+
+    public function findByType($type)
     {
         return $this->createQueryBuilder('p')
-            ->where('p.titre LIKE :titre')
-            ->setParameter('titre', '%' . $titre . '%')
+            ->where('p.type LIKE :type')
+            ->setParameter('type', '%' . $type . '%')
             ->getQuery()
             ->getResult();
     }

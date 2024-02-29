@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -20,6 +21,9 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class PostController extends AbstractController
 {
@@ -31,46 +35,53 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/search', name: 'post_search')]
-    public function search(Request $request, PostRepository $postRepository)
-    {
-        $form = $this->createForm(SearchPostType::class);
-        $form->handleRequest($request);
-
-        $posts = [];
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $posts = $postRepository->findByTitle($data['search']);
-        }
-
-        return $this->render('front_office/post/showtest2.html.twig', [
-            'form' => $form->createView(),
-            'posts' => $posts,
-        ]);
-    }
 
     #[Route('/showpost', name: 'showpost')]
     public function showpost(Request $request, PostRepository $postRepository): Response
     {
-        $form = $this->createForm(SearchPostType::class);
-        $form->handleRequest($request);
-        $posts = [];
-        $posts = $postRepository->findAll();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $posts = $postRepository->findByTitle($data['search']);
-        }
+        $post = $postRepository->findAll();
         return $this->render('front_office/post/showtest.html.twig', [
-            'form' => $form->createView(),
-            'post' => $posts
+            'post' => $post
         ]);
+    }
+
+
+    #[Route('/search', name: 'search')]
+    public function search(Request $request, PostRepository $postRepository): Response
+    {
+        $query = $request->query->get('query');
+
+        // Perform search query using Doctrine ORM
+        $results = $postRepository->createQueryBuilder('e')
+            ->where('e.titre LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+
+        // Transform results to array to prepare for JSON response
+        $formattedResults = [];
+        foreach ($results as $result) {
+            // Customize the fields you want to include in the response
+            $formattedResults[] = [
+                'titre' => $result->getTitre(),
+                'description' => $result->getDescription(),
+                'date' => $result->getDate(),
+                'type' => $result->getType(),
+                'imageUrl' => $result->getImageUrl(),
+                'place' => $result->getPlace(),
+
+                // Add more fields as needed
+            ];
+        }
+
+        // Return JSON response
+        return new JsonResponse($formattedResults);
     }
 
 
 
     #[Route('/addpost', name: 'addpost')]
-    public function addpost(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response
+    public function addpost(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger, HubInterface $hub): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
@@ -108,8 +119,7 @@ class PostController extends AbstractController
             $em->persist($post);
             $em->flush();
             $this->addFlash('success', 'Post successfully added!');
-            return $this->redirectToRoute('addpost'); // Redirect to a route after successful submission
-
+            return $this->redirectToRoute('addpost');
         }
 
         return $this->renderForm('front_office/post/addpost2.html.twig', [
