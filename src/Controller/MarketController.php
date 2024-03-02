@@ -13,6 +13,7 @@ use App\Repository\MarketRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Twilio\Rest\Client;
 
 class MarketController extends AbstractController
 {

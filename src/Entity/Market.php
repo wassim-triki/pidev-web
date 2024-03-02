@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomAssert;
 
 #[ORM\Entity(repositoryClass: MarketRepository::class)]
 class Market
@@ -24,7 +25,7 @@ class Market
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\OneToMany(mappedBy: 'marketRelated', targetEntity: Voucher::class)]
+    #[ORM\OneToMany(mappedBy: 'marketRelated', targetEntity: Voucher::class, cascade: ['persist', 'remove'])]
     private Collection $vouchers;
 
     #[Assert\NotBlank(message: "The city must not be blank")]
@@ -43,12 +44,11 @@ class Market
     #[ORM\Column(length: 50)]
     private ?string $city = null;
 
-    #[Assert\NotBlank(message: "The zip code must not be blank")]
-    #[Assert\Regex(
-        pattern: '/^\d{4}$/',
-        message: "The zip code must be a 4-digit number"
-    )]
+    
     #[ORM\Column]
+    #[Assert\Type(type: 'integer', message: "The zip code must be an integer")]
+    #[CustomAssert\IntegerValue]
+    #[Assert\NotBlank(message: "The city must not be blank")]
     private ?int $zipCode = null;
 
     #[ORM\Column(length: 255, nullable: true)]

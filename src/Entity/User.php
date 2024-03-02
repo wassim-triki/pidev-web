@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $reputation = null;
 
-    #[ORM\OneToMany(mappedBy: 'userWon', targetEntity: Voucher::class)]
+    #[ORM\OneToMany(mappedBy: 'userWon', targetEntity: Voucher::class, cascade: ['persist', 'remove'])]
     private Collection $vouchers;
 
     public function __construct()

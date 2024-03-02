@@ -39,8 +39,6 @@ class HomeController extends AbstractController
         // hedha kollou bech yetna7aa !
         $user = $this->fetchUserFromDatabase();
         $this->storeUserInSession($user);
-        $userEmail = $this->session->get('user_email');
-        $userRoles = $this->session->get('user_roles');
         $this->authenticateUser($user);
         // youfa hnee
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
@@ -55,8 +53,6 @@ class HomeController extends AbstractController
     public function profile() : Response {
         $user = $this->fetchUserFromDatabase();
         $this->storeUserInSession($user);
-        // $userEmail = $this->session->get('user_email');
-        // $userRoles = $this->session->get('user_roles');
         $this->authenticateUser($user);
         if($user){
             $vouchers = $this->entityManager->createQueryBuilder()
@@ -65,11 +61,11 @@ class HomeController extends AbstractController
             ->where('v.userWon = :userId')
             ->andWhere('v.isValid = :isValid')
             ->setParameter('userId', $user->getId())
-            ->setParameter('isValid', true) // Assuming isValid is a boolean property
+            ->setParameter('isValid', true)
             ->getQuery()
             ->getResult();
     
-            // Count the number of vouchers
+            
             $voucherCount = count($vouchers);
             return $this->render('frontOffice/profile.html.twig', [
                 'voucherCount' => $voucherCount,
@@ -104,7 +100,6 @@ class HomeController extends AbstractController
     // hedha kollou pour le test
     private function fetchUserFromDatabase(): ?User
     {
-        // You can customize this method to fetch a user based on your application's logic
         return $this->managerRegistry->getRepository(User::class)->findOneBy(['email' => 'user1@gmail.com']);
     }
 

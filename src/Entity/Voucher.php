@@ -26,7 +26,6 @@ class Voucher
 
     #[ORM\Column]
     #[CustomAssert\IntegerValue]
-    #[Assert\Regex(pattern: "/^\d+$/", message: "Usage limit must be a digit")]
     #[Assert\NotBlank(message: "The name must not be blank")]
     private ?float $value = null;
 

@@ -25,7 +25,7 @@ class VoucherCategory
     #[Assert\NotBlank(message: 'Description cannot be blank')]
     private ?string $discription = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Voucher::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Voucher::class, cascade: ['persist', 'remove'])]
     private Collection $vouchers;
 
     public function __construct()

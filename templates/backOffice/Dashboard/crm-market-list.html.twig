@@ -17,23 +17,23 @@
                                         {% for market in markets %}
                                         <tr data-market-id="{{ market.id }}" class="voucher-row">
                                             <td>
-                                                <h5 class="font-14 my-1 fw-normal market-name" data-market-id="{{ market.id }}">{{ market.name}}</h5>
+                                                <h5 class="font-14 my-1 fw-normal market-name" data-market-id="{{ market.id }}">Market Name</h5>
                                                 <span class="text-muted font-13" data-voucher-id="{{ market.id }}">{{ market.name }}</span>
                                             </td>
                                             <td>
-                                                <h5 class="font-14 my-1 fw-normal">Type</h5>
+                                                <h5 class="font-14 my-1 fw-normal">Region</h5>
                                                 <span class="text-muted font-13">{{ market.region }}</span>
                                             </td>
                                             <td>
-                                                <h5 class="font-14 my-1 fw-normal">Value</h5>
-                                                <span class="text-muted font-13">{{ market.city }}DT</span>
+                                                <h5 class="font-14 my-1 fw-normal">City</h5>
+                                                <span class="text-muted font-13">{{ market.city }}</span>
                                             </td>
                                             <td>
-                                                <h5 class="font-14 my-1 fw-normal">Name of user</h5>
+                                                <h5 class="font-14 my-1 fw-normal">Zip code</h5>
                                                 <span class="text-muted font-13">{{market.zipCode}}</span>
                                             </td>
                                             <td>
-                                                <h5 class="font-14 my-1 fw-normal">Name of Market</h5>
+                                                <h5 class="font-14 my-1 fw-normal">Address</h5>
                                                 <span class="text-muted font-13">{{ market.address}}</span>
                                             </td>
                                             <td>
