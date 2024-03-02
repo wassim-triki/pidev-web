@@ -3,19 +3,19 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 {% endblock %}
 
 {% block main %}
     <h1 class="mb-4 text-center">Q/A</h1>
-    <div class="d-flex justify-content-center">
-        <div class="col-md-8">
+    <div class=" d-flex justify-content-center">
+        <div class="col-md-6">
             {% for question in questions %}
                 <div class="card mb-3">
                     <div class="card-header bg-light">
                         <b class="text-uppercase">{{ question.title }}</b>
                         <br>    
-                        <small class="text-muted">Questionné par {{ question.userid.username }} en {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
-                    </div>
+                        <small class="text-muted">Questionné par <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> en {{ question.createdAt|date('Y-m-d H:i:s') }}</small>                    </div>
                     <div class="card-body">
                         <p>{{ question.body }}</p>
                         <!-- Show Answers button -->
@@ -30,7 +30,6 @@
                             <a href="{{ path('admin_answer_new', {'id': question.id}) }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-reply"></i> Répondre
                             </a>
-                   
                     </div>
                     <div class="card-footer text-right">
                        
@@ -66,6 +65,23 @@
                   </div>
                 </div>
             {% endfor %}
+            {% if questions is not empty %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {{ knp_pagination_render(questions) }}
+                    </ul>
+                </nav>
+            {% endif %}
+           
         </div>
+      
+      
     </div>
+    <div class="statistics card rounded-lg shadow-lg p-3" style="position: fixed; right: 0; top: 50%; transform: translateY(-50%);">
+        <h3>Statistiques</h3>
+        <p>Nombre total des questions: {{ total_questions }}</p>
+        <p>Nombre de questions répondues:  {{ answered_questions }}</p>
+        <p>Nombre de questions ajoutés aujourd'hui: {{ today_questions }}</p>
+    </div>
+ 
 {% endblock %}

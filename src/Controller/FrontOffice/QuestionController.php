@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 class QuestionController extends AbstractController
 {
@@ -22,11 +23,16 @@ class QuestionController extends AbstractController
 
     
     #[Route('/showquestions', name: 'show_questions')]
-    public function show(QuestionRepository $qr): Response
+    public function show(QuestionRepository $qr,PaginatorInterface $paginator,Request $req): Response
     {
-         $question= $qr->findAll();
+        $pagination = $paginator->paginate(
+            $qr->paginationquery(),
+            $req->query->get('page',1),
+            3
+
+        );
         return $this->render('front_office/question/show.html.twig', [
-            'questions' => $question
+            'questions' => $pagination
         ]);
     }
 

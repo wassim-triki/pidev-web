@@ -15,8 +15,8 @@ class AnswerType extends AbstractType
         $builder
         ->add('body', TextareaType::class, [
             'attr' => ['class' => 'form-control'],
-            'label' => 'Réponse',
-            'label_attr' => ['class' => 'form-label']
+            'label' => 'Réponse : ',
+            'label_attr' => ['class' => 'col-auto']
         ])->add('save', SubmitType::class, [
             'attr' => ['class' => 'btn btn-info mx-auto d-block'],
             'label' => 'Répondre'

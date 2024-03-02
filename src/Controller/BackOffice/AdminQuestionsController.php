@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 class AdminQuestionsController extends AbstractController
 {
@@ -23,12 +24,24 @@ class AdminQuestionsController extends AbstractController
         ]);
     }
     #[Route('/showquestions', name: 'admin_questions_show')]
-public function show(QuestionRepository $questionRepository): Response
+public function show(QuestionRepository $questionRepository,PaginatorInterface $paginator,Request $req): Response
 {
-    $questions = $questionRepository->findAll();
+    $pagination = $paginator->paginate(
+        $questionRepository->paginationquery(),
+        $req->query->get('page',1),
+        3
+
+    );
+    $totalQuestions = $questionRepository->getTotalQuestionsCount();
+   $answeredQuestions = $questionRepository->getAnsweredQuestionsCount();
+   $todayQuestions = $questionRepository->getTodayQuestionsCount();
+
 
     return $this->render('back_office/admin_questions/show.html.twig', [
-        'questions' => $questions,
+        'questions' => $pagination,
+        'total_questions' => $totalQuestions,
+        'answered_questions' => $answeredQuestions,
+        'today_questions' => $todayQuestions,
     ]);
 }
 #[Route('/question/{id}/answer', name: 'admin_answer_new')]

@@ -21,20 +21,42 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-//    /**
-//     * @return Question[] Returns an array of Question objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   public function paginationquery(): array
+    {     
+         return $this->createQueryBuilder('q')
+      ->orderBy('q.id', 'Desc')
+        ->getQuery()
+         ->getResult()
+       ;
+   }
+   public function getTotalQuestionsCount(): int
+{
+    return $this->createQueryBuilder('q')
+        ->select('count(q.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function getAnsweredQuestionsCount(): int
+{
+    return $this->createQueryBuilder('q')
+        ->select('count(q.id)')
+        ->innerJoin('q.answer', 'a') // Replace 'answers' with the actual property/method that indicates a question has been answered
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+public function getTodayQuestionsCount(): int
+{
+    $qb = $this->createQueryBuilder('q');
+
+    return $qb->select('count(q.id)')
+        ->where($qb->expr()->between('q.created_at', ':start', ':end'))
+        ->setParameter('start', new \DateTime('today'))
+        ->setParameter('end', new \DateTime('tomorrow'))
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
 
 //    public function findOneBySomeField($value): ?Question
 //    {
