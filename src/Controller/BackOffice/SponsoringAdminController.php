@@ -9,6 +9,7 @@ use App\Service\JwtTokenService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -135,4 +136,30 @@ class SponsoringAdminController extends AbstractController
 
         return $this->redirectToRoute('showdbsponsoring');
     }
+ 
+
+// Ajoutez cette méthode dans votre contrôleur Symfony
+#[Route('/update-sponsor-state', name: 'update_sponsor_state', methods: ['POST'])]
+public function updateSponsorState(Request $request, SponsoringRepository $sponsorRepository, ManagerRegistry $managerRegistry): JsonResponse
+{
+    $sponsorId = $request->request->get('id');
+    $newState = $request->request->get('type');
+
+    // Vérifiez si l'ID du sponsor est valide
+    $sponsor = $sponsorRepository->find($sponsorId);
+    if (!$sponsor) {
+        return new JsonResponse(['message' => 'Sponsor not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    // Mettez à jour l'état du sponsor
+    $sponsor->setType($newState);
+
+    // Enregistrez les modifications dans la base de données
+    $entityManager = $managerRegistry->getManager();
+    $entityManager->flush();
+
+    // Répondez avec succès
+    return new JsonResponse(['message' => 'Sponsor state updated successfully'], Response::HTTP_OK);
+}
+
 }
