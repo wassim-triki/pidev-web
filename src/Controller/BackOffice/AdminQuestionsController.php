@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 class AdminQuestionsController extends AbstractController
 {
     #[Route('/questions', name: 'app_admin_questions')]
@@ -45,7 +47,7 @@ public function show(QuestionRepository $questionRepository,PaginatorInterface $
     ]);
 }
 #[Route('/question/{id}/answer', name: 'admin_answer_new')]
-public function newAnswer(Request $request, ManagerRegistry $managerRegistry, Question $question): Response
+public function newAnswer(Request $request, ManagerRegistry $managerRegistry, Question $question,MailerInterface $mailer): Response
 {
     $answer = $question->getAnswer();
 
@@ -62,6 +64,23 @@ public function newAnswer(Request $request, ManagerRegistry $managerRegistry, Qu
         $answer->setCreatedAt(new \DateTimeImmutable());
         $entityManager->persist($answer);
         $entityManager->flush();
+        $email = (new TemplatedEmail())
+            ->from('admin@Al9ani.tn')
+            ->to($question->getUserId()->getEmail())
+            ->subject('Votre question a été répondue par un administrateur !')
+            ->htmlTemplate('back_office/admin_questions/email.html.twig')
+        
+            ->context([
+                'question' =>$question,
+                'answer'=>$answer,
+                'name'=>$question->getUserId()
+
+                
+            ])
+        ;
+
+        $mailer->send($email);
+
 
         return $this->redirectToRoute('admin_questions_show', ['id' => $question->getId()]);
     }
