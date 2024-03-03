@@ -27,11 +27,11 @@
                         <form action="{{ path('admin_login') }}" method="post">
                             <div class="mb-3">
                                 <label for="emailaddress" class="form-label">Email address</label>
-                                <input class="form-control" type="email" name="_username" required="" placeholder="Enter your email">
+                                <input id="emailaddress" class="form-control" type="email" name="email" required="" placeholder="Enter your email">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" name="_password" class="form-control" placeholder="Enter your password">
+                                <input id="password" type="password" name="password" class="form-control" placeholder="Enter your password">
                             </div>
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                             {% if error %}
