@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
         $user->setUsername('user');
         $user->setGender(GenderEnum::FEMALE);
         $user->setPassword($this->passwordHasher->hashPassword($user, 'userpassword'));
-        $user->setRoles(['ROLE_USER']);
+//        $user->setRoles(['ROLE_USER']);
         $manager->persist($user);
 
         // Create an admin user
@@ -35,6 +35,7 @@ class AppFixtures extends Fixture
         $admin->setGender(GenderEnum::MALE);
         $admin->setPassword($this->passwordHasher->hashPassword($admin, 'adminpassword'));
         $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setIsVerified(true);
         $manager->persist($admin);
 
         $manager->flush();

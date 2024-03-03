@@ -35,8 +35,8 @@ class AccountInformationFormType extends AbstractType
             ->add('phone', TextType::class, [
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/^(\+216)?\d{8}$/',
-                        'message' => 'Phone number must be exactly 8 digits or in the format +216xxxxxxxx',
+                        'pattern' => '/^(\\+216)?[2459]\\d{7}$/',
+                        'message' => "Phone number must start with 2, 5, 9, 4 or +216 and be exactly 8 digits long",
                     ]),
                 ],
             ])

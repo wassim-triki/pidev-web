@@ -3,6 +3,7 @@
 namespace App\Controller\BackOffice;
 
 use App\Entity\User;
+use App\Form\AdminEditProfileFormType;
 use App\Form\AdminUserCreationFormType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -131,5 +132,58 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+
+    #[Route('/profile/edit', name: 'admin_edit_profile')]
+    public function editProfile(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $user = $this->getUser();
+        $form = $this->createForm(AdminEditProfileFormType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $photoFile */
+            $photoFile = $form->get('photo')->getData();
+
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    $user->setPhoto($newFilename);
+                } catch (FileException $e) {
+                    // Handle exception if something happens during file upload
+                }
+            }
+
+//            if ($form->get('password')->getData()) {
+//                $user->setPassword(
+//                    $passwordEncoder->encodePassword(
+//                        $user,
+//                        $form->get('password')->getData()
+//                    )
+//                );
+//            }
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Profile updated successfully.');
+
+            return $this->redirectToRoute('admin_dashboard');
+        }
+
+        return $this->render('back_office/users/edit_profile.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
 
 }
