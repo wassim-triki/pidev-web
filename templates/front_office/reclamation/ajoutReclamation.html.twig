@@ -1,0 +1,57 @@
+{% extends 'front_office/base.html.twig' %}
+{% block title %}Add Reclamation{% endblock %}
+
+{% block main %}
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <h4 class="mb-0">Add Reclamation</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+                        <div class="mb-3">
+                            {{ form_label(f.subject, "Subject") }}
+                            {{ form_widget(f.subject, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color:red;">{{ form_errors(f.subject) }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(f.description, "Description") }}
+                            {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color:red;">{{ form_errors(f.description) }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(f.ReportedUsername, "ReportedUsername") }}
+                            {{ form_widget(f.ReportedUsername, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color:red;">{{ form_errors(f.ReportedUsername) }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(f.TypeReclamation, "TypeReclamation") }}
+                            {{ form_widget(f.TypeReclamation, {'attr': {'class': 'form-control'}}) }}
+                            <div style="color:red;">{{ form_errors(f.TypeReclamation) }}</div>
+                        </div>
+
+                     <div class="mb-3">
+                        {{form_label(f.screenShot, "ScreenShot")}}
+                        {{ form_widget(f.screenShot, {'attr': {'class': 'form-control'}}) }}
+                       
+                     </div>
+
+                        <div class="d-grid gap-2">
+                            {{ form_widget(f.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+                        </div>
+
+                        {{ form_end(f) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

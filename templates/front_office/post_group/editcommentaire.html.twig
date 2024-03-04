@@ -1,0 +1,35 @@
+
+
+{% extends 'front_office/base.html.twig' %}
+
+{% block main %}
+    {{ parent() }}
+
+    {# Modal pour afficher l'alerte #}
+    <div class="modal fade" id="editcommentaireModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editcommentaireModalLabel">Édition du commentaire</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                   
+                    
+                    {# Formulaire d'édition du commentaire #}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# JavaScript pour afficher automatiquement la modal lors de l'affichage de la page #}
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            $('#editcommentaireModal').modal('show');
+        });
+    </script>
+{% endblock %}

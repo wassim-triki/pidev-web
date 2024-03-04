@@ -1,0 +1,174 @@
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}
+    Edit User
+{% endblock %}
+
+{% block main %}
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ path('admin_users') }}">Users</a></li>
+                                    <li class="breadcrumb-item active">Edit User</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Edit User</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="mb-3">
+                                            {{ form_label(form.username) }}
+                                            {{ form_widget(form.username) }}
+                                            {% if form.username.vars.errors %}
+                                                {% for error in form.username.vars.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.email) }}
+                                            {{ form_widget(form.email) }}
+                                            {% if form.email.vars.errors %}
+                                                {% for error in form.email.vars.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+{#                                        <div class="mb-3">#}
+{#                                            {{ form_label(form.password) }}#}
+{#                                            {{ form_widget(form.password) }}#}
+{#                                            {% if form.password.vars.errors %}#}
+{#                                                {% for error in form.password.vars.errors %}#}
+{#                                                    <div class="alert alert-danger">#}
+{#                                                        {{ error.message }}#}
+{#                                                    </div>#}
+{#                                                {% endfor %}#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.address) }}
+                                            {{ form_widget(form.address) }}
+                                            {% if form.address.vars.errors %}
+                                                {% for error in form.address.vars.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.phone) }}
+                                            {{ form_widget(form.phone) }}
+                                            {% if form.phone.vars.errors %}
+                                                {% for error in form.phone.vars.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+{#                                        <div class="mb-3">#}
+{#                                            {{ form_label(form.gender) }}#}
+{#                                            {{ form_widget(form.gender) }}#}
+{#                                            {% if form.gender.vars.errors %}#}
+{#                                                {% for error in form.gender.vars.errors %}#}
+{#                                                    <div class="alert alert-danger">#}
+{#                                                        {{ error.message }}#}
+{#                                                    </div>#}
+{#                                                {% endfor %}#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+
+{#                                        <div class="mb-3">#}
+{#                                            {{ form_label(form.roles) }}#}
+{#                                            {{ form_widget(form.roles) }}#}
+{#                                            {% if form.roles.vars.errors %}#}
+{#                                                {% for error in form.roles.vars.errors %}#}
+{#                                                    <div class="alert alert-danger">#}
+{#                                                        {{ error.message }}#}
+{#                                                    </div>#}
+{#                                                {% endfor %}#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+                                    </div>
+
+                                    <div class="col-xl-6">
+                                        <div class="mb-3">
+                                            {{ form_label(form.photo) }}
+                                            {{ form_widget(form.photo) }}
+                                            {% if form.photo.vars.errors %}
+                                                {% for error in form.photo.vars.errors %}
+                                                    <div class="alert alert-danger">
+                                                        {{ error.message }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                    </div> <!-- end col-->
+                </div>
+                <!-- end row-->
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-end footer-links d-none d-md-block">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+
+{% endblock %}
