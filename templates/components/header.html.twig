@@ -118,11 +118,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="discussions.html">
+                            <a class="nav-link" href="{{ path('showsponsor') }}">
                     <span class="nav-icon d-lg-none me-3">
                       <i class="feather-message-circle"></i>
                     </span>
-                                Discussion
+                                Forum
                             </a>
                         </li>
 {#                        <li class="nav-item dropdown">#}
@@ -461,7 +461,7 @@
                         {% if app.user.photo %}
                             <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User Photo">
                         {% else %}
-                            <img class="user-photo" src="{{ asset('images/default-user.png') }}" alt="Default User">
+                            <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
                         {% endif %}
                     </div>
 

@@ -6,7 +6,9 @@ use App\Entity\User;
 use App\Form\AdminEditProfileFormType;
 use App\Form\AdminUserCreationFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Service\JwtTokenService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -19,12 +21,19 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'admin_dashboard')]
-    public function dashboard()
+    public function dashboard(JwtTokenService $postStatisticsService, PostRepository $postRepository)
     {
         // Only allow authenticated users with the ROLE_ADMIN to access this page
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        return $this->render('back_office/dashboard/dashboard.html.twig');
+        $post = $postRepository->findAll();
+        $postStatistics = $postStatisticsService->getPostStatistics();
+        $sponsorStatistics = $postStatisticsService->getSponsorStatistics();
+        return $this->render('back_office/dashboard/dashboard.html.twig', [
+            'postStatistics' => $postStatistics,
+            'post' => $post,
+            'sponsorStatistics' => $sponsorStatistics
+        ]);
     }
 
     #[Route('/users', name: 'admin_users')]
@@ -84,7 +93,7 @@ class AdminController extends AbstractController
 
 
     #[Route('/users/create', name: 'admin_create_user')]
-    public function createUser(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder,SluggerInterface $slugger): Response
+    public function createUser(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -100,7 +109,7 @@ class AdminController extends AbstractController
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // Use the slugger to create a safe filename
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
 
                 try {
                     $photoFile->move(
@@ -151,7 +160,7 @@ class AdminController extends AbstractController
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
 
                 try {
                     $photoFile->move(
@@ -164,14 +173,14 @@ class AdminController extends AbstractController
                 }
             }
 
-//            if ($form->get('password')->getData()) {
-//                $user->setPassword(
-//                    $passwordEncoder->encodePassword(
-//                        $user,
-//                        $form->get('password')->getData()
-//                    )
-//                );
-//            }
+            //            if ($form->get('password')->getData()) {
+            //                $user->setPassword(
+            //                    $passwordEncoder->encodePassword(
+            //                        $user,
+            //                        $form->get('password')->getData()
+            //                    )
+            //                );
+            //            }
 
             $entityManager->flush();
 
@@ -184,6 +193,4 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
 }

@@ -68,11 +68,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    #[ORM\Column(type: 'string', length: 180, unique: true,nullable: true)]
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     private ?string $emailVerificationToken = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PostGroup::class)]
+    private Collection $postGroups;
 
     public function getEmailVerificationToken(): ?string
     {
@@ -116,9 +119,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
     private Collection $user;
 
+
+    #[ORM\Column]
+    private ?int $avertissementsCount = null;
+
+    #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
+    private Collection $avertissements;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Postcommentaire::class)]
+    private Collection $postcommentaires;
+
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+        $this->avertissements = new ArrayCollection();
+        $this->postGroups = new ArrayCollection();
+        $this->postcommentaires = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -314,4 +329,107 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
+    public function getAvertissementsCount(): ?int
+    {
+        return $this->avertissementsCount;
+    }
+
+    public function setAvertissementsCount(int $avertissementsCount): static
+    {
+        $this->avertissementsCount = $avertissementsCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avertissement>
+     */
+    public function getAvertissements(): Collection
+    {
+        return $this->avertissements;
+    }
+
+    public function addAvertissement(Avertissement $avertissement): static
+    {
+        if (!$this->avertissements->contains($avertissement)) {
+            $this->avertissements->add($avertissement);
+            $avertissement->setF($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvertissement(Avertissement $avertissement): static
+    {
+        if ($this->avertissements->removeElement($avertissement)) {
+            // set the owning side to null (unless already changed)
+            if ($avertissement->getF() === $this) {
+                $avertissement->setF(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostGroup>
+     */
+    public function getPostGroups(): Collection
+    {
+        return $this->postGroups;
+    }
+
+    public function addPostGroup(PostGroup $postGroup): static
+    {
+        if (!$this->postGroups->contains($postGroup)) {
+            $this->postGroups->add($postGroup);
+            $postGroup->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostGroup(PostGroup $postGroup): static
+    {
+        if ($this->postGroups->removeElement($postGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($postGroup->getUser() === $this) {
+                $postGroup->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Postcommentaire>
+     */
+    public function getPostcommentaires(): Collection
+    {
+        return $this->postcommentaires;
+    }
+
+    public function addPostcommentaire(Postcommentaire $postcommentaire): static
+    {
+        if (!$this->postcommentaires->contains($postcommentaire)) {
+            $this->postcommentaires->add($postcommentaire);
+            $postcommentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostcommentaire(Postcommentaire $postcommentaire): static
+    {
+        if ($this->postcommentaires->removeElement($postcommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($postcommentaire->getUser() === $this) {
+                $postcommentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }
