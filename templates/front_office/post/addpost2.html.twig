@@ -9,15 +9,16 @@
 <!-- Body Start -->
 <main class="goeveni-mp">
     <div class="main-section">
-        {% for flashMessage in app.flashes('success') %}
-        <div class="alert alert-success" role="alert">
-            {{ flashMessage }}
-        </div>
-        {% endfor %}
+
         <div class="container">
+
             <div class="row justify-content-md-center">
                 <div class="col-xl-6 col-lg-10 col-md-12">
-
+                    {% for flashMessage in app.flashes('success') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                    {% endfor %}
                     <div class="add-event-tabs">
                         {{ form_start(f, {'attr': {'class': 'needs-validation','id':'form', 'novalidate': true}}) }}
 
