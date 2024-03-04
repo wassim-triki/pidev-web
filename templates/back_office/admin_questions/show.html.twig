@@ -15,7 +15,10 @@
                     <div class="card-header bg-light">
                         <b class="text-uppercase">{{ question.title }}</b>
                         <br>    
-                        <small class="text-muted">Questionné par <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> en {{ question.createdAt|date('Y-m-d H:i:s') }}</small>                    </div>
+                        <small class="text-muted">
+                            Questionné par <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> en {{ question.createdAt|date('Y-m-d H:i:s') }}
+                        </small>
+                    </div>
                     <div class="card-body">
                         <p>{{ question.body }}</p>
                         <!-- Show Answers button -->
@@ -32,7 +35,11 @@
                             </a>
                     </div>
                     <div class="card-footer text-right">
-                       
+                        {% if question.answer %}
+                            <span class="text-success">Répondu</span>
+                        {% else %}
+                            <span class="text-danger">Non répondu</span>
+                        {% endif %}
                     </div>
                 </div>
 
