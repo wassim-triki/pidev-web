@@ -31,11 +31,11 @@ class ReclamationType extends AbstractType
         ])
         ->add('screenShot', FileType::class, [
             'label' => 'screenShot',
-            'required' => false, // Facultatif
-            'mapped' => false, // Ne pas mapper ce champ à une propriété de l'entité
+            'required' => false, 
+            'mapped' => false, 
             'constraints' => [
                 new File([
-                    'maxSize' => '1024k', // Limite la taille à 1 Mo
+                    'maxSize' => '1024k', 
                     'mimeTypes' => [
                         'image/*', // Accepte uniquement les fichiers de type image
                     ],
@@ -55,4 +55,11 @@ public function configureOptions(OptionsResolver $resolver): void
         'data_class' => Reclamation::class,
     ]);
 }
+
+
+
+
+
+
+
 }

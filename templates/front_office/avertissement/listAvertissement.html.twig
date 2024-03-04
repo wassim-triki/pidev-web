@@ -17,7 +17,25 @@
         }, 5000);
     </script>
     {% endif %}
-    
+    <script>
+        var conn = new WebSocket('ws://localhost:8080');
+
+        conn.onopen = function(e) {
+            console.log("Connexion établie !");
+        };
+
+        conn.onmessage = function(e) {
+            var messages = document.getElementById('messages');
+            messages.innerHTML += '<div>' + e.data + '</div>';
+        };
+
+        function sendMessage() {
+            var messageInput = document.getElementById('messageInput');
+            var message = messageInput.value;
+            conn.send(message);
+            messageInput.value = '';
+        }
+    </script>
 
    <style>
     .action-buttons {
@@ -48,6 +66,7 @@
         opacity: 0.8;
     }
 </style>
+
 <h1 style="font-size: 32px; color: #333; margin-bottom: 20px; text-align: center; text-transform: uppercase; font-weight: bold;">List of Avertissements</h1>
 
 
@@ -60,6 +79,8 @@
 							<div class="checkout-heading">
 																
 							</div>
+                          
+                           
 							<div class="table-responsive table-brder">
 								<table class="table">
 									<thead>
@@ -90,20 +111,24 @@
                                                     Avertissement déjà confirmé
                                                 {% endif %}
                                                     <form action="{{ path('avertissement_delete', {'id': r.id}) }}" method="post">
-                                                        <button type="submit" class="btn-delete">Supprimer</button>
+                                                    
                                                     </form>
                                                 </td>
                                             
 										</tr>
-                                        {% endfor %}									
+                                        {% endfor %}	
+                                       							
 									</tbody>
 								</table>
+                                {# Afficher les contrôles de pagination #}
+                                {{ knp_pagination_render(pagination) }}	
 							</div>
 						
 						</div>											
 					</div>					
 				</div>
 			</div>
+           
 		</main>
 {% endblock %}
     

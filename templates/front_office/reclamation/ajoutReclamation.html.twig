@@ -6,12 +6,20 @@
 {% block title %}Add Reclamation{% endblock %}
 
 {% block main %}
+<style>
+    .error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #d9534f;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
 
-{% for flash_message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ flash_message }}
-    </div>
-{% endfor %}
+</style>
+
+
+
 
 
   
@@ -27,66 +35,53 @@
 							</div>
 							<div class="contact-form">
                                 {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
-									<form enctype="multipart/form-data">
-									<div class="form-group">									
+								
+                                    <div class="form-group">
                                         {{ form_label(f.subject, "Subject") }}
-                                        {{ form_widget(f.subject, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_widget(f.subject, {'attr': {'class': 'form-control common-input'}}) }}
                                         {% if form_errors(f.subject) %}
-                                        <div style="color: #d9534f; background-color: #f2dede; border: 1px solid #d9534f; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                                            {{ form_errors(f.subject) }}
-                                        </div>
-                                    {% endif %}
-									</div>
-									<div class="form-group">									
+                                            <div class="error-message">{{ form_errors(f.subject) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
                                         {{ form_label(f.description, "Description") }}
-                                        {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_widget(f.description, {'attr': {'class': 'form-textarea common-input'}}) }}
                                         {% if form_errors(f.description) %}
-                                        <div style="color: #d9534f; background-color: #f2dede; border: 1px solid #d9534f; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                                            {{ form_errors(f.description) }}
-                                        </div>
-                                    {% endif %}
-									</div>
-									</div>
-									<div class="form-group">									
+                                            <div class="error-message">{{ form_errors(f.description) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
                                         {{ form_label(f.ReportedUsername, "ReportedUsername") }}
-                                        {{ form_widget(f.ReportedUsername, {'attr': {'class': 'form-control'}}) }}
-                                        
+                                        {{ form_widget(f.ReportedUsername, {'attr': {'class': 'form-control common-input'}}) }}
                                         {% if form_errors(f.ReportedUsername) %}
-                                        <div style="color: #d9534f; background-color: #f2dede; border: 1px solid #d9534f; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                                            {{ form_errors(f.ReportedUsername) }}
-                                        </div>
-                                    {% endif %}
-									</div>
-									</div>
-									<div class="form-group">									
+                                            <div class="error-message">{{ form_errors(f.ReportedUsername) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
                                         {{ form_label(f.TypeReclamation, "TypeReclamation") }}
-                                        {{ form_widget(f.TypeReclamation, {'attr': {'class': 'form-control'}}) }}
-            
+                                        {{ form_widget(f.TypeReclamation, {'attr': {'class': 'form-control common-input'}}) }}
                                         {% if form_errors(f.TypeReclamation) %}
-                                        <div style="color: #d9534f; background-color: #f2dede; border: 1px solid #d9534f; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                                            {{ form_errors(f.TypeReclamation) }}
-                                        </div>
-                                    {% endif %}
-									</div>
-									</div>
-									<div class="form-group">																		
-                                        {{form_label(f.screenShot, "ScreenShot")}}
-                                        {{ form_widget(f.screenShot, {'attr': {'class': 'form-control'}}) }}
-                    
-                                        {% if form_errors(f.screenShot) %}
-                                        <div style="color: #d9534f; background-color: #f2dede; border: 1px solid #d9534f; border-radius: 4px; padding: 10px; margin-bottom: 10px;">
-                                            {{ form_errors(f.screenShot) }}
-                                        </div>
-                                          {% endif %}
-									</div>								
-									</div>
-                                    {{ form_row(f.save) }}
-                                     {{ form_end(f) }}
-								</form>
+                                            <div class="error-message">{{ form_errors(f.TypeReclamation) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.screenShot, "ScreenShot") }}
+                                        {{ form_widget(f.screenShot, {'attr': {'class': 'form-control common-input'}}) }}
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(f.save) }}
+                                    </div>
+                                
+                                {{ form_end(f) }}
+                                
 							</div>
 						</div>						
 					</div>					
 				</div>
 			</div>
+           
+          
+
 		</main>
 {% endblock %}

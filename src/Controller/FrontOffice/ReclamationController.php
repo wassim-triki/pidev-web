@@ -70,7 +70,12 @@ class ReclamationController extends AbstractController
         // Persistez l'avertissement et la réclamation
         $entityManager->persist($avertissement);
         $entityManager->flush();
+        $this->addFlash(
+            'success', // Type de message, peut être 'success', 'warning', 'error', etc.
+            'Claim added successfully' // Le message à afficher
+        );
        return $this->redirect('listreclamation');
+      
          
         }
        return $this->renderForm('front_office/reclamation/ajoutReclamation.html.twig', [
@@ -91,6 +96,7 @@ class ReclamationController extends AbstractController
     #[Route('/editreclamation{id}', name: 'editreclamation')]
     public function  editreclamation ($id,ManagerRegistry $managerRegistry,Request $req,ReclamationRepository $reclamationrep, SluggerInterface $slugger): Response
     {
+       
         $em=$managerRegistry->getManager();
         $reclamation=$reclamationrep->find($id);
         $form=$this->createForm(ReclamationType::class, $reclamation);
@@ -116,6 +122,11 @@ class ReclamationController extends AbstractController
                  // ... handle exception if something happens during file upload
              }
          }
+         if ($reclamation->getS() && $reclamation->getS()->isConfirmation()) {
+            // Si oui, afficher un message et rediriger
+            $this->addFlash('error', 'This claim has been confirmed by the administrator and cannot be updated.');
+            return $this->redirectToRoute('listreclamation');
+        }
        
         $em->persist($reclamation);
        
@@ -133,8 +144,19 @@ class ReclamationController extends AbstractController
     {
         $em=$managerRegistry->getManager();
         $reclamation=$reclamationrep->find($id);
+
+           // Vérifier si la réclamation a été confirmée par l'administrateur
+    if ($reclamation->getS() && $reclamation->getS()->isConfirmation()) {
+        // Si oui, afficher un message et rediriger
+        $this->addFlash('error', 'This claim has been confirmed by the administrator and cannot be deleted.');
+        return $this->redirectToRoute('listreclamation');
+    }
         $em->remove($reclamation);
         $em->flush();
+        $this->addFlash(
+            'success', // Type de message, peut être 'success', 'warning', 'error', etc.
+            'Claim deleted successfully' // Le message à afficher
+        );
        return $this->redirect('listreclamation');
     }
 

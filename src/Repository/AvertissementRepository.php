@@ -20,6 +20,30 @@ class AvertissementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Avertissement::class);
     }
+    public function findByQuery($query)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.ReportedUsername LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function countTotalAvertissements(): int
+{
+    return $this->createQueryBuilder('a')
+        ->select('COUNT(a.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function countConfirmedAvertissements(): int
+{
+    return $this->createQueryBuilder('a')
+        ->select('COUNT(a.id)')
+        ->where('a.confirmation = true')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
 
 //    /**
 //     * @return Avertissement[] Returns an array of Avertissement objects
