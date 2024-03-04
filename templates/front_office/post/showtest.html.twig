@@ -1,6 +1,7 @@
 {% extends 'front_office/base.html.twig' %}
 {% block main %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="{{ asset('build/fullcalendar.js') }}"></script>
 
 <main>
   <div class="main-section">
@@ -1457,6 +1458,7 @@
                     Suspendisse cursus egestas luctus.
                     <a href="#">https://website.com/news</a>
                   </div>
+                  <div id='calendar'></div>
                 </div>
               </div>
             </div>
@@ -1520,6 +1522,14 @@
         });
       }
     });
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['dayGrid'],
+      events: '/api/events' // URL to fetch events
+    });
+    calendar.render();
   });
 </script>
 {% endblock %}

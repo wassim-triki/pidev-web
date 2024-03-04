@@ -52,17 +52,26 @@ class PostController extends AbstractController
     }
 
 
+
     #[Route('/search', name: 'search')]
     public function search(Request $request, PostRepository $postRepository): Response
     {
         $query = $request->query->get('query');
+        $date = $request->query->get('date');
 
-        // Perform search query using Doctrine ORM
-        $results = $postRepository->createQueryBuilder('e')
-            ->where('e.titre LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
+        $qb = $postRepository->createQueryBuilder('e');
+
+        if ($query) {
+            $qb->where('e.titre LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($date) {
+            $qb->andWhere('e.date = :date')
+                ->setParameter('date', new \DateTime($date));
+        }
+
+        $results = $qb->getQuery()->getResult();
 
         // Transform results to array to prepare for JSON response
         $formattedResults = [];
