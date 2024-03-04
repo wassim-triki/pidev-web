@@ -46,6 +46,11 @@ class AdminController extends AbstractController
             'sponsorStatistics' => $sponsorStatistics
         ]);
     }
+    #[Route('/dash', name: 'admin_dashboard')]
+    public function dashboardYassine()
+    {
+        return $this->render('backOffice/Dashboard/dashboard.html.twig');
+    }
 
     #[Route('/users', name: 'admin_users')]
     public function users(UserRepository $userRepository)
