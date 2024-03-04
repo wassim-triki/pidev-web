@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Service\SmsService;
 use App\Entity\Market;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,8 @@ use App\Repository\MarketRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Twilio\Rest\Client;
+use Symfony\Component\HttpClient\HttpClient;
+use HTTP_Request2;
 
 class MarketController extends AbstractController
 {
@@ -88,6 +90,34 @@ class MarketController extends AbstractController
             }
             $address = $market->getRegion() . ' - ' . $market->getCity() . ' - ' . $market->getZipCode();
             $market->setAddress($address);
+            
+            $client = HttpClient::create();
+
+            $response = $client->request('POST', 'https://ggeryw.api.infobip.com/sms/2/text/advanced', [
+                'headers' => [
+                    'Authorization' => 'App 89e1c61117eca29bb00decebebd55d87-1a217764-058b-4b49-b5bb-70c536865ec8',
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'
+                ],
+                'json' => [
+                    'messages' => [
+                        [
+                            'destinations' => [
+                                ['to' => '21658450148']
+                            ],
+                            'from' => 'ServiceSMS',
+                            'text' => 'MARKET NAME :'.$market->getName().' - MARKET ADDRESS : ' . $market->getAddress() . ' add with success '.' Thank you for your trust.',
+                        ]
+                    ]
+                ]
+            ]);
+            
+            $status = $response->getStatusCode();
+            if ($status === Response::HTTP_OK) {
+                echo $response->getContent();
+            } else {
+                echo 'Unexpected HTTP status: ' . $status;
+            }
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($market);
             $entityManager->flush();
