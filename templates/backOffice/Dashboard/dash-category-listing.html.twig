@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voucher Details{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    {% if category is empty %}
+        <p>No voucher found.</p>
+    {% else %}
+        <div class="row">
+            <div class="col-xl-é col-lg-7 col-md-6 col-7">
+                <div class="event-main-post">
+                    <div class="main-photo">
+                        <a href="#">
+                            <div class="photo-overlay"></div>
+                            <img src="{{asset('images/category-icons/category.png')}}" alt="">
+                        </a>
+                    </div>
+                    <div class="event-body">
+                        <a href="#" class="event-title"><i class="feather-flag me-3"></i>{{ category.titre }}</a>
+                        <div class="dash-counter-block">
+                            <p class="dash-event-counter">
+                                <span class="h-color"><i class="feather-package me-2"></i>{{ category.discription }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% block footer %}
+{% endblock %}
+{% endblock %}

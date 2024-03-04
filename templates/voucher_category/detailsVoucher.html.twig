@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+    %} {% block main %}
+    <main>
+      <div class="main-section">
+        <div class="container">
+          <div class="row">
+            <div
+              class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
+            >
+              <div class="center-section">
+                <div class="main-search-bar">
+                  <h2>Shop in your city</h2>
+                  <form id="search-form" method="GET">
+                      <div class="main-search-inputs main-form">
+                          <div class="row g-3">
+                              <div class="col-lg-5 col-md-12 col-sm-12">
+                                  <input
+                                      class="search-form-input"
+                                      type="text"
+                                      name="name"
+                                      placeholder="Search Shop by name"
+                                  />
+                              </div>
+                              <div class="col-lg-5 col-md-12 col-sm-12">
+                                  <input
+                                      class="search-form-input"
+                                      type="text"
+                                      name="region"
+                                      placeholder="Search Shop by location"
+                                  />
+                              </div>
+                              <div class="col-lg-2 col-md-12 col-sm-12">
+                                  <button id="search-btn" class="search-btn" type="submit">
+                                      <i class="feather-search"></i><span>Search</span>
+                                  </button>
+                              </div>
+                              <div class="col-lg-2 col-md-12 col-sm-12">
+                                <a href="{{ path('app_home') }}" id="search-btn" class="search-btn" style="width: 50%; height: 50%;">
+                                    <img src="{{ asset('images/fleche-petite-gauche.png') }}" alt="" style="width:30%">
+                                </a>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                </div>
+    
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="tab-top">
+                    <div class="main-posts">
+                      <div class="row">
+                              <div class="col-md-6">
+                                  <div class="event-main-post">
+                                      <div class="main-photo">
+                                          <a href="{{ path('vouchercategory_details', {'id': voucherCategory.id}) }}">
+                                              <div class="photo-overlay"></div>
+                                              <img src="{{ asset('images/homepage/coupons.png') }}" alt="{{ voucherCategory.titre }}" />
+                                          </a>
+                                          <div class="option-ellipsis">
+                                              <div class="dropdown">
+                                                  <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                                      data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                          class="fas fa-ellipsis-v"></i></a>
+                                                  <div class="dropdown-menu dropdown-menu-end">
+                                                      <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                                      <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                                      <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                                                      <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                                          data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="event-body">
+                                          <a href="{{ path('vouchercategory_details', {'id': voucherCategory.id}) }}" class="event-title">{{ voucherCategory.titre }}</a>
+                                          <span class="event-type">{{ voucherCategory.discription }}</span>
+                                          <!-- Add relevant buttons and functionalities here -->
+                                      </div>
+                                  </div>
+                              </div>
+                    <div class="col-md-12">
+                        <div class="loading-btn">
+                            <button class="process-btn btn-hover" type="button">No More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+    {% endblock %}
+    

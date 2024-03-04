@@ -19,3 +19,10 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+### BASH script to run and stop server ###
+server.sh
+gittoken
+
+/src/qrcodes/
+public/uploads/

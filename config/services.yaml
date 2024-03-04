@@ -6,6 +6,7 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/%env(UPLOADS_DIRECTORY)%'
     screenshot_directory: '%kernel.project_dir%/public/uploads/screenshots'
+    qrcode_directory: '%kernel.project_dir%/public/qrcode'
 
 services:
     # config/services.yaml
