@@ -10,6 +10,10 @@ use App\Repository\MarketRepository;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Market;
 use App\Entity\VoucherCategory;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class AdminController extends AbstractController
 {
@@ -26,32 +30,47 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dash/voucher-list', name: 'admin-voucher-list')]
-    public function voucherList(MarketRepository $marketRepository): Response
+    public function voucherList(PaginatorInterface $paginator, Request $request): Response
     {
          // Fetch voucher details from the database
          $vouchers = $this->managerRegistry->getRepository(Voucher::class)->findAll();
+         $pagination = $paginator->paginate(
+            $vouchers,
+            $request->query->getInt('page', 1),
+            5 
+        );
          return $this->render('backOffice/Dashboard/crm-voucher-list.html.twig', [
-             'vouchers' => $vouchers,
+             'pagination' => $pagination,
          ]);
     }
 
     #[Route('/dash/market-list', name: 'admin-market-list')]
-    public function marketList(): Response
+    public function marketList(PaginatorInterface $paginator, Request $request): Response
     {
          // Fetch voucher details from the database
          $market = $this->managerRegistry->getRepository(Market::class)->findAll();
+         $pagination = $paginator->paginate(
+            $market,
+            $request->query->getInt('page', 1),
+            5 
+        );
          return $this->render('backOffice/Dashboard/crm-market-list.html.twig', [
-             'markets' => $market,
+             'pagination' => $pagination,
          ]);
     }
 
     #[Route('/dash/category-list', name: 'admin-category-list')]
-    public function categoryList(): Response
+    public function categoryList(PaginatorInterface $paginator, Request $request): Response
     {
          // Fetch voucher details from the database
          $category = $this->managerRegistry->getRepository(VoucherCategory::class)->findAll();
+         $pagination = $paginator->paginate(
+            $category,
+            $request->query->getInt('page', 1),
+            5 
+        );
          return $this->render('backOffice/Dashboard/crm-category-list.html.twig', [
-             'category' => $category,
+             'pagination' => $pagination,
          ]);
     }
 }

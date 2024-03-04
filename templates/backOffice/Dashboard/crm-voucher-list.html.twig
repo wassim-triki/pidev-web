@@ -14,7 +14,7 @@
                             <div class="table-responsive">
                                 <table class="table table-centered table-nowrap table-hover mb-0">
                                     <tbody>
-                                        {% for voucher in vouchers %}
+                                        {% for voucher in pagination %}
                                         <tr data-voucher-id="{{ voucher.id }}" class="voucher-row">
                                             <td>
                                                 <h5 class="font-14 my-1 fw-normal voucher-code" data-voucher-id="{{ voucher.id }}">{{ voucher.code }}</h5>
@@ -51,6 +51,7 @@
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->
+                            {{ knp_pagination_render(pagination) }}
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
                 </div><!-- end col-->

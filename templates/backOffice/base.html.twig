@@ -80,6 +80,7 @@
           </div>
         </button>
 
+        {% block search%}
         <!-- Topbar Search Form -->
         <div class="app-search dropdown d-none d-lg-block">
           <form>
@@ -89,7 +90,7 @@
               <button class="input-group-text btn btn-primary" type="submit">Search</button>
             </div>
           </form>
-
+        {% endblock %}
           <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
             <!-- item-->
             <div class="dropdown-header noti-title">

@@ -14,7 +14,7 @@
                             <div class="table-responsive">
                                 <table class="table table-centered table-nowrap table-hover mb-0">
                                     <tbody>
-                                        {% for category in category %}
+                                        {% for category in pagination %}
                                         <tr data-category-id="{{ category.id }}" class="category-row">
                                             <td>
                                                 <h5 class="font-14 my-1 fw-normal category-name" data-category-id="{{ category.id }}">Category</h5>
@@ -39,6 +39,7 @@
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->
+                            {{ knp_pagination_render(pagination) }}
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
                 </div><!-- end col-->

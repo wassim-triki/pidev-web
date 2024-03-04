@@ -14,7 +14,7 @@
                             <div class="table-responsive">
                                 <table class="table table-centered table-nowrap table-hover mb-0">
                                     <tbody>
-                                        {% for market in markets %}
+                                        {% for market in pagination %}
                                         <tr data-market-id="{{ market.id }}" class="voucher-row">
                                             <td>
                                                 <h5 class="font-14 my-1 fw-normal market-name" data-market-id="{{ market.id }}">Market Name</h5>
@@ -51,6 +51,7 @@
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->
+                                    {{ knp_pagination_render(pagination) }}
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
                 </div><!-- end col-->
@@ -61,6 +62,11 @@
                         </div>
                         <div class="card-body pt-0">
                             <div class="chart-widget-list">
+                                <!-- Voucher details will be displayed here -->
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div id="searchResults">
                                 <!-- Voucher details will be displayed here -->
                             </div>
                         </div>
@@ -104,6 +110,26 @@
                     console.error('Error:', error);
                 });
         });
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('top-search');
+    const searchResults = document.getElementById('searchResults');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        const searchText = searchInput.value.trim();
+
+        // Perform AJAX request to search endpoint
+        fetch(`/search?query=${searchText}`)
+            .then(response => response.text())
+            .then(data => {
+                searchResults.innerHTML = data; // Update search results
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
 });
 </script>
