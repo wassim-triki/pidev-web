@@ -1,4 +1,8 @@
-{% block main %}
+{% extends 'front_office/base.html.twig' %}
+{% block title %}Vouchers{% endblock %}
+
+	{% block body %}
+
 	{% if vouchers is empty %}
 		<p>No vouchers found.</p>
 	{% else %}

@@ -121,7 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column]
-    private ?int $avertissementsCount = null;
+    private ?int $avertissementsCount = 0;
 
     #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
     private Collection $avertissements;

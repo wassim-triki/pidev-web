@@ -1,5 +1,5 @@
-{% extends 'backOffice/base.html.twig' %}
 
+    {% extends 'back_office/base.html.twig' %}
 {% block title %}Dashboard{% endblock %}
 
 {% block main %}
@@ -72,8 +72,8 @@
                             <h4 class="header-title">Add Voucher :</h4>
                         </div>
                         <div class="card-body pt-0">
-                            <span class="text-muted font-14">Add a new voucher here -> </span>
-                            <a href="{{path('voucher_add')}}"><img class="icone-custom" src="{{asset('images/category-icons/add.png')}}" alt=""></a>
+                            <span class="text-muted font-14">Add a new voucher here </span>
+                            <a href="{{path('voucher_add')}}"><img class="icone-custom" src="{{asset('front_office/images/category-icons/add.png')}}" alt=""></a>
                         </div>
                     </div>
             </div>
