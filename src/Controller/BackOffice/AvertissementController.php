@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\FrontOffice;
+namespace App\Controller\BackOffice;
 
 use App\Entity\Avertissement;
 use App\Repository\AvertissementRepository;
@@ -33,6 +33,8 @@ class AvertissementController extends AbstractController
     #[Route('/listAvertissement', name: 'listAvertissement')]
     public function listAvertissement(AvertissementRepository $repaverti ,Request  $request,PaginatorInterface $paginatorInterface): Response
     {
+        // Only allow authenticated users with the ROLE_ADMIN to access this page
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $list = $repaverti->findAll();
         $statistiques = $repaverti->countAvertissementsByRaison();
         $pagination=$paginatorInterface->paginate(
