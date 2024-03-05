@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -44,8 +44,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Regex(
-        pattern: '/^(\+216)?\d{8}$/',
-        message: "Phone number must be exactly 8 digits or in the format +216xxxxxxxx",
+        pattern: '/^(\\+216)?[2459]\\d{7}$/',
+        message: "Phone number must start with 2, 5, 9, 4 or +216 and be exactly 8 digits long",
         groups: ["registration"],
     )]
     private ?string $phone = null;
@@ -54,11 +54,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true,nullable: true)]
+    #[ORM\Column(type: 'boolean')]
+    private bool $isEnabled = true;
+
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
+    }
+
+    public function setIsEnabled(bool $isEnabled): self
+    {
+        $this->isEnabled = $isEnabled;
+        return $this;
+    }
+
+    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
     private ?string $emailVerificationToken = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PostGroup::class)]
+    private Collection $postGroups;
 
     public function getEmailVerificationToken(): ?string
     {
@@ -102,16 +119,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class)]
     private Collection $user;
 
-  
+
     #[ORM\Column]
     private ?int $avertissementsCount = null;
 
     #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
     private Collection $avertissements;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Postcommentaire::class)]
+    private Collection $postcommentaires;
+
+    #[ORM\OneToMany(mappedBy: 'User_id', targetEntity: Question::class)]
+    private Collection $questions;
+
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Answer::class)]
+    private Collection $answers;
+
     public function __construct()
     {
         $this->avertissements = new ArrayCollection();
+        $this->postGroups = new ArrayCollection();
+        $this->postcommentaires = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->answers = new ArrayCollection();
         $this->setAvertissementsCount(0);
     }
 
@@ -308,7 +338,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-  
+
 
     public function getAvertissementsCount(): ?int
     {
@@ -352,4 +382,123 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, PostGroup>
+     */
+    public function getPostGroups(): Collection
+    {
+        return $this->postGroups;
+    }
+
+    public function addPostGroup(PostGroup $postGroup): static
+    {
+        if (!$this->postGroups->contains($postGroup)) {
+            $this->postGroups->add($postGroup);
+            $postGroup->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostGroup(PostGroup $postGroup): static
+    {
+        if ($this->postGroups->removeElement($postGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($postGroup->getUser() === $this) {
+                $postGroup->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Postcommentaire>
+     */
+    public function getPostcommentaires(): Collection
+    {
+        return $this->postcommentaires;
+    }
+
+    public function addPostcommentaire(Postcommentaire $postcommentaire): static
+    {
+        if (!$this->postcommentaires->contains($postcommentaire)) {
+            $this->postcommentaires->add($postcommentaire);
+            $postcommentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostcommentaire(Postcommentaire $postcommentaire): static
+    {
+        if ($this->postcommentaires->removeElement($postcommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($postcommentaire->getUser() === $this) {
+                $postcommentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): static
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): static
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getUserId() === $this) {
+                $question->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): static
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): static
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getUserId() === $this) {
+                $answer->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
 }

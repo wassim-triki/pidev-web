@@ -1,0 +1,55 @@
+{% extends 'front_office/user/profile.html.twig' %} {% block title %}Profile{% endblock
+%} {% block main2 %}
+                                            {% for i in a %}
+                                                <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+                                                    <div class="event-main-post">
+                                                        <div class="main-photo">
+                                                            <a href="#">
+                                                                <div class="photo-overlay"></div>
+                                                                <img
+                                                                  src="{{ asset('uploads/' ~ i.imageUrl) }}"
+                                                                  alt={{ i.imageUrl }}
+                                                                  style="height: 4.5cm;"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div class="event-body">
+                                <span class="event-time"
+                                  >{{ i.date|date("F j, Y, g:i a") }}</span
+                                >
+                                <a href="event_detail_view.html" class="event-title"
+                                  >{{ i.titre }}</a
+                                >
+                                <span class="event-type">{{ i.description }}</span>
+                                <p class="ingo-counter">
+                                  <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
+                                  <span>{{ i.place }}</span>
+                                </p>
+                                <div class="group-btns">
+                                    
+                                    
+                                <form action="{{ path('editpost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir modifier ce poste?');">
+                                  {% if isOwnProfile %}
+                                    <button class="interest-btn btn-hover">
+                                        <i class="feather-edit-2 me-2"></i>Modifier
+                                    </button>
+                                  {% endif %}
+                                    </form>
+                                    <form action="{{ path('deletepost', {'id': i.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce poste?');">
+                                  {% if isOwnProfile %}
+                                  <button
+                                    class="share-btn btn-hover"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#shareModal"
+                                  >
+                                    <i class="feather-delete"></i>
+                                  </button>
+                                  {% endif %}
+                                  </form>
+                                </div>
+                              </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                               
+{% endblock %}

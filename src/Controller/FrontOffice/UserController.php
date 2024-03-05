@@ -30,7 +30,7 @@ class UserController extends AbstractController
     #[Route('/user/{username}', name: 'user_profile')]
     public function userProfile(string $username, UserRepository $userRepository): Response
     {
-        $user = $userRepository->findOneBy(['username'=>$username]);
+        $user = $userRepository->findOneBy(['username' => $username]);
 
         // Create the profile picture form
         $profilePictureForm = $this->createForm(ProfilePictureType::class);
@@ -46,7 +46,7 @@ class UserController extends AbstractController
 
     #[Route('/settings', name: 'user_settings')]
     #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_REMEMBERED)]
-    public function userSettings(Request $request,UserPasswordEncoderInterface $passwordEncoder,MailerInterface $mailer,JwtTokenService $jwtTokenService): Response
+    public function userSettings(Request $request, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer, JwtTokenService $jwtTokenService): Response
     {
         $tab = $request->query->get('tab', 'account');
 
@@ -74,7 +74,7 @@ class UserController extends AbstractController
 
             $this->addFlash('acc_succ', 'Account information updated successfully.');
 
-            return $this->redirectToRoute('user_settings',['tab'=>'account']);
+            return $this->redirectToRoute('user_settings', ['tab' => 'account']);
         }
 
         if ($emailChangeForm->isSubmitted() && $emailChangeForm->isValid()) {
@@ -132,7 +132,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('pass_succ', 'Password changed successfully.');
-                return $this->redirectToRoute('user_settings',['tab'=>"password"]);
+                return $this->redirectToRoute('user_settings', ['tab' => "password"]);
             } else {
                 $this->addFlash('pass_err', 'Old password is incorrect.');
             }
@@ -172,7 +172,7 @@ class UserController extends AbstractController
 
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
 
                 try {
                     $photoFile->move($this->getParameter('uploads_directory'), $newFilename);
@@ -191,14 +191,14 @@ class UserController extends AbstractController
 
 
     #[Route('/settings/delete-account', name: 'user_delete_account', methods: ['POST'])]
-    public function deleteAccount(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder,TokenStorageInterface $tokenStorage): Response
+    public function deleteAccount(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, TokenStorageInterface $tokenStorage): Response
     {
 
         $user = $this->getUser();
         $form = $this->createForm(DeleteAccountType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() ) {
+        if ($form->isSubmitted()) {
             $formData = $form->getData();
 
             if ($user->getEmail() === $formData['email'] && $passwordEncoder->isPasswordValid($user, $formData['password'])) {
@@ -222,16 +222,4 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_settings', ['tab' => 'delete']);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

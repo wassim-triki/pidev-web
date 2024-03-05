@@ -1,0 +1,80 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4 text-center">Q/A</h1>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-8">
+            {% for question in questions %}
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <b class="text-uppercase">{{ question.title }}</b>
+                        <br>    
+                        <small class="text-muted">Questionné par <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> en {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ question.body }}</p>
+                        <!-- Show Answers button -->
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#answersModal{{question.id}}">
+                            <i class="fas fa-eye"></i> Voir réponse
+                        </button>
+                        {% if app.user == question.userid %}
+                            <!-- Edit and Delete buttons -->
+                            <a href="{{ path('edit_question', {'id': question.id}) }}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <a href="{{ path('delete_question', {'id': question.id}) }}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-right">
+                       
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="answersModal{{question.id}}" tabindex="-1" aria-labelledby="answersModalLabel{{question.id}}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="answersModalLabel{{question.id}}">Réponse</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- Answer will be inserted here -->
+                        {% if question.answer %}
+                            <p>{{ question.answer.body }}</p>
+                            <small class="text-muted">Répondu par Admin en {{ question.answer.createdAt|date('Y-m-d H:i:s') }}</small>
+                        {% else %}
+                            <p>Pas de réponses encore</p>
+                        {% endif %}
+                    </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+            {% if questions is not empty %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {{ knp_pagination_render(questions) }}
+            </ul>
+        </nav>
+    {% endif %}
+            <div class="d-flex justify-content-end">
+                <a href="{{ path('add_question') }}" class="btn btn-warning">
+                    Questionner
+                 </a>
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

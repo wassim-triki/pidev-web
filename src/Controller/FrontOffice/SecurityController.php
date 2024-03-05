@@ -29,7 +29,7 @@ class SecurityController extends AbstractController
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('showpost');
         }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -57,13 +57,13 @@ class SecurityController extends AbstractController
     }
 
 
-// src/Controller/SecurityController.php
+    // src/Controller/SecurityController.php
 
     #[Route('/forgot-password', name: 'app_forgot_password')]
     public function forgotPassword(Request $request, UserRepository $userRepository, MailerInterface $mailer, JwtTokenService $jwtTokenService): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('user_settings',['tab'=>'password']);
+            return $this->redirectToRoute('user_settings', ['tab' => 'password']);
         }
         $form = $this->createForm(EmailFormType::class);
         $form->handleRequest($request);
@@ -90,7 +90,7 @@ class SecurityController extends AbstractController
                     ->html("Please click on the following link to reset your password: <a href='$resetUrl'>$resetUrl</a>");
 
                 $mailer->send($email);
-                $this->addFlash('success', 'A password reset link has been sent to '.$user->getEmail());
+                $this->addFlash('success', 'A password reset link has been sent to ' . $user->getEmail());
             } else {
                 $this->addFlash('error', 'No account found with this email.');
             }
@@ -107,7 +107,7 @@ class SecurityController extends AbstractController
     {
         $user = $userRepository->findOneBy(['resetToken' => $token]);
 
-        if(!$user){
+        if (!$user) {
             $this->addFlash('error', 'This password reset link is invalid or has expired.');
             return $this->redirectToRoute('app_forgot_password');
         }
@@ -148,7 +148,4 @@ class SecurityController extends AbstractController
             'resetForm' => $form->createView(),
         ]);
     }
-
-
-
 }
