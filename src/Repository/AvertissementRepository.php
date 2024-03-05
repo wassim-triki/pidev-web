@@ -28,22 +28,15 @@ class AvertissementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function countTotalAvertissements(): int
-{
-    return $this->createQueryBuilder('a')
-        ->select('COUNT(a.id)')
-        ->getQuery()
-        ->getSingleScalarResult();
-}
+    public function countAvertissementsByRaison()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.raison, COUNT(a.id) as nombre')
+            ->groupBy('a.raison')
+            ->getQuery()
+            ->getResult();
+    }
 
-public function countConfirmedAvertissements(): int
-{
-    return $this->createQueryBuilder('a')
-        ->select('COUNT(a.id)')
-        ->where('a.confirmation = true')
-        ->getQuery()
-        ->getSingleScalarResult();
-}
 
 //    /**
 //     * @return Avertissement[] Returns an array of Avertissement objects

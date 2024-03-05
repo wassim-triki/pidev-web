@@ -34,10 +34,11 @@ class AvertissementController extends AbstractController
     public function listAvertissement(AvertissementRepository $repaverti ,Request  $request,PaginatorInterface $paginatorInterface): Response
     {
         $list = $repaverti->findAll();
+        $statistiques = $repaverti->countAvertissementsByRaison();
         $pagination=$paginatorInterface->paginate(
             $list,
             $request->query->getInt('page',1),
-            5
+            2
 
       
         );
@@ -45,6 +46,7 @@ class AvertissementController extends AbstractController
 
         return $this->render('back_office/dashboard/listeavertissement1.html.twig', [
             'pagination' => $pagination,
+            'statistiques' => $statistiques
         ]);
 
 

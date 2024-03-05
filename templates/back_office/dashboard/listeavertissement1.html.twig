@@ -69,25 +69,70 @@
 }
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<div class="card">
-<h1 style="font-size: 32px; margin-bottom: 30px; margin-left: 300px; text-align: left;  font-weight: bold;">List of Avertissements</h1>
-<div style="padding-left: 400px; padding-top: 30px;"> <input  type="text" id="search-input" placeholder="Recherche..."></div>
-   
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
 
+<div  class="card"   style="padding-left: 600px;">
+    <canvas id="myChart" style="width: 250px; height: 250px; ;"></canvas>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['violation of the rules of the platform', 'inappropriate content', 'other reasons'],
+            datasets: [{
+                label: 'My Dataset',
+                data: [10, 20, 30],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false
+        }
+    });
+});
+</script>
+
+<table>
+    <thead>
+        <tr>
+            <th><strong>Raison</strong></th>
+            <th><strong>Nombre</strong> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stat in statistiques %}
+            <tr>
+                <td>{{ stat.raison }}</td>
+                <td>{{ stat.nombre }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+
+<div class="card">
+<h1 style="font-size: 32px; margin-bottom: 30px; margin-left: 600px; text-align: left;  font-weight: bold;">List of Avertissements</h1>
+<div class="row" style="padding-top: 30px;">
+ 
+
+    
+</div>
 
 <div id="search-results" ></div>
 <div class="row" style="margin-left: 100px;">
-    <div class="col-lg-3" style="color: #f44336;">
-        <!-- Menu content goes here -->
-        <!-- Adjust the size of this column based on your menu's width -->
-    </div>
-    <div style="margin-left: 1000px;"><h1>Chat Administrateur</h1>
-
-        <input type="text" id="messageInput">
-        <button class="btn btn-secondary" style="margin-left: 30px;" onclick="sendMessage()">Envoyer</button>
-        <div style="margin-left: -10px; margin-bottom: 50px;" id="messageArea1"> </div>
-   </div>
+   
     <div class="col-lg-8" style="margin-left: 250px;" id="results-container" >
         <!-- Content for the dashboard -->
         {% for r in pagination %}
@@ -146,6 +191,25 @@
         
     </div>
   </div>
+</div>
+<div class="col-md-12">
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 50%; padding-left: 400px;">
+                
+                <input type="text" id="search-input" placeholder="search reported username..." class="form-control">
+            </td>
+            <td style="width: 50%; padding-left: 100px;">
+                <div class="chat-admin">
+                    <h2>Chat </h2>
+                    <input type="text" id="messageInput" class="form-control">
+                    <button class="btn btn-secondary" onclick="sendMessage()">Envoyer</button>
+                    <div id="messageArea1" style="margin-top: 10px;"> </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 </div>
 </div>
 <script>
