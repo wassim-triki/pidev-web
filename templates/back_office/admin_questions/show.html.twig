@@ -95,32 +95,57 @@
     </div>
     {% block javascripts %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const ctx = document.getElementById('myChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Total Questions', 'Answered Questions'],
-                        datasets: [{
-                            label: 'Number of Questions',
-                            data: [{{ total_questions }}, {{ answered_questions }}],
-                            backgroundColor: [
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(255, 99, 132, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(255, 99, 132, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Questions', 'Answered Questions'],
+                datasets: [{
+                    label: 'Number of Questions',
+                    data: [{{ total_questions }}, {{ answered_questions }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)', // Blue color
+                        'rgba(255, 99, 132, 0.6)', // Red color
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Questions Overview'
                     },
-                    options: {
-                        responsive: true
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Questions'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Category'
+                        }
                     }
-                });
-            });
-        </script>
+                }
+            }
+        });
+    });
+</script>
+
     {% endblock %}
 {% endblock %}

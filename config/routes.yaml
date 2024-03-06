@@ -12,6 +12,11 @@ back_office:
   resource: '../src/Controller/BackOffice'
   type: annotation
   prefix: /admin
-
+search_questions_ajax:
+    path: /search-ajax
+    controller: App\Controller\FrontOffice\QuestionController::searchQuestionsAjax
+    methods: [GET]
+    options:
+        expose: true
   # config/routes.yaml
 

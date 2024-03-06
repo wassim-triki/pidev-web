@@ -19,6 +19,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
+
 class AdminQuestionsController extends AbstractController
 {
     #[Route('/questions', name: 'app_admin_questions')]
@@ -70,7 +71,7 @@ class AdminQuestionsController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from('admin@Al9ani.tn')
                 ->to($question->getUserId()->getEmail())
-                ->subject('Votre question a été répondue par un administrateur !')
+                ->subject('An admin answered you !')
                 ->htmlTemplate('back_office/admin_questions/email.html.twig')
 
                 ->context([
@@ -112,6 +113,7 @@ class AdminQuestionsController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('admin_questions_show');
     }
+
  
     
 }
