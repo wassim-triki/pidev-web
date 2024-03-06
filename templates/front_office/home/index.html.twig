@@ -11,78 +11,77 @@
             <div class="main-search-bar">
               <h2>Shop in your city</h2>
               <form id="search-form" method="GET">
-                  <div class="main-search-inputs main-form">
-                      <div class="row g-3">
-                          <div class="col-lg-5 col-md-12 col-sm-12">
-                              <input
-                                  class="search-form-input"
-                                  type="text"
-                                  name="name"
-                                  placeholder="Search Shop by name"
-                              />
-                          </div>
-                          <div class="col-lg-5 col-md-12 col-sm-12">
-                              <input
-                                  class="search-form-input"
-                                  type="text"
-                                  name="region"
-                                  placeholder="Search Shop by location"
-                              />
-                          </div>
-                          <div class="col-lg-2 col-md-12 col-sm-12">
-                              <button id="search-btn" class="search-btn" type="submit">
-                                  <i class="feather-search"></i><span>Search</span>
-                              </button>
-                          </div>
-                      </div>
+                  <div class="main-search-inputs">
+                <div class="row g-3">
+                  <div class="col-lg-5 col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <label for="search">Search:</label>
+                      <input class="form-control form-control-navbar" id="searchInput" type="search"
+                        placeholder="Search" aria-label="Search" style="width: 300PX;">
+                    </div>
                   </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12">
+
+                  </div>
+                </div>
+              </div>
               </form>
             </div>
 
             <div class="tab-content">
               <div class="tab-pane fade show active" id="tab-top">
                 <div class="main-posts">
-                  <div class="row">
-                    
-                          <div class="col-md-6">
-                              <div class="event-main-post">
-                                  <div class="main-photo">
-                                      <a href="#">
-                                          <div class="photo-overlay"></div>
-                                          <img src="images/homepage/center/post-img-7.jpg" alt="#" />
-                                      </a>
-                                      <div class="option-ellipsis">
-                                          <div class="dropdown">
-                                              <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
-                                                  data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                      class="fas fa-ellipsis-v"></i></a>
-                                              <div class="dropdown-menu dropdown-menu-end">
-                                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
-                                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
-                                                  <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
-                                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
-                                                      data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="event-body">
-                                      <a href="#" class="event-title">post.name</a>
-                                      <span class="event-type">post.details</span>
-                                      <p class="ingo-counter">
-                                          <span>post.Details</span> <!-- Add relevant data here -->
-                                          <span>post.details</span> <!-- Add relevant data here -->
-                                      </p>
-                                      <!-- Add relevant buttons and functionalities here -->
-                                  </div>
+                <div class="row" , id="new"></div>
+                  <div class="row" , id="prev">
+                      {% for i in post %}
+                      <div class="col-md-6">
+                        <div class="event-main-post">
+                          <div class="main-photo">
+                            <a href="event_detail_view.html">
+                              <div class="photo-overlay"></div>
+                              <img src="{{ asset('uploads/' ~ i.imageUrl) }}" alt={{ i.imageUrl }}
+                                style="height: 4.5cm;" />
+                            </a>
+                            <div class="option-ellipsis">
+                              <div class="dropdown">
+                                <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                  data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                  <a class="post-link-item" href="user_profile.html"><i
+                                      class="feather-user icon-mr1"></i>User
+                                    Profile</a>
+                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                </div>
                               </div>
-                          </div>
-                        <div class="col-md-12">
-                            <div class="loading-btn">
-                                <button class="process-btn btn-hover" type="button">No More</button>
                             </div>
+                          </div>
+                          <div class="event-body">
+                            <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
+                            <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
+                            <span class="event-type">{{ i.description }}</span>
+                            <p class="ingo-counter">
+                              <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
+                              <span>{{ i.place }}</span>
+                            </p>
+                            <div class="group-btns">
+                              <button class="interest-btn btn-hover">
+                                <i class="feather-star me-2"></i>Interested
+                              </button>
+                              <button class="share-btn btn-hover" data-bs-toggle="modal" data-bs-target="#shareModal">
+                                <i class="feather-share-2"></i>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-            </div>
+                      </div>
+                      {% endfor %}
+
+                      {{ knp_pagination_render(post) }}
+
+                    </div>
         </div>
     </div>
       <div class="tab-pane fade" id="tab-following">
@@ -253,4 +252,70 @@
     </div>
   </div>
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+      var query = $(this).val();
+      if (query.length === 0) {
+        $('#prev').show();
+        $('#new').hide();
+        $('#new').empty();
+      } else {
+        $.ajax({
+          url: "/search", // Change the URL to match your route
+          type: "GET", // Change the request type to GET
+          data: { query: query },
+          success: function (data) {
+           // Access the data directly
+           console.log(data)
+            if (data.length > 0) {
+              $('#prev').hide();
+              $('#new').empty();
+              $('#new').show();
+              $.each(data, function (i, obj) {
+                var card = '<div class="col-md-6">' +
+                  '<div class="event-main-post">' +
+                  '<div class="main-photo">' +
+                  '<a href="event_detail_view.html">' +
+                  '<div class="photo-overlay"></div>' +
+                  '<img src="/uploads/' + obj.imageUrl + '" alt="' + obj.titre + '" style="height: 4.5cm;" />' +
+                  '</a>' +
+                  '</div>' +
+                  '<div class="event-body">' +
+                  '<span class="event-time">' + new Date(obj.date.date).toLocaleString() + '</span>' +
+                  '<a href="event_detail_view.html" class="event-title">' + obj.titre + '</a>' +
+                  '<span class="event-type">' + obj.description + '</span>' +
+                  '<p class="ingo-counter">' +
+                  '<span style="color: orangered;"><strong>' + obj.type + '</strong></span>' +
+                  '<span>' + obj.place + '</span>' +
+                  '</p>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>';
+                $('#new').append(card);
+              });
+
+            } else {
+              $('#prev').show();
+              $('#new').hide();
+              $('#new').empty();
+            }
+          },
+          error: function () {
+            console.error("An error occurred while processing the AJAX request.");
+          }
+        });
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['dayGrid'],
+      events: '/api/events' // URL to fetch events
+    });
+    calendar.render();
+  });
+</script>
 {% endblock %}
