@@ -120,7 +120,8 @@ class VoucherController extends AbstractController
     public function confirmVoucher($id, VoucherRepository $voucherRepository,ServiceQRCodeGenerator $qrcode, MailerInterface $mailer): Response
     {
 
-        
+        $voucher = $voucherRepository->find($id);
+
         $qr = null;
         $voucher = $voucherRepository->find($id);
         $qr=$qrcode->generateQRCode($voucher);

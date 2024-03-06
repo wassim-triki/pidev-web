@@ -577,7 +577,27 @@
         function submitProfilePictureForm() {
             document.getElementById('profile-picture-form').submit();
         }
-
+			function useVoucher(url, voucherId) {
+				fetch(url, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' 
+					}
+				})
+				.then(response => {
+					if (response.ok) {
+						sendEmail()
+						window.location.href = '{{ path('confirm_voucher', {'id': 'VOUCHER_ID'}) }}'.replace('VOUCHER_ID', voucherId);
+					} else {
+						console.error('Failed to update voucher');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+			}
 			function sendEmail() {
 				fetch('{{ path('send_email') }}', {
 					method: 'POST',
