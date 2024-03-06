@@ -15,21 +15,21 @@
                     <div class="card-header bg-light">
                         <b class="text-uppercase">{{ question.title }}</b>
                         <br>    
-                        <small class="text-muted">Questionné par <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> en {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+                        <small class="text-muted">Questioned by <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> on {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
                     </div>
                     <div class="card-body">
                         <p>{{ question.body }}</p>
                         <!-- Show Answers button -->
                         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#answersModal{{question.id}}">
-                            <i class="fas fa-eye"></i> Voir réponse
+                            <i class="fas fa-eye"></i> View answer
                         </button>
                         {% if app.user == question.userid %}
                             <!-- Edit and Delete buttons -->
                             <a href="{{ path('edit_question', {'id': question.id}) }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-edit"></i> Modifier
+                                <i class="fas fa-edit"></i> Edit
                             </a>
                             <a href="{{ path('delete_question', {'id': question.id}) }}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i> Supprimer
+                                <i class="fas fa-trash"></i> Delete
                             </a>
                         {% endif %}
                     </div>
@@ -43,20 +43,20 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="answersModalLabel{{question.id}}">Réponse</h5>
+                        <h5 class="modal-title" id="answersModalLabel{{question.id}}">Answer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
                         <!-- Answer will be inserted here -->
                         {% if question.answer %}
                             <p>{{ question.answer.body }}</p>
-                            <small class="text-muted">Répondu par Admin en {{ question.answer.createdAt|date('Y-m-d H:i:s') }}</small>
+                            <small class="text-muted">Answered by Admin on {{ question.answer.createdAt|date('Y-m-d H:i:s') }}</small>
                         {% else %}
-                            <p>Pas de réponses encore</p>
+                            <p>No answers yet</p>
                         {% endif %}
                     </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -70,11 +70,28 @@
         </nav>
     {% endif %}
             <div class="d-flex justify-content-end">
-                <a href="{{ path('add_question') }}" class="btn btn-warning">
-                    Questionner
-                 </a>
+                {% if app.user %}
+                <a href="{{ path('add_question') }}" class="btn btn-warning" id="askButton">
+                    Ask
+                </a>
+            {% else %}
+                <button class="btn btn-warning" id="askButton">
+                    Ask
+                </button>
+            {% endif %}            
                 
             </div>
         </div>
-    </div>
+    </div> <!-- This is the missing closing div tag -->
+{% endblock %}
+{% block javascripts %}
+<script>
+    document.getElementById('askButton').addEventListener('click', function() {
+        {% if app.user %}
+            window.location.href = "{{ path('add_question') }}";
+        {% else %}
+            window.location.href = "{{ path('app_register') }}";
+        {% endif %}
+    });
+</script>
 {% endblock %}

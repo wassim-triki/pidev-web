@@ -1,0 +1,9 @@
+{
+    "controllers": [
+        {
+            "name": "symfony/ux-chartjs/chart",
+            "fetch": "eager"
+        }
+    ],
+    "entrypoints": []
+}
