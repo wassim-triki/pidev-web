@@ -38,12 +38,12 @@
                                             </td>
                                             <td>
                                                 <a href="{{ path('market_edit', {'id': market.id}) }}" class="btn btn-link" style="font-size: 24px;" onclick="return confirm('Are you sure you want to delete this Market?');">
-                                                    <img src="{{asset('images/category-icons/edit.png')}}" alt="" class="icone-custom">
+                                                    <img src="{{asset('front_office/images/category-icons/edit.png')}}" alt="" class="icone-custom">
                                                 </a>
                                             </td>
                                             <td>
                                                 <a href="{{ path('deletemarket', {'id': market.id}) }}" class="btn btn-link" style="font-size: 24px;" onclick="return confirm('Are you sure you want to delete this Market?');">
-                                                    <img src="{{asset('images/category-icons/poubelle.png')}}" alt="" class="icone-custom">
+                                                    <img src="{{asset('front_office/images/category-icons/poubelle.png')}}" alt="" class="icone-custom">
                                                 </a>
                                             </td>
                                         </tr>
@@ -77,8 +77,8 @@
                             <h4 class="header-title">Add market :</h4>
                         </div>
                         <div class="card-body pt-0">
-                            <span class="text-muted font-14">Add a new market here -> </span>
-                            <a href="{{path('market_new')}}"><img class="icone-custom" src="{{asset('images/category-icons/add.png')}}" alt=""></a>
+                            <span class="text-muted font-14">Add a new market here </span>
+                            <a href="{{path('market_new')}}"><img class="icone-custom" src="{{asset('front_office/images/category-icons/add.png')}}" alt=""></a>
                         </div>
                     </div>
             </div>

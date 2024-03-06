@@ -3,6 +3,7 @@
 namespace App\Controller\FrontOffice;
 
 use App\Entity\User;
+use App\Entity\Voucher;
 use App\Form\AccountInformationFormType;
 use App\Form\ChangePasswordType;
 use App\Form\DeleteAccountType;
@@ -10,6 +11,7 @@ use App\Form\EmailChangeFormType;
 use App\Form\ProfilePictureType;
 use App\Repository\UserRepository;
 use App\Service\JwtTokenService;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -23,12 +25,23 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 
 class UserController extends AbstractController
 {
+    private $managerRegistry;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(ManagerRegistry $managerRegistry, EntityManagerInterface $entityManager)
+    {
+        $this->managerRegistry = $managerRegistry;
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/user/{username}', name: 'user_profile')]
-    public function userProfile(string $username, UserRepository $userRepository): Response
+    public function userProfile(string $username, UserRepository $userRepository,Request $request): Response
     {
         $user = $userRepository->findOneBy(['username' => $username]);
 
@@ -36,6 +49,15 @@ class UserController extends AbstractController
         $profilePictureForm = $this->createForm(ProfilePictureType::class);
 
         $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
+
+
+
+        // Get the entity manager from the manager registry
+        $entityManager = $this->managerRegistry->getManager();
+
+
+
+        $vouchers = $entityManager->getRepository(Voucher::class)->findAll();
 
         return $this->render('front_office/user/profile.html.twig', [
             'user' => $user,

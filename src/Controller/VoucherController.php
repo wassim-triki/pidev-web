@@ -191,15 +191,24 @@ class VoucherController extends AbstractController
     {
         $filter = $request->query->get('filter');
 
+
         // Get the entity manager from the manager registry
         $entityManager = $this->managerRegistry->getManager();
+        $vouchers=[];
+
+
 
         // Fetch vouchers based on the selected filter
+        if ($filter === 'all') {
+            $vouchers = $entityManager->getRepository(Voucher::class)->findAll();
+        }
         if ($filter === 'used') {
             $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => false]);
-        } else {
+        }
+        if ($filter === 'unused'){
             $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => true]);
         }
+
 
         // Render the voucher listing template with the filtered vouchers
         return $this->render('front_office/crm/voucher/voucher_listing.html.twig', [

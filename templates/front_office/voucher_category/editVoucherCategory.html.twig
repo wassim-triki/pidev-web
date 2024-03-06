@@ -1,6 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'front_office/base.html.twig' %}
 
 {% block title %}Hello SponsoringController!{% endblock %}
+    {% block header %}
+    {% endblock %}
 
 {% block main %}
     <div class="main-section">
@@ -41,4 +43,6 @@
             </div>
         </div>
     </div>
+    {% block footer %}
+    {% endblock %}
 {% endblock %}

@@ -33,7 +33,7 @@ class VoucherCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/voucher_category/newvouchercategory', name: 'vouchercategory_new', methods: ['GET', 'POST'])]
+    #[Route('vouchers/voucher_category/newvouchercategory', name: 'vouchercategory_new', methods: ['GET', 'POST'])]
     public function newMarket(Request $request): Response
     {
         $voucherCategory = new VoucherCategory();
