@@ -28,12 +28,12 @@ class VoucherCategoryController extends AbstractController
     #[Route('/vouchercategory', name: 'app_voucher_category')]
     public function index(): Response
     {
-        return $this->render('frontOffice/error404.html.twig', [
+        return $this->render('front_office/error/error404.html.twig', [
             'voucher' => $this->managerRegistry->getRepository(VoucherCategory::class)->findAll(),
         ]);
     }
 
-    #[Route('/voucher_category/newvouchercategory', name: 'vouchercategory_new', methods: ['GET', 'POST'])]
+    #[Route('vouchers/voucher_category/newvouchercategory', name: 'vouchercategory_new', methods: ['GET', 'POST'])]
     public function newMarket(Request $request): Response
     {
         $voucherCategory = new VoucherCategory();
@@ -48,7 +48,7 @@ class VoucherCategoryController extends AbstractController
             return $this->redirectToRoute('admin-category-list');
         }
 
-        return $this->render('voucher_category/newVoucherCategory.html.twig', [
+        return $this->render('/front_office/voucher_category/newVoucherCategory.html.twig', [
             'voucherCategory' => $voucherCategory,
             'form' => $form->createView(),
         ]);
@@ -67,7 +67,7 @@ class VoucherCategoryController extends AbstractController
             return $this->redirectToRoute('admin-category-list');
         }
 
-        return $this->render('voucher_category/editVoucherCategory.html.twig', [
+        return $this->render('front_office/voucher_category/editVoucherCategory.html.twig', [
             'voucherCategory' => $voucherCategory,
             'form' => $form->createView(),
         ]);
@@ -95,7 +95,7 @@ class VoucherCategoryController extends AbstractController
         $entityManager = $this->managerRegistry->getManagerForClass(VoucherCategory::class);
         $voucherCategory = $entityManager->getRepository(VoucherCategory::class)->find($vouchercategory->getId());
 
-        return $this->render('voucher_category/detailsVoucher.html.twig', [
+        return $this->render('/front_office/voucher_category/detailsVoucher.html.twig', [
             'voucherCategory' => $voucherCategory,
         ]);
     }
@@ -113,7 +113,7 @@ class VoucherCategoryController extends AbstractController
         }
 
         // Render the Twig template with voucher details
-        return $this->render('backOffice/Dashboard/dash-category-listing.html.twig', [
+        return $this->render('back_office/crm/dash-category-listing.html.twig', [
             'category' => $category,
         ]);
     }

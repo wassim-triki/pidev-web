@@ -1,0 +1,59 @@
+{% extends 'front_office/base.html.twig' %}
+{% block title %}Vouchers{% endblock %}
+{% block header %}
+{% endblock %}
+	{% block main %}
+
+	{% if vouchers is empty %}
+		<p>No vouchers found.</p>
+	{% else %}
+		{% for voucher in vouchers %} 
+    <div class="col-xl-4 col-lg-12 col-md-6 col-12">
+		<div class="event-main-post">
+			<div class="main-photo">
+				<a href="#">
+					<div class="photo-overlay"></div>
+					<img src="images/coupon.jpeg" alt="">
+				</a>
+			</div>											
+			<div class="event-body">
+				<a href="event_detail_view.html" class="event-title"><i class="feather-dollar-sign me-3"></i>{{voucher.value}} DT</a>
+				<div class="dash-counter-block">	
+					<p class="dash-event-counter">
+						<span class="h-color"><i class="feather-lock me-2"></i>{{voucher.code}}</span>
+					</p>
+					<p class="dash-event-counter">
+						<span class="h-color"><i class="feather-users me-2"></i>{{voucher.userWon.getEmail()}}</span>
+					<p class="dash-event-counter">
+						<span class="h-color"><i class="feather-star me-2"></i>{{voucher.category.getTitre()}}</span>
+					</p>
+					<p class="dash-event-counter">
+						<span class="h-color"><i class="feather-tag me-2"></i>{{voucher.marketRelated.getName()}}</span>
+					</p>
+					<p class="dash-event-counter">
+						<span class="h-color"><i class="feather-activity me-2"></i>{{voucher.isValid ? 'not Used yet' : 'Used'}}</span>
+					</p>
+				</div>
+				<div class="group-btns">
+					<button class="interest-btn btn-hover w-100"onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id}) }}')"><i class="feather-pocket me-2"></i>USE</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    {% endfor %}
+{% endif %}
+{% block footer %}
+	{% endblock %}
+	<!-- Scripts js -->
+    <script src="{{ asset('front_office/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{
+        asset('front_office/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      }}"></script>
+    <script src="{{
+        asset('front_office/vendor/bootstrap-select/js/bootstrap-select.min.js')
+      }}"></script>
+    <script src="{{ asset('front_office/vendor/OwlCarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('front_office/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('front_office/js/i18n/datepicker.en.js') }}"></script>
+    <script src="{{ asset('front_office/js/custom.js') }}"></script>
+{% endblock %}

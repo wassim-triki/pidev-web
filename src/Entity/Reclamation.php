@@ -29,7 +29,7 @@ class Reclamation
 
     
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\NotBlank(message: "Reported is required")]
     
     private ?string $ReportedUsername = null;
 
@@ -39,7 +39,7 @@ class Reclamation
     private ?string $TypeReclamation = null;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations')]
-    private ?Avertissement $s = null;
+    private ?Avertissement $s = null;   
 
     #[ORM\Column(length: 255)]
     private ?string $screenShot = null;

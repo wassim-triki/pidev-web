@@ -20,6 +20,56 @@ class AvertissementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Avertissement::class);
     }
+    public function findByQuery($query)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.ReportedUsername LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function countAvertissementsByRaison()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.raison, COUNT(a.id) as nombre')
+            ->groupBy('a.raison')
+            ->getQuery()
+            ->getResult();
+    }
+    public function countraisoninappropriatecontent():int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as nombre')
+            ->where('a.raison = :raison')
+            ->setParameter('raison', 'inappropriate content')
+            ->getQuery()
+            ->getSingleScalarResult();
+           
+    }
+    public function countraisoninappropriatecontent2():int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as nombre')
+            ->where('a.raison = :raison')
+            ->setParameter('raison', 'violation of the rules of the platform')
+            ->getQuery()
+            ->getSingleScalarResult();
+           
+    }
+    public function countraisoninappropriatecontent3():int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as nombre')
+            ->where('a.raison = :raison')
+            ->setParameter('raison', 'other reasons')
+            ->getQuery()
+            ->getSingleScalarResult();
+           
+    }
+    
+ 
+
+
 
 //    /**
 //     * @return Avertissement[] Returns an array of Avertissement objects

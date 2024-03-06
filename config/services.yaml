@@ -17,6 +17,8 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     App\Service\JwtTokenService:
+    App\Service\QRCodeGenerator:
+    
 
     App\Validator\Constraints\UniqueEmailValidator:
         tags:

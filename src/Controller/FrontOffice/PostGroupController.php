@@ -93,7 +93,7 @@ class PostGroupController extends AbstractController
     }
 
 
-    #[Route('/addpostgroup/{id}/{idpost}', name: 'editpost')]
+    #[Route('/addpostgroup/{id}/{idpost}', name: 'editpostgroup')]
     public function editpostgroup($idpost, $id, PostGroupRepository $PostGroupRepository, Request $request, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
@@ -127,7 +127,7 @@ class PostGroupController extends AbstractController
 
 
 
-    #[Route('/addpostgroup/{id}/{idpost}/delete', name: 'deletepost')]
+    #[Route('/addpostgroup/{id}/{idpost}/delete', name: 'deletepostgroup')]
     public function deletepost($id, $idpost, PostGroupRepository $PostGroupRepository, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
