@@ -32,6 +32,13 @@ class HomeController extends AbstractController
         );
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
         $user = $this->getUser();
+        if($user){
+            $result=$postRepository->GetLostAndFoundPostCount($user->getId());
+            $counts = $result[0];
+            $lostCount = $counts['lost_count'];
+            $foundCount = $counts['found_count'];
+
+        }
         $voucher = null;
         if ($user) {
             $voucher = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user]);
@@ -42,6 +49,8 @@ class HomeController extends AbstractController
             'post' => $post,
             'markets' => $markets,
             'voucher' => $voucher,
+            'lostCount' =>$lostCount,
+            'foundCount' => $foundCount
         ]);
     }
 }

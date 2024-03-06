@@ -13,10 +13,10 @@
               <form id="search-form" method="GET">
                   <div class="main-search-inputs">
                 <div class="row g-3">
-                  <div class="col-lg-5 col-md-12 col-sm-12">
-                    <div class="form-group">
+                  <div class="col-12">
+                    <div class="form-group w-100">
                       <label for="search">Search:</label>
-                      <input class="form-control form-control-navbar" id="searchInput" type="search"
+                      <input class="form-control w-100 form-control-navbar" id="searchInput" type="search"
                         placeholder="Search" aria-label="Search" style="width: 300PX;">
                     </div>
                   </div>
@@ -126,13 +126,13 @@
                   <li>
                     <div class="followers-dt-sm">
                       <h4>Lost</h4>
-                      <span>3</span>
+                      <span>{{ lostCount }}</span>
                     </div>
                   </li>
                   <li>
                     <div class="followers-dt-sm">
                       <h4>Found</h4>
-                      <span>2</span>
+                      <span>{{ foundCount }}</span>
                     </div>
                   </li>
                 </ul>
