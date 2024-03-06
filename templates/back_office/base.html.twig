@@ -86,8 +86,8 @@
         <!-- Topbar Search Form -->
         <div class="app-search dropdown d-none d-lg-block">
           <form>
-            <div class="input-group">
-              <input type="search" class="form-control dropdown-toggle" placeholder="Search..." id="top-search">
+            <div class="input-group" id="">
+              <input type="search" class="form-control dropdown-toggle"  id="search-input" placeholder="Search..." id="">
               <span class="mdi mdi-magnify search-icon"></span>
               <button class="input-group-text btn btn-primary" type="submit">Search</button>
             </div>
@@ -401,7 +401,7 @@
                                 {% if app.user.photo %}
                                   <img src="{{ asset('uploads/' ~ app.user.photo) }}" alt="user-image" width="32" class="rounded-circle">
                         {% else %}
-                                  <img src="{{ asset('images/default-user.png') }}" alt="user-image" width="32" class="rounded-circle">
+                                  <img src="{{ asset('front_office/images/default-user.png') }}" alt="user-image" width="32" class="rounded-circle">
                                 {% endif %}
                                 </span>
             <span class="d-lg-flex flex-column gap-1 d-none">
@@ -645,6 +645,12 @@
            <span> Q/A </span>
          </a>
      </li>
+     <li class="side-nav-item">
+      <a href="{{ path('listAvertissement') }}" class="side-nav-link">
+        <i class="ri-question-answer-line"></i>
+        <span> List Avertissement </span>
+      </a>
+  </li>
      <li class="side-nav-item">
          <a href="{{ path('admin-voucher-list') }}" class="side-nav-link">
            <i class="ri-question-answer-line"></i>

@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\Reclamation;
+
 #[ORM\Entity(repositoryClass: AvertissementRepository::class)]
 class Avertissement
 {
@@ -18,10 +20,9 @@ class Avertissement
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ReportedUsername = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $nombreReclamation = null;
+  
 
-    #[ORM\OneToMany(mappedBy: 's', targetEntity: Reclamation::class)]
+    #[ORM\OneToMany(mappedBy: 's', targetEntity: Reclamation::class, cascade: ["remove"])]
     private Collection $reclamations;
 
     #[ORM\Column(nullable: true)]
@@ -59,17 +60,7 @@ class Avertissement
         return $this;
     }
 
-    public function getNombreReclamation(): ?int
-    {
-        return $this->nombreReclamation;
-    }
-
-    public function setNombreReclamation(?int $nombreReclamation): static
-    {
-        $this->nombreReclamation = $nombreReclamation;
-
-        return $this;
-    }
+  
 
     /**
      * @return Collection<int, Reclamation>

@@ -1,57 +1,87 @@
+
+
+
+
 {% extends 'front_office/base.html.twig' %}
 {% block title %}Add Reclamation{% endblock %}
 
 {% block main %}
-<main class="py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-lg">
-                    <div class="card-header">
-                        <h4 class="mb-0">Add Reclamation</h4>
-                    </div>
-                    <div class="card-body">
-                        {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+<style>
+    .error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #d9534f;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
 
-                        <div class="mb-3">
-                            {{ form_label(f.subject, "Subject") }}
-                            {{ form_widget(f.subject, {'attr': {'class': 'form-control'}}) }}
-                            <div style="color:red;">{{ form_errors(f.subject) }}</div>
-                        </div>
+</style>
 
-                        <div class="mb-3">
-                            {{ form_label(f.description, "Description") }}
-                            {{ form_widget(f.description, {'attr': {'class': 'form-control'}}) }}
-                            <div style="color:red;">{{ form_errors(f.description) }}</div>
-                        </div>
 
-                        <div class="mb-3">
-                            {{ form_label(f.ReportedUsername, "ReportedUsername") }}
-                            {{ form_widget(f.ReportedUsername, {'attr': {'class': 'form-control'}}) }}
-                            <div style="color:red;">{{ form_errors(f.ReportedUsername) }}</div>
-                        </div>
 
-                        <div class="mb-3">
-                            {{ form_label(f.TypeReclamation, "TypeReclamation") }}
-                            {{ form_widget(f.TypeReclamation, {'attr': {'class': 'form-control'}}) }}
-                            <div style="color:red;">{{ form_errors(f.TypeReclamation) }}</div>
-                        </div>
 
-                     <div class="mb-3">
-                        {{form_label(f.screenShot, "ScreenShot")}}
-                        {{ form_widget(f.screenShot, {'attr': {'class': 'form-control'}}) }}
-                       
-                     </div>
 
-                        <div class="d-grid gap-2">
-                            {{ form_widget(f.save, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
-                        </div>
+  
+    </style>
+<main class="contact-mp">	
+			<div class="main-section">
+				<div class="container ">
+					<div class="row justify-content-md-center ">
+						<div class="col-lg-6 col-md-8 card">							
+							<div class="contact-heading text-center ">
+								<h2 class="mt-3 mb-3">ADD RECLMATION</h2>
+								<p class="mb-37">Do you have any reclamation?</p>
+							</div>
+							<div class="contact-form">
+                                {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+								
+                                    <div class="form-group">
+                                        {{ form_label(f.subject, "Subject") }}
+                                        {{ form_widget(f.subject, {'attr': {'class': 'form-control common-input'}}) }}
+                                        {% if form_errors(f.subject) %}
+                                            <div class="error-message">{{ form_errors(f.subject) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.description, "Description") }}
+                                        {{ form_widget(f.description, {'attr': {'class': 'form-textarea common-input'}}) }}
+                                        {% if form_errors(f.description) %}
+                                            <div class="error-message">{{ form_errors(f.description) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.ReportedUsername, "ReportedUsername") }}
+                                        {{ form_widget(f.ReportedUsername, {'attr': {'class': 'form-control common-input'}}) }}
+                                        {% if form_errors(f.ReportedUsername) %}
+                                            <div class="error-message">{{ form_errors(f.ReportedUsername) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.TypeReclamation, "TypeReclamation") }}
+                                        {{ form_widget(f.TypeReclamation, {'attr': {'class': 'form-control common-input'}}) }}
+                                        {% if form_errors(f.TypeReclamation) %}
+                                            <div class="error-message">{{ form_errors(f.TypeReclamation) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.screenShot, "ScreenShot") }}
+                                        {{ form_widget(f.screenShot, {'attr': {'class': 'form-control common-input'}}) }}
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(f.save) }}
+                                    </div>
+                                
+                                {{ form_end(f) }}
+                                
+							</div>
+						</div>						
+					</div>					
+				</div>
+			</div>
+           
+          
 
-                        {{ form_end(f) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+		</main>
 {% endblock %}

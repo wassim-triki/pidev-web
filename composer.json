@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "consoletvs/profanity": "^3.3",
         "babdev/pagerfanta-bundle": "^4.4",
+        "cboden/ratchet": "^0.4.4",
         "amphp/http-client": "^4.2.1",
         "doctrine/annotations": "^2.0",
         "doctrine/data-fixtures": "@dev",
