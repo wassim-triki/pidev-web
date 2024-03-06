@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block body %}
+  <h1>Search Results</h1>
+  {% if markets is empty %}
+    <p>No markets found.</p>
+  {% else %}
+    <div class="row">
+      {% for market in markets %}
+        <div class="col-md-6">
+          <div class="event-main-post">
+            <div class="main-photo">
+              <a href="{{ path('market_details', {'id': market.id}) }}">
+                <div class="photo-overlay"></div>
+                <img src="images/homepage/center/post-img-4.jpg" alt="{{ market.name }}" />
+              </a>
+              <div class="option-ellipsis">
+                <div class="dropdown">
+                  <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                    <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                    <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                    <a class="post-link-item" href="#" data-bs-toggle="modal" data-bs-target="#reportModal">
+                      <i class="feather-flag icon-mr1"></i>Report
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="event-body">
+              <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name }}</a>
+              <span class="event-type">{{ market.address }}</span>
+              <p class="info-counter">
+                <span>{{ market.region }}</span>
+                <span>{{ market.zipCode }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

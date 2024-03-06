@@ -2,7 +2,10 @@
 
 namespace App\Controller\BackOffice;
 
+use App\Entity\Market;
+use App\Entity\Voucher;
 use App\Entity\User;
+use App\Entity\VoucherCategory;
 use App\Form\AdminEditProfileFormType;
 use App\Form\AdminUserCreationFormType;
 use App\Form\RegistrationFormType;
@@ -10,6 +13,8 @@ use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Service\JwtTokenService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +25,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminController extends AbstractController
 {
+    private $managerRegistry;
+
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+    }
     #[Route('/', name: 'admin_dashboard')]
     public function dashboard(JwtTokenService $postStatisticsService, PostRepository $postRepository)
     {
@@ -193,4 +204,5 @@ class AdminController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

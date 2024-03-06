@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Enum\GenderEnum;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -121,7 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column]
-    private ?int $avertissementsCount = null;
+    private ?int $avertissementsCount = 0;
 
     #[ORM\OneToMany(mappedBy: 'f', targetEntity: Avertissement::class)]
     private Collection $avertissements;
@@ -143,7 +143,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->questions = new ArrayCollection();
         $this->answers = new ArrayCollection();
         $this->setAvertissementsCount(0);
+        $this->vouchers = new ArrayCollection();
     }
+
+    #[ORM\Column(nullable: true)]
+    private ?int $reputation = null;
+
+    #[ORM\OneToMany(mappedBy: 'userWon', targetEntity: Voucher::class, cascade: ['persist', 'remove'])]
+    private Collection $vouchers;
+
+
+
+
 
     public function getId(): ?string
     {
@@ -496,6 +507,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($answer->getUserId() === $this) {
                 $answer->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getReputation(): ?int
+    {
+        return $this->reputation;
+    }
+
+    public function setReputation(?int $reputation): static
+    {
+        $this->reputation = $reputation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Voucher>
+     */
+    public function getVouchers(): Collection
+    {
+        return $this->vouchers;
+    }
+
+    public function addVoucher(Voucher $voucher): static
+    {
+        if (!$this->vouchers->contains($voucher)) {
+            $this->vouchers->add($voucher);
+            $voucher->setUserWon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoucher(Voucher $voucher): static
+    {
+        if ($this->vouchers->removeElement($voucher)) {
+            // set the owning side to null (unless already changed)
+            if ($voucher->getUserWon() === $this) {
+                $voucher->setUserWon(null);
             }
         }
 

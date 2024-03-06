@@ -99,6 +99,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="events-tab" data-bs-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false"><i class="feather-calendar"></i>Events</a>
                                     </li>
+                                    <li class="nav-item">
+											<a class="nav-link" id="events-tab" data-bs-toggle="tab" href="#voucher" role="tab" aria-controls="events" aria-selected="false"><i class="feather-dollar-sign"></i>Vouchers</a>
+										</li>
                                 </ul>
                             </div>
                             <div class="tab-content" id="myTabContent">
@@ -142,7 +145,7 @@
                                     <div class="main-card mt-4 mb-0">
                                         <div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4">
                                             <h4>Events</h4>
-                                            <a href="add_new_event.html" class="main-btn btn-hover h_40 ms-auto">Create</a>
+                                            <a href="{{ path('addpost')}}" class="main-btn btn-hover h_40 ms-auto">Create</a>
                                         </div>
                                         <div class="events-dash-options main-form">
                                             <div class="row g-2">
@@ -525,6 +528,44 @@
                                         </div>
                                     </div>
                                 </div>
+                                {# begin voucher div #}
+								<div class="tab-pane fade" id="voucher" role="tabpanel" aria-labelledby="events-tab">
+                                    <div class="main-card mt-4 mb-0">
+                                        <div class="events-dash-heading d-flex align-items-center w-100 py-2 pe-2 ps-4">
+                                            <h4>Events</h4>
+                                            <a href="add_new_event.html" class="main-btn btn-hover h_40 ms-auto">Create</a>
+                                        </div>
+                                        <div class="events-dash-options main-form">
+                                            <div class="row g-2">
+                                                <div class="col-lg-4 col-md-4 col-12">
+                                                    <div class="event-search-dash">
+                                                        <div class="position-relative">
+                                                        <input id="voucherCategorySearch" class="form-input" type="text" placeholder="Search Voucher By category">
+                                                        <span class="icon-158"><i class="feather-search"></i></span>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4 col-12">
+                                                    <select class="selectpicker" data-width="100%" onchange="filterVouchers(this.value)">
+                                                        <option value="all">All</option>
+                                                        <option value="unused">Unused Voucher</option>
+                                                        <option value="used">Used Voucher</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="filteredVouchersContainer" class="row"></div>
+                                        <div class="all-dash-events">
+                                            <div class="row" id="vouchers-row">	
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {# end voucher div #}
+                                
                             </div>
                         </div>
                     </div>
@@ -536,5 +577,69 @@
         function submitProfilePictureForm() {
             document.getElementById('profile-picture-form').submit();
         }
+
+			function sendEmail() {
+				fetch('{{ path('send_email') }}', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'X-CSRF-Token': '{{ csrf_token("send_email") }}'
+					}
+				})
+				.then(response => {
+					if (!response.ok) {
+						console.error('Failed to send email');
+					}
+				})
+				.catch(error => {
+					console.error('Error sending email:', error);
+				});
+			}
+
+			
+
+		function filterVouchers(filter) {
+			// Send AJAX request to fetch vouchers based on the selected filter
+			$.ajax({
+				url: "{{ path('filter_vouchers') }}",
+				type: "GET",
+				data: { filter: filter },
+				success: function(response) {
+					// Replace the voucher listing with the updated vouchers
+                    console.log(response)
+					$('#vouchers-row').html(response);
+				}
+			});
+
+            // Event listener for the keyup event on the search input field
+$('#voucherCategorySearch').on('keyup', function(event) {
+    // Check if the Enter key was pressed (key code 13)
+    if (event.keyCode === 13) {
+        // Call the search function when Enter key is pressed
+        searchVouchersByCategory();
+    }
+});
+
+		function triggerSearch() {
+        // Get the search input value
+        var searchInput = document.getElementById("voucherCategorySearch").value;
+
+        // Trigger the search function only if the search input is not empty
+        if (searchInput.trim() !== '') {
+            searchVouchersByCategory();
+        }
+    }
+
+    // Event listener for the keyup event on the search input field
+    $('#voucherCategorySearch').on('keyup', function() {
+        // Call the triggerSearch function when the user finishes typing
+        triggerSearch();
+    });
+    	}
+	function submitProfilePictureForm() {
+		document.getElementById('profile-picture-form').submit();
+	}
+
     </script>
 {% endblock %}

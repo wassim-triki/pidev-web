@@ -6,6 +6,7 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/%env(UPLOADS_DIRECTORY)%'
     screenshot_directory: '%kernel.project_dir%/public/uploads/screenshots'
+    qrcode_directory: '%kernel.project_dir%/public/qrcode'
 
 services:
     # config/services.yaml
@@ -16,6 +17,8 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     App\Service\JwtTokenService:
+    App\Service\QRCodeGenerator:
+    
 
     App\Validator\Constraints\UniqueEmailValidator:
         tags:

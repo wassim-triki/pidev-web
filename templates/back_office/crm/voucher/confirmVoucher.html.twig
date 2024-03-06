@@ -1,0 +1,49 @@
+{% extends 'front_office/base.html.twig' %} 
+	{% block title %}Confirme Voucher{% endblock
+    %} 
+	{% block main %}
+		
+		<main class="discussion-mp">	
+			<div class="main-section">
+				<div class="container">
+					<div class="row justify-content-md-center">
+						<div class="col-lg-6 col-md-8">
+							<div class="checkout-heading text-center">
+								<h2 class="mt-3">./med</h2>								
+							</div>
+							<div class="confirm-order">
+							<div class="checkout-dt1">
+								<div class="check-img">
+									<img src="{{asset('front_office/images/category-icons/3d.png')}}" alt="">
+								</div>
+								<div class="evnt-dt-ckot1">
+									<div class="lctn-dt1"><h4><i class="feather-lock"></i>{{voucher.code}}></h4></div>
+									<div class="lctn-dt1"><i class="feather-tag"></i>{{voucher.category.getTitre()}}</div>
+									<div class="lctn-dt1"><i class="feather-shopping-cart"></i>{{voucher.marketRelated.getName()}}</div>
+									<div class="lctn-dt1"><i class="feather-dollar-sign"></i>{{voucher.value}} DT</div>
+									<div class="lctn-dt1"><i class="feather-user"></i>{{voucher.userWon.Email}}</div>
+								</div>									
+							</div>
+							<div class="confirm-tickets">
+								<div class="vip-left1">Validity : </div>
+								<div class="vip-left">{{voucher.isValid ? 'not Used yet' : 'Used'}}</div>
+								<div class="css-dot">,</div>
+								<div class="general-left">limite Usage : {{voucher.usageLimit}}</div>
+							</div>
+							<div class="congrats">
+								<h4>Congratulations {{voucher.userWon.Email}} !!!</h4>
+								<span>You just have used your voucher </span>
+								<p>Scan QRCode at {{voucher.marketRelated.name}} to take you phisical coupons there !</p>
+								{% if qrcode %}
+									<img src="{{qrcode}}" alt="">
+								{% endif %}
+								<p class="sms">Ticket details are sent to you in email. Thanks!</p>
+							</div>															
+						</div>															
+					</div>											
+				</div>					
+			</div>
+		</div>
+</main>
+
+{% endblock %}

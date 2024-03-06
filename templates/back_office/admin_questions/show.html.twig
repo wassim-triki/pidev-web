@@ -24,12 +24,19 @@
                         </button>
                             <!-- Delete button -->
                             <a href="{{ path('delete_question', {'id': question.id}) }}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i> Supprimer
+                                <i class="fas fa-trash"></i> Archiver
                             </a>
                             <!-- Answer button -->
                             <a href="{{ path('admin_answer_new', {'id': question.id}) }}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-reply"></i> Répondre
                             </a>
+                    </div>
+                       <div class="card-footer text-right">
+                        {% if question.answer %}
+                            <span class="text-success">Répondu</span>
+                        {% else %}
+                            <span class="text-danger">Non répondu</span>
+                        {% endif %}
                     </div>
                     <div class="card-footer text-right">
                        

@@ -517,7 +517,7 @@
 {#        </li>#}
         <li class="side-nav-item">
           <a  href="{{ path('admin_dashboard') }}"   class="side-nav-link">
-            <i class="uil-home-alt"></i>
+            <i class="ri-bar-chart-2-line"></i>
 {#            <span class="badge bg-success float-end">5</span>#}
             <span> Dashboards </span>
           </a>
@@ -528,23 +528,15 @@
             <span> Users </span>
           </a>
         </li>
+        <li class="side-nav-item">
+          <a href="{{ path('posts_admin') }}" class="side-nav-link">
+            <i class="ri-image-line"></i>
+            <span> Posts </span>
+          </a>
+        </li>
 
-{#        <li class="side-nav-title">Apps</li>#}
-
-{#        <li class="side-nav-item">#}
-{#          <a href="apps-calendar.html" class="side-nav-link">#}
-{#            <i class="uil-calender"></i>#}
-{#            <span> Calendar </span>#}
-{#          </a>#}
-{#        </li>#}
-
-{#        <li class="side-nav-item">#}
-{#          <a href="apps-chat.html" class="side-nav-link">#}
-{#            <i class="uil-comments-alt"></i>#}
-{#            <span> Chat </span>#}
-{#          </a>#}
-{#        </li>#}
-
+        
+          
 {#        <li class="side-nav-item">#}
 {#          <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm" class="side-nav-link">#}
 {#            <i class="uil uil-tachometer-fast"></i>#}
@@ -649,7 +641,7 @@
 
        <li class="side-nav-item">
          <a href="{{ path('admin_questions_show') }}" class="side-nav-link">
-           <i class="ri-question-answer-line"></i>
+           <i class="ri-questionnaire-line"></i>
            <span> Q/A </span>
          </a>
      </li>
@@ -659,6 +651,24 @@
         <span> List Avertissement </span>
       </a>
   </li>
+     <li class="side-nav-item">
+         <a href="{{ path('admin-voucher-list') }}" class="side-nav-link">
+           <i class="ri-question-answer-line"></i>
+           <span> Vouchers </span>
+         </a>
+     </li>
+     <li class="side-nav-item">
+         <a href="{{ path('admin-market-list') }}" class="side-nav-link">
+           <i class="ri-question-answer-line"></i>
+           <span> Markets </span>
+         </a>
+     </li>
+     <li class="side-nav-item">
+         <a href="{{ path('admin-category-list') }}" class="side-nav-link">
+           <i class="ri-question-answer-line"></i>
+           <span> Voucher Category </span>
+         </a>
+     </li>
 
 {#        <li class="side-nav-item">#}
 {#          <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks" class="side-nav-link">#}
@@ -1084,20 +1094,20 @@
 {#          </div>#}
 {#        </li>#}
 
-{#        <li class="side-nav-item">#}
-{#          <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">#}
-{#            <i class="uil-document-layout-center"></i>#}
-{#            <span> Forms </span>#}
-{#            <span class="menu-arrow"></span>#}
-{#          </a>#}
-{#          <div class="collapse" id="sidebarForms">#}
-{#            <ul class="side-nav-second-level">#}
-{#              <li>#}
-{#                <a href="form-elements.html">Basic Elements</a>#}
-{#              </li>#}
-{#              <li>#}
-{#                <a href="form-advanced.html">Form Advanced</a>#}
-{#              </li>#}
+        <li class="side-nav-item">
+          <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">
+            <i class="uil-document-layout-center"></i>
+            <span> Sponsor </span>
+            <span class="menu-arrow"></span>
+          </a>
+          <div class="collapse" id="sidebarForms">
+            <ul class="side-nav-second-level">
+              <li>
+                <a href="{{ path('addformsponsor') }}">add Sponsor Group</a>
+              </li>
+              <li>
+                <a href="{{ path('showdbsponsoring') }}">Sponsor Group</a>
+              </li>
 {#              <li>#}
 {#                <a href="form-validation.html">Validation</a>#}
 {#              </li>#}
@@ -1110,9 +1120,21 @@
 {#              <li>#}
 {#                <a href="form-editors.html">Editors</a>#}
 {#              </li>#}
-{#            </ul>#}
-{#          </div>#}
-{#        </li>#}
+            </ul>
+          </div>
+        </li>
+        <li class="side-nav-item">
+          <a href="{{ path('showdbpostgroup') }}" class="side-nav-link">
+            <i class="ri-team-line"></i>
+            <span> Post Group </span>
+          </a>
+        </li>
+        <li class="side-nav-item">
+                <a href="{{ path('showdbcommentaire') }}" class="side-nav-link">
+                  <i class=" ri-question-answer-line"></i>
+                  <span> Commentaire Group </span>
+              </a>
+          </li>
 
 {#        <li class="side-nav-item">#}
 {#          <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">#}
