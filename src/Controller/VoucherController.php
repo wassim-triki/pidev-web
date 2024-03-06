@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Repository\VoucherRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Controller\Service\QRCodeGenerator;
+use App\Service\QRCodeGenerator as ServiceQRCodeGenerator;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -29,12 +29,12 @@ class VoucherController extends AbstractController
     #[Route('/voucher', name: 'app_voucher')]
     public function index(): Response
     {
-        return $this->render('frontOffice/error404.html.twig', [
+        return $this->render('front_office/error/error404.html.twig', [
             'voucher' => $this->managerRegistry->getRepository(Voucher::class)->findAll(),
         ]);
     }
 
-    #[Route('/voucher/add', name: 'voucher_add')]
+    #[Route('admin/vouchers/add', name: 'voucher_add')]
     public function add(Request $request): Response
     {
         // Create a new Voucher object
@@ -55,7 +55,7 @@ class VoucherController extends AbstractController
         }
 
         // Render the form template with the form
-        return $this->render('voucher/add.html.twig', [
+        return $this->render('back_office/crm/voucher/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -75,7 +75,7 @@ class VoucherController extends AbstractController
             return $this->redirectToRoute('admin-voucher-list');
         }
 
-        return $this->render('voucher/editVoucher.html.twig', [
+        return $this->render('back_office/crm/voucher/editVoucher.html.twig', [
             'voucher' => $voucher,
             'form' => $form->createView(),
         ]);
@@ -117,7 +117,7 @@ class VoucherController extends AbstractController
     }
 
     #[Route('/confirm-voucher/{id}',name: 'confirm_voucher')]
-    public function confirmVoucher($id, VoucherRepository $voucherRepository,QRCodeGenerator $qrcode, MailerInterface $mailer): Response
+    public function confirmVoucher($id, VoucherRepository $voucherRepository,ServiceQRCodeGenerator $qrcode, MailerInterface $mailer): Response
     {
 
         
@@ -158,7 +158,7 @@ class VoucherController extends AbstractController
         if (!$voucher) {
             throw $this->createNotFoundException('Voucher not found');
         }
-        return $this->render('frontOffice/confirmVoucher.html.twig',
+        return $this->render('back_office/crm/voucher/confirmVoucher.html.twig',
         [
             'voucher' => $voucher,
             'qrcode' => $qr
@@ -191,18 +191,27 @@ class VoucherController extends AbstractController
     {
         $filter = $request->query->get('filter');
 
+
         // Get the entity manager from the manager registry
         $entityManager = $this->managerRegistry->getManager();
+        $vouchers=[];
+
+
 
         // Fetch vouchers based on the selected filter
+        if ($filter === 'all') {
+            $vouchers = $entityManager->getRepository(Voucher::class)->findAll();
+        }
         if ($filter === 'used') {
             $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => false]);
-        } else {
+        }
+        if ($filter === 'unused'){
             $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => true]);
         }
 
+
         // Render the voucher listing template with the filtered vouchers
-        return $this->render('voucher/voucher_listing.html.twig', [
+        return $this->render('front_office/crm/voucher/voucher_listing.html.twig', [
             'vouchers' => $vouchers
         ]);
     }
@@ -240,7 +249,7 @@ class VoucherController extends AbstractController
         }
 
         // Render the Twig template with voucher details
-        return $this->render('backOffice/Dashboard/dash-voucher-listing.html.twig', [
+        return $this->render('back_office/crm/dash-voucher-listing.html.twig', [
             'voucher' => $voucher,
         ]);
     }

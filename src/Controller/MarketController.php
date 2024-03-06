@@ -29,25 +29,15 @@ class MarketController extends AbstractController
     #[Route('/market', name: 'market_index')]
     public function index(): Response
     {
-        return $this->render('frontOffice/error404.html.twig', [
+        return $this->render('front_office/error/error404.html.twig', [
             'markets' => $this->managerRegistry->getRepository(Market::class)->findAll(),
         ]);
     }
 
-    #[Route('/market/showmarket', name: 'market_show', methods: ['GET'])]
-    public function show(Market $market): Response
-    {
-        $market = $this->managerRegistry->getRepository(Market::class)->findAll($market);
-        return $this->render('market/show.html.twig', ['market' => $market,]);
-    }
-
-    #[Route('/market/showmarkets', name: 'showmarket')]
+    #[Route('market/showmarkets', name: 'showmarket')]
     public function showMarket(MarketRepository $marketRepository): Response
     {
-        $market = $marketRepository->findAll();
-        return $this->render('frontOffice/error404.html.twig', [
-            'markets' => $market
-        ]);
+        return $this->render('front_office/error/error404.html.twig');
     }
 
     #[Route('/market/{id}/details', name: 'market_details')]
@@ -125,7 +115,7 @@ class MarketController extends AbstractController
             return $this->redirectToRoute('admin-market-list');
         }
 
-        return $this->render('market/newMarket.html.twig', [
+        return $this->render('front_office/market/newMarket.html.twig', [
             'market' => $market,
             'form' => $form->createView(),
         ]);
@@ -161,7 +151,7 @@ class MarketController extends AbstractController
             return $this->redirectToRoute('admin-market-list', ['id' => $market->getId()]);
         }
 
-        return $this->render('market/editMarket.html.twig', [
+        return $this->render('front_office/market/editMarket.html.twig', [
             'market' => $market,
             'form' => $form->createView(),
         ]);
@@ -196,7 +186,7 @@ class MarketController extends AbstractController
         }
 
         // Render the Twig template with voucher details
-        return $this->render('backOffice/Dashboard/dash-market-listing.html.twig', [
+        return $this->render('back_office/crm/dash-market-listing.html.twig', [
             'market' => $market,
         ]);
     }

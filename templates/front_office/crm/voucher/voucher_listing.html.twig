@@ -1,4 +1,9 @@
-{% block main %}
+{% extends 'front_office/base.html.twig' %}
+{% block title %}Vouchers{% endblock %}
+{% block header %}
+{% endblock %}
+	{% block main %}
+
 	{% if vouchers is empty %}
 		<p>No vouchers found.</p>
 	{% else %}
@@ -37,4 +42,18 @@
 	</div>
     {% endfor %}
 {% endif %}
+{% block footer %}
+	{% endblock %}
+	<!-- Scripts js -->
+    <script src="{{ asset('front_office/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{
+        asset('front_office/vendor/bootstrap/js/bootstrap.bundle.min.js')
+      }}"></script>
+    <script src="{{
+        asset('front_office/vendor/bootstrap-select/js/bootstrap-select.min.js')
+      }}"></script>
+    <script src="{{ asset('front_office/vendor/OwlCarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('front_office/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('front_office/js/i18n/datepicker.en.js') }}"></script>
+    <script src="{{ asset('front_office/js/custom.js') }}"></script>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %} 
+{% extends 'front_office/base.html.twig' %} 
 	{% block title %}Confirme Voucher{% endblock
     %} 
 	{% block main %}
@@ -9,12 +9,12 @@
 					<div class="row justify-content-md-center">
 						<div class="col-lg-6 col-md-8">
 							<div class="checkout-heading text-center">
-								<h2 class="mt-3">Voucher Confirmed</h2>								
+								<h2 class="mt-3">./med</h2>								
 							</div>
 							<div class="confirm-order">
 							<div class="checkout-dt1">
 								<div class="check-img">
-									<img src="{{asset('images/category-icons/3d.png')}}" alt="">
+									<img src="{{asset('front_office/images/category-icons/3d.png')}}" alt="">
 								</div>
 								<div class="evnt-dt-ckot1">
 									<div class="lctn-dt1"><h4><i class="feather-lock"></i>{{voucher.code}}></h4></div>
@@ -37,12 +37,7 @@
 								{% if qrcode %}
 									<img src="{{qrcode}}" alt="">
 								{% endif %}
-								<p class="sms">Ticket details are sent to you in sms & email. Thanks!</p>
-									<div class="group-btns">
-										<button class="interest-btn btn-hover w-100" onclick="goToProfile()">
-											<i class="feather-link me-2"></i>Go back to profile
-										</button>
-									</div>
+								<p class="sms">Ticket details are sent to you in email. Thanks!</p>
 							</div>															
 						</div>															
 					</div>											
@@ -50,12 +45,5 @@
 			</div>
 		</div>
 </main>
-
-<script>
-    function goToProfile() {
-        // Change the window location to the profile page
-        window.location.href = '/profile';
-    }
-</script>
 
 {% endblock %}

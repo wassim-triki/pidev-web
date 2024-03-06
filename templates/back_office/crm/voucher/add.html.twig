@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front_office/base.html.twig' %}
 
 {% block title %}Hello SponsoringController!{% endblock %}
 
@@ -31,7 +31,7 @@
                                                             <div style="color: red;">{{ form_errors(form.code) }}</div>
                                                         </div>
                                                         <div class="form-group mt-3  ">
-                                                            {{ form_label(form.value, "Value in Dinar (DT):", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.value, "Value in Dinar (DT):", {'label_attr': {'class': 'form-lable'}}) }}
                                                             
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(form.value, {'attr': {'class': 'form-control'}}) }}
@@ -39,7 +39,7 @@
                                                             <div style="color: red;">{{ form_errors(form.value) }}</div>
                                                         </div>
                                                         <div class="form-group mt-3 ">
-                                                            {{ form_label(form.category, "Coupon's category:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.category, "Coupon's category:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
@@ -47,7 +47,7 @@
                                                             {# <div style="color: red;">{{ form_errors(form.category) }}</div> #}
                                                         </div>
                                                         <div class="form-group mt-3  ">
-                                                            {{ form_label(form.type, "Coupon's type:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.type, "Coupon's type:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
@@ -58,22 +58,22 @@
                                                          
                                                         
                                                         <div class="form-group mt-5  ">
-                                                            {{ form_label(form.expiration, "Expiration Date:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.expiration, "Expiration Date:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             <div style="color: red;">{{ form_errors(form.expiration) }}</div>
                                                             <div class="col-sm-8 ">
-                                                                {{ form_widget(form.expiration, {'attr': {'class': 'form-control'}}) }}
+                                                                {{ form_widget(form.expiration, {'attr': {'class': 'form-lable'}}) }}
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group mt-5  ">
-                                                            {{ form_label(form.usageLimit, "Usage limit:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
-                                                            {# <div style="color: red;">{{ form_errors(form.usageLimit) }}</div> #}
+                                                            {{ form_label(form.usageLimit, "Usage limit:", {'label_attr': {'class': 'form-lable'}}) }}
+                                                             <div style="color: red;">{{ form_errors(form.usageLimit) }}</div>
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(form.usageLimit, {'attr': {'class': 'form-control'}}) }}
                                                             </div>
                                                         </div>
                                                         <div class="form-group mt-5">
-                                                            {{ form_label(form.isValid, "Is Valid:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.isValid, "Is Valid:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             {# <div style="color: red;">{{ form_errors(form.isValid) }}</div> #}
                                                             <div class="col-sm-8">
                                                                 {{ form_widget(form.isValid, {'attr': {'class': 'form-check-input'}}) }}
@@ -81,7 +81,7 @@
                                                         </div>
 
                                                         <div class="form-group mt-5">
-                                                            {{ form_label(form.isGivenToUser, "Is Given to User:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.isGivenToUser, "Is Given to User:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             {# <div style="color: red;">{{ form_errors(form.isGivenToUser) }}</div> #}
                                                             <div class="col-sm-8">
                                                                 {{ form_widget(form.isGivenToUser, {'attr': {'class': 'form-check-input'}}) }}
@@ -89,7 +89,7 @@
                                                         </div>
 
                                                         <div class="form-group mt-3  ">
-                                                            {{ form_label(form.userWon, "Coupon's Owner:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.userWon, "Coupon's Owner:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(form.userWon, {'attr': {'class': 'form-control'}}) }}
@@ -97,7 +97,7 @@
                                                             {# <div style="color: red;">{{ form_errors(form.userWon) }}</div> #}
                                                         </div>
                                                         <div class="form-group mt-3  ">
-                                                            {{ form_label(form.marketRelated, "Market:", {'label_attr': {'class': 'col-sm-2 col-form-label text-sm-end'}}) }}
+                                                            {{ form_label(form.marketRelated, "Market:", {'label_attr': {'class': 'form-lable'}}) }}
                                                             
                                                             <div class="col-sm-8 ">
                                                                 {{ form_widget(form.marketRelated, {'attr': {'class': 'form-control'}}) }}
