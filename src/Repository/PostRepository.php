@@ -64,6 +64,28 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function GetTypeLost($username)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.username = :username')
+            ->setParameter('type', '%' . $username . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function GetLostAndFoundPostCount($user)
+    {
+        $rsm = new ResultSetMapping();
+
+        $query = $this->getEntityManager()->createNativeQuery('SELECT 
+        (SELECT COUNT(*) FROM POST WHERE user = :user AND type = "lost") AS lost_count, 
+        (SELECT COUNT(*) FROM POST WHERE user = :user AND type = "found") AS found_count', $rsm);
+        $query->setParameter('user', $user);
+
+        return $query->getResult();
+    }
+
 
     //    /**
     //     * @return Post[] Returns an array of Post objects

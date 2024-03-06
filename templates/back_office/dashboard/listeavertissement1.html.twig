@@ -69,57 +69,7 @@
 }
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
 
-<div  class="card"   style="padding-left: 600px;">
-    <canvas id="myChart" style="width: 250px; height: 250px; ;"></canvas>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['violation of the rules of the platform', 'inappropriate content', 'other reasons'],
-            datasets: [{
-                label: 'My Dataset',
-                data: [{{n1}},{{n2}},{{n3}}],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: false
-        }
-    });
-});
-</script>
-
-<table>
-    <thead>
-        <tr>
-            <th><strong>Raison</strong></th>
-            <th><strong>Nombre</strong> </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for stat in statistiques %}
-            <tr>
-                <td>{{ stat.raison }}</td>
-                <td>{{ stat.nombre }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-</div>
 
 
 <div class="card">

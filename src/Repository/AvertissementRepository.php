@@ -36,7 +36,7 @@ class AvertissementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function countraisoninappropriatecontent():int
+    public function countraisoninappropriatecontent1(): int
     {
         return $this->createQueryBuilder('a')
             ->select('COUNT(a.id) as nombre')
@@ -44,9 +44,8 @@ class AvertissementRepository extends ServiceEntityRepository
             ->setParameter('raison', 'inappropriate content')
             ->getQuery()
             ->getSingleScalarResult();
-           
     }
-    public function countraisoninappropriatecontent2():int
+    public function countraisoninappropriatecontent2(): int
     {
         return $this->createQueryBuilder('a')
             ->select('COUNT(a.id) as nombre')
@@ -54,9 +53,8 @@ class AvertissementRepository extends ServiceEntityRepository
             ->setParameter('raison', 'violation of the rules of the platform')
             ->getQuery()
             ->getSingleScalarResult();
-           
     }
-    public function countraisoninappropriatecontent3():int
+    public function countraisoninappropriatecontent3(): int
     {
         return $this->createQueryBuilder('a')
             ->select('COUNT(a.id) as nombre')
@@ -64,35 +62,34 @@ class AvertissementRepository extends ServiceEntityRepository
             ->setParameter('raison', 'other reasons')
             ->getQuery()
             ->getSingleScalarResult();
-           
     }
-    
- 
 
 
 
-//    /**
-//     * @return Avertissement[] Returns an array of Avertissement objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Avertissement
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+    //    /**
+    //     * @return Avertissement[] Returns an array of Avertissement objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('a.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Avertissement
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
