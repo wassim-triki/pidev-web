@@ -195,4 +195,9 @@ class PostController extends AbstractController
         // Return JSON response
         return new JsonResponse($formattedResults);
     }
+    #[Route('/contact', name: 'contact')]
+    public function contact(): Response
+    {
+        return $this->render('contactus.html.twig', []);
+    }
 }
