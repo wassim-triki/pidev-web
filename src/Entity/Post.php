@@ -18,12 +18,12 @@ class Post
     private ?int $id = null;
 
     #[Assert\NotBlank(message: "The titre n'est pas vide")]
-    #[Assert\Length(min: 5, minMessage: "le titre doit avoir un longeur plus que 5 charactére")]
+    #[Assert\Length(min: 3, minMessage: "le titre doit avoir un longeur plus que 5 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
     #[Assert\NotBlank(message: "The description n'est pas vide")]
-    #[Assert\Length(min: 20, minMessage: "le description doit avoir un longeur plus que 20 charactére")]
+    #[Assert\Length(min: 10, minMessage: "le description doit avoir un longeur plus que 20 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 

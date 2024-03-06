@@ -31,33 +31,21 @@ class AvertissementController extends AbstractController
 
 
     #[Route('/listAvertissement', name: 'listAvertissement')]
-    public function listAvertissement(AvertissementRepository $repaverti ,Request  $request,PaginatorInterface $paginatorInterface): Response
+    public function listAvertissement(AvertissementRepository $repaverti, Request  $request, PaginatorInterface $paginatorInterface): Response
     {
         // Only allow authenticated users with the ROLE_ADMIN to access this page
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $list = $repaverti->findAll();
-        $statistiques = $repaverti->countAvertissementsByRaison();
-        $n1 = $repaverti->countraisoninappropriatecontent();
-        $n2= $repaverti->countraisoninappropriatecontent2();
-        $n3= $repaverti->countraisoninappropriatecontent3();
-        $pagination=$paginatorInterface->paginate(
+        $pagination = $paginatorInterface->paginate(
             $list,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             2
-
-      
         );
 
 
         return $this->render('back_office/dashboard/listeavertissement1.html.twig', [
             'pagination' => $pagination,
-            'statistiques' => $statistiques,
-            'n1' => $n1,
-            'n2' => $n2,
-            'n3' => $n3,
         ]);
-
-
     }
 
 
@@ -70,36 +58,36 @@ class AvertissementController extends AbstractController
         UserRepository $userRepository // Injectez le repository de l'entité User
     ): Response {
         $avertissement = $avertissementRepository->find($id);
-    
+
         if (!$avertissement) {
             throw $this->createNotFoundException('Avertissement non trouvé');
         }
-    
+
         // Marquer l'avertissement comme confirmé
         $avertissement->setConfirmation(true);
         $entityManager->flush();
-    
+
         // Récupérer le nom d'utilisateur associé à l'avertissement
         $reportedUsername = $avertissement->getReportedUsername();
-    
+
         // Récupérer l'utilisateur associé à partir du nom d'utilisateur
         $user = $userRepository->findOneBy(['username' => $reportedUsername]);
-    
+
         if (!$user) {
             throw new \Exception('Utilisateur non trouvé pour le nom d\'utilisateur associé à l\'avertissement.');
         }
-    
+
         // Incrémenter le nombre d'avertissements de l'utilisateur
         $nombreAvertissements = $user->getAvertissementsCount() ?? 0;
         $user->setAvertissementsCount($nombreAvertissements + 1);
         $entityManager->flush();
 
-            // Envoi de l'email à l'utilisateur signalé
+        // Envoi de l'email à l'utilisateur signalé
         $email = (new Email())
-        ->from('no-reply@al9ani.tn')
-        ->to($user->getEmail())
-        ->subject('Nouvel avertissement')
-        ->html("Cher utilisateur, vous avez reçu un nouvel avertissement. Vous avez maintenant {$user->getAvertissementsCount()} avertissements au total.");
+            ->from('no-reply@al9ani.tn')
+            ->to($user->getEmail())
+            ->subject('Nouvel avertissement')
+            ->html("Cher utilisateur, vous avez reçu un nouvel avertissement. Vous avez maintenant {$user->getAvertissementsCount()} avertissements au total.");
 
         try {
             $mailer->send($email);
@@ -107,7 +95,7 @@ class AvertissementController extends AbstractController
             // Log or handle the error as needed
             $this->addFlash('error', 'Failed to send email: ' . $e->getMessage());
         }
-    
+
         // Rediriger ou retourner une réponse appropriée
         $this->addFlash('success', 'Warning confirmed successfully');
         return $this->redirectToRoute('listAvertissement');
@@ -119,12 +107,12 @@ class AvertissementController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         $avertissement = $avertissementRepository->find($id);
-    
-    
-    
+
+
+
         $entityManager->remove($avertissement);
         $entityManager->flush();
-    
+
         $this->addFlash(
             'success', // Type de message, peut être 'success', 'warning', 'error', etc.
             'The warning has been successfully deleted' // Le message à afficher
@@ -135,7 +123,7 @@ class AvertissementController extends AbstractController
     #[Route('/search', name: 'search')]
     public function search(Request $request, AvertissementRepository $repaverti): JsonResponse
     {
-    $query = $request->query->get('query');
+        $query = $request->query->get('query');
 
         // Perform search query using Doctrine ORM
         $results = $repaverti->createQueryBuilder('e')
@@ -153,7 +141,7 @@ class AvertissementController extends AbstractController
                 'confirmation' => $result->isConfirmation(),
                 'screenShot' => $result->getScreenShot(),
                 'raison' => $result->getRaison(),
-               
+
 
                 // Add more fields as needed
             ];
@@ -168,17 +156,13 @@ class AvertissementController extends AbstractController
     {
         $totalAvertissements = $avertissementRepository->countTotalAvertissements();
         $confirmedAvertissements = $avertissementRepository->countConfirmedAvertissements();
-    
+
         // Récupérez d'autres statistiques si nécessaire
-    
+
         return $this->render('back_office/dashboard/dashboard.html.twig', [
             'totalAvertissements' => $totalAvertissements,
             'confirmedAvertissements' => $confirmedAvertissements,
             // Passez d'autres statistiques à la vue
         ]);
     }
-   
 }
-
-
-

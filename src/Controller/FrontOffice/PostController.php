@@ -2,7 +2,6 @@
 
 namespace App\Controller\FrontOffice;
 
-
 use App\Entity\Post;
 use App\Enum\PostTypeEnum;
 use App\Form\PostType;
@@ -51,47 +50,6 @@ class PostController extends AbstractController
         ]);
     }
 
-
-
-    #[Route('/search', name: 'search')]
-    public function search(Request $request, PostRepository $postRepository): Response
-    {
-        $query = $request->query->get('query');
-        $date = $request->query->get('date');
-
-        $qb = $postRepository->createQueryBuilder('e');
-
-        if ($query) {
-            $qb->where('e.titre LIKE :query')
-                ->setParameter('query', '%' . $query . '%');
-        }
-
-        if ($date) {
-            $qb->andWhere('e.date = :date')
-                ->setParameter('date', new \DateTime($date));
-        }
-
-        $results = $qb->getQuery()->getResult();
-
-        // Transform results to array to prepare for JSON response
-        $formattedResults = [];
-        foreach ($results as $result) {
-            // Customize the fields you want to include in the response
-            $formattedResults[] = [
-                'titre' => $result->getTitre(),
-                'description' => $result->getDescription(),
-                'date' => $result->getDate(),
-                'type' => $result->getType(),
-                'imageUrl' => $result->getImageUrl(),
-                'place' => $result->getPlace(),
-
-                // Add more fields as needed
-            ];
-        }
-
-        // Return JSON response
-        return new JsonResponse($formattedResults);
-    }
 
 
 
@@ -196,5 +154,45 @@ class PostController extends AbstractController
             'isOwnProfile' => $isOwnProfile,
             'profilePictureForm' => $profilePictureForm->createView(),
         ]);
+    }
+
+    #[Route('/searchPost', name: 'searchPost')]
+    public function searchPost(Request $request, PostRepository $postRepository): Response
+    {
+        $query = $request->query->get('query');
+        $date = $request->query->get('date');
+
+        $qb = $postRepository->createQueryBuilder('e');
+
+        if ($query) {
+            $qb->where('e.titre LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($date) {
+            $qb->andWhere('e.date = :date')
+                ->setParameter('date', new \DateTime($date));
+        }
+
+        $results = $qb->getQuery()->getResult();
+
+        // Transform results to array to prepare for JSON response
+        $formattedResults = [];
+        foreach ($results as $result) {
+            // Customize the fields you want to include in the response
+            $formattedResults[] = [
+                'titre' => $result->getTitre(),
+                'description' => $result->getDescription(),
+                'date' => $result->getDate(),
+                'type' => $result->getType(),
+                'imageUrl' => $result->getImageUrl(),
+                'place' => $result->getPlace(),
+
+                // Add more fields as needed
+            ];
+        }
+
+        // Return JSON response
+        return new JsonResponse($formattedResults);
     }
 }

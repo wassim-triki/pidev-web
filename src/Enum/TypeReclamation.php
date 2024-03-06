@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Enum;
+
 class TypeReclamationEnum
 {
     const TYPE_1 = 'violation of the rules of the platform';
@@ -15,4 +17,3 @@ class TypeReclamationEnum
         ]);
     }
 }
-
