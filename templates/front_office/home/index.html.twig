@@ -101,39 +101,43 @@
           class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12"
         >
           <div class="main-left-sidebar mt-5 mt-lg-5 mt-xl-0">
+            {% if app.user %}
             <div class="user-data full-width">
               <div class="user-profile">
                 <div class="username-dt dpbg-1">
                   <div class="usr-pic">
                     <img
-                      src="images/homepage/left-side/profile-dp.jpg"
+                      src="{{ asset(app.user.photo?'uploads/' ~ app.user.photo:'front_office/images/default-user.png') }}"
                       alt=""
                     />
                   </div>
                 </div>
                 <div class="user-main-details">
-                  <h4>Yassine Ben Aoun</h4>
-                  <span><i class="feather-map-pin"></i>Tunisia</span>
+                  <h4>{{ app.user.username }}</h4>
+                  {% if app.user.address %}
+                  <span><i class="feather-map-pin"></i>{{ app.user.address }}</span>
+                  {% endif %}
                 </div>
                 <ul class="followers-dts">
                   <li>
                     <div class="followers-dt-sm">
-                      <h4>Followers</h4>
+                      <h4>Lost</h4>
                       <span>3</span>
                     </div>
                   </li>
                   <li>
                     <div class="followers-dt-sm">
-                      <h4>Following</h4>
+                      <h4>Found</h4>
                       <span>2</span>
                     </div>
                   </li>
                 </ul>
                 <div class="profile-link">
-                  <a href="my_profile.html">View Profile</a>
+                  <a href="{{ path('user_profile',{'username':app.user.username}) }}">View Profile</a>
                 </div>
               </div>
             </div>
+            {% endif %}
             <div class="user-data full-width">
               <div class="categories-left-heading">
                 <h3>Categories</h3>
