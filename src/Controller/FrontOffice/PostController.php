@@ -37,7 +37,7 @@ class PostController extends AbstractController
     }
 
 
-    #[Route('/showpost', name: 'showpost')]
+    #[Route('/', name: 'showpost')]
     public function showpost(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response
     {
         $post = $postRepository->findAll();
@@ -180,7 +180,7 @@ class PostController extends AbstractController
         return $this->render('test.html.twig', []);
     }
 
-    #[Route('/user/{username}/posts', name: 'showpostid')]
+    #[Route('/user/{username}', name: 'showpostid')]
     public function showpostid($username, PostRepository $postRepository, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneBy(['username' => $username]);

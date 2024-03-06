@@ -17,7 +17,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SponsoringAdminController extends AbstractController
 {
-
+    #[Route('/posts', name: 'posts')]
+    public function showSponsorByAdmin(JwtTokenService $sponsorStatisticsService,  SponsoringRepository $postRepository): Response
+    {
+        $statistics = $sponsorStatisticsService->getSponsorStatistics();
+        $statisticsPost = $sponsorStatisticsService->getPostStatistics();
+        return $this->render('back_office\dashboard\dashboard.html.twig', [
+            'statistics' => $statistics,
+            'postStatistics' => $statisticsPost
+        ]);
+    }
 
     #[Route('/addformsponsor', name: 'addformsponsor')]
     public function addformsponsor(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response
