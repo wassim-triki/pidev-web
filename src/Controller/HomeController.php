@@ -100,7 +100,7 @@ class HomeController extends AbstractController
     // hedha kollou pour le test
     private function fetchUserFromDatabase(): ?User
     {
-        return $this->managerRegistry->getRepository(User::class)->findOneBy(['email' => 'user1@gmail.com']);
+        return $this->managerRegistry->getRepository(User::class)->findOneBy(['email' => 'user@example.com']);
     }
 
     private function storeUserInSession(?User $user): void
