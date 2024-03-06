@@ -37,6 +37,9 @@ class AvertissementController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $list = $repaverti->findAll();
         $statistiques = $repaverti->countAvertissementsByRaison();
+        $n1 = $repaverti->countraisoninappropriatecontent();
+        $n2= $repaverti->countraisoninappropriatecontent2();
+        $n3= $repaverti->countraisoninappropriatecontent3();
         $pagination=$paginatorInterface->paginate(
             $list,
             $request->query->getInt('page',1),
@@ -48,7 +51,10 @@ class AvertissementController extends AbstractController
 
         return $this->render('back_office/dashboard/listeavertissement1.html.twig', [
             'pagination' => $pagination,
-            'statistiques' => $statistiques
+            'statistiques' => $statistiques,
+            'n1' => $n1,
+            'n2' => $n2,
+            'n3' => $n3,
         ]);
 
 

@@ -36,6 +36,39 @@ class AvertissementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function countraisoninappropriatecontent():int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as nombre')
+            ->where('a.raison = :raison')
+            ->setParameter('raison', 'inappropriate content')
+            ->getQuery()
+            ->getSingleScalarResult();
+           
+    }
+    public function countraisoninappropriatecontent2():int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as nombre')
+            ->where('a.raison = :raison')
+            ->setParameter('raison', 'violation of the rules of the platform')
+            ->getQuery()
+            ->getSingleScalarResult();
+           
+    }
+    public function countraisoninappropriatecontent3():int
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id) as nombre')
+            ->where('a.raison = :raison')
+            ->setParameter('raison', 'other reasons')
+            ->getQuery()
+            ->getSingleScalarResult();
+           
+    }
+    
+ 
+
 
 
 //    /**
