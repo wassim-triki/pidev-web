@@ -74,14 +74,17 @@ class PostRepository extends ServiceEntityRepository
     }
 
 
-    public function GetLostAndFoundPostCount($user)
+    public function GetLostAndFoundPostCount(String $userId)
     {
         $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('lost_count', 'lost_count');
+        $rsm->addScalarResult('found_count', 'found_count');
 
         $query = $this->getEntityManager()->createNativeQuery('SELECT 
-        (SELECT COUNT(*) FROM POST WHERE user = :user AND type = "lost") AS lost_count, 
-        (SELECT COUNT(*) FROM POST WHERE user = :user AND type = "found") AS found_count', $rsm);
-        $query->setParameter('user', $user);
+    (SELECT COUNT(*) FROM post WHERE user_id = :userId AND type = "Lost") AS lost_count, 
+    (SELECT COUNT(*) FROM post WHERE user_id = :userId AND type = "Found") AS found_count', $rsm);
+        $query->setParameter('userId', $userId);
+
         return $query->getResult();
     }
 
@@ -93,6 +96,7 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
 
     //    /**

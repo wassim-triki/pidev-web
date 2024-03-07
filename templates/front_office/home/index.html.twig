@@ -11,10 +11,10 @@
               <form id="search-form" method="GET">
                 <div class="main-search-inputs">
                   <div class="row g-3">
-                    <div class="col-lg-5 col-md-12 col-sm-12">
-                      <div class="form-group">
+                    <div class="col-12">
+                      <div class="form-group w-100">
                         <label for="search">Search:</label>
-                        <input class="form-control form-control-navbar" id="searchInput" type="search"
+                        <input class="form-control w-100 form-control-navbar" id="searchInput" type="search"
                           placeholder="Search" aria-label="Search" style="width: 300PX;">
                       </div>
                     </div>
@@ -104,36 +104,42 @@
         </div>
         <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
           <div class="main-left-sidebar mt-5 mt-lg-5 mt-xl-0">
+            {% if app.user %}
             <div class="user-data full-width">
               <div class="user-profile">
                 <div class="username-dt dpbg-1">
                   <div class="usr-pic">
-                    <img src="images/homepage/left-side/profile-dp.jpg" alt="" />
+                    <img
+                      src="{{ asset(app.user.photo?'uploads/' ~ app.user.photo:'front_office/images/default-user.png') }}"
+                      alt="" />
                   </div>
                 </div>
                 <div class="user-main-details">
-                  <h4>Yassine Ben Aoun</h4>
-                  <span><i class="feather-map-pin"></i>Tunisia</span>
+                  <h4>{{ app.user.username }}</h4>
+                  {% if app.user.address %}
+                  <span><i class="feather-map-pin"></i>{{ app.user.address }}</span>
+                  {% endif %}
                 </div>
                 <ul class="followers-dts">
                   <li>
                     <div class="followers-dt-sm">
-                      <h4>Followers</h4>
-                      <span>3</span>
+                      <h4>Lost</h4>
+                      <span>{{ lostCount }}</span>
                     </div>
                   </li>
                   <li>
                     <div class="followers-dt-sm">
-                      <h4>Following</h4>
-                      <span>2</span>
+                      <h4>Found</h4>
+                      <span>{{ foundCount }}</span>
                     </div>
                   </li>
                 </ul>
                 <div class="profile-link">
-                  <a href="my_profile.html">View Profile</a>
+                  <a href="{{ path('user_profile',{'username':app.user.username}) }}">View Profile</a>
                 </div>
               </div>
             </div>
+            {% endif %}
             <div class="user-data full-width">
               <div class="categories-left-heading">
                 <h3>Categories</h3>
@@ -164,7 +170,8 @@
               {% for voucher in voucher %}
               <div class="sugguest-user">
                 <div class="sugguest-user-dt">
-                  <a href="#"><img src="images/category-icons/bon-de-reduction.png" alt="" /></a>
+                  <a href="#"><img src="{{asset('front_office/images/category-icons/bon-de-reduction.png')}}"
+                      alt="" /></a>
                   <a href="#">
                     <h4>{{ voucher.code }}</h4>
                   </a>

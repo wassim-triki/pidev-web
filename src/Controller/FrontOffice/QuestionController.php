@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 class QuestionController extends AbstractController
 {
     #[Route('/question', name: 'app_question')]
@@ -95,4 +95,7 @@ class QuestionController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('show_questions');
     }
+    
+   
+
 }

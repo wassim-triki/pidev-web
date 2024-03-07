@@ -140,23 +140,6 @@ class PostController extends AbstractController
         return $this->render('test.html.twig', []);
     }
 
-    #[Route('/user/{username}', name: 'showpostid')]
-    public function showpostid($username, PostRepository $postRepository, UserRepository $userRepository): Response
-    {
-        $user = $userRepository->findOneBy(['username' => $username]);
-        $listpost = $postRepository->findByUser($user);
-
-        // Create the profile picture form
-        $profilePictureForm = $this->createForm(ProfilePictureType::class);
-
-        $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
-        return $this->render('front_office/post/sowpostown.html.twig', [
-            'a' => $listpost,
-            'user' => $user,
-            'isOwnProfile' => $isOwnProfile,
-            'profilePictureForm' => $profilePictureForm->createView(),
-        ]);
-    }
 
     #[Route('/searchPost', name: 'searchPost')]
     public function searchPost(Request $request, PostRepository $postRepository): Response

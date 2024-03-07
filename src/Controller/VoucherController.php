@@ -120,7 +120,8 @@ class VoucherController extends AbstractController
     public function confirmVoucher($id, VoucherRepository $voucherRepository,ServiceQRCodeGenerator $qrcode, MailerInterface $mailer): Response
     {
 
-        
+        $voucher = $voucherRepository->find($id);
+
         $qr = null;
         $voucher = $voucherRepository->find($id);
         $qr=$qrcode->generateQRCode($voucher);
@@ -189,31 +190,29 @@ class VoucherController extends AbstractController
     #[Route('/filter-vouchers', name: 'filter_vouchers')]
     public function filterVouchers(Request $request)
     {
-        $filter = $request->query->get('filter');
+        $user = $this->getUser();
+        if ($user) {
+            $filter = $request->query->get('filter');
+            $entityManager = $this->managerRegistry->getManager();
+            $vouchers = [];
 
+            // Fetch vouchers based on the user who won the voucher and the selected filter
+            $criteria = ['userWon' => $user]; // Assuming 'userWon' is the property representing the user who won the voucher
+            if ($filter === 'all') {
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy($criteria);
+            } elseif ($filter === 'used') {
+                $criteria['isValid'] = false; // Add additional criteria for 'isValid' state
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy($criteria);
+            } elseif ($filter === 'unused') {
+                $criteria['isValid'] = true; // Add additional criteria for 'isValid' state
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy($criteria);
+            }
 
-        // Get the entity manager from the manager registry
-        $entityManager = $this->managerRegistry->getManager();
-        $vouchers=[];
-
-
-
-        // Fetch vouchers based on the selected filter
-        if ($filter === 'all') {
-            $vouchers = $entityManager->getRepository(Voucher::class)->findAll();
-        }
-        if ($filter === 'used') {
-            $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => false]);
-        }
-        if ($filter === 'unused'){
-            $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => true]);
-        }
-
-
-        // Render the voucher listing template with the filtered vouchers
-        return $this->render('front_office/crm/voucher/voucher_listing.html.twig', [
-            'vouchers' => $vouchers
-        ]);
+            // Return the vouchers as a response
+            return $this->render('front_office/crm/voucher/voucher_listing.html.twig', [
+                'vouchers' => $vouchers
+            ]);
+    }
     }
 
     #[Route('/search-vouchers-by-category', name: 'search_vouchers_by_category')]

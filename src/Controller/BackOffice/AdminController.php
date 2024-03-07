@@ -9,7 +9,9 @@ use App\Entity\VoucherCategory;
 use App\Form\AdminEditProfileFormType;
 use App\Form\AdminUserCreationFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\AvertissementRepository;
 use App\Repository\PostRepository;
+use App\Repository\QuestionRepository;
 use App\Repository\UserRepository;
 use App\Service\JwtTokenService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +34,7 @@ class AdminController extends AbstractController
         $this->managerRegistry = $managerRegistry;
     }
     #[Route('/', name: 'admin_dashboard')]
-    public function dashboard(JwtTokenService $postStatisticsService, PostRepository $postRepository)
+    public function dashboard(JwtTokenService $postStatisticsService,QuestionRepository $questionRepository,AvertissementRepository $repaverti, PostRepository $postRepository)
     {
         // Only allow authenticated users with the ROLE_ADMIN to access this page
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -40,10 +42,23 @@ class AdminController extends AbstractController
         $post = $postRepository->findAll();
         $postStatistics = $postStatisticsService->getPostStatistics();
         $sponsorStatistics = $postStatisticsService->getSponsorStatistics();
+        $n1 = $repaverti->countraisoninappropriatecontent1();
+        $n2 = $repaverti->countraisoninappropriatecontent2();
+        $n3 = $repaverti->countraisoninappropriatecontent3();
+
+        $totalQuestions = $questionRepository->getTotalQuestionsCount();
+        $answeredQuestions = $questionRepository->getAnsweredQuestionsCount();
+        $todayQuestions = $questionRepository->getTodayQuestionsCount();
         return $this->render('back_office/dashboard/dashboard.html.twig', [
             'postStatistics' => $postStatistics,
             'post' => $post,
-            'sponsorStatistics' => $sponsorStatistics
+            'sponsorStatistics' => $sponsorStatistics,
+            'n1' => $n1,
+            'n2' => $n2,
+            'n3' => $n3,
+            'total_questions' => $totalQuestions,
+            'answered_questions' => $answeredQuestions,
+            'today_questions' => $todayQuestions,
         ]);
     }
 

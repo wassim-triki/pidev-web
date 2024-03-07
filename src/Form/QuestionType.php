@@ -17,17 +17,17 @@ class QuestionType extends AbstractType
         $builder
         ->add('title', TextType::class, [
             'attr' => ['class' => 'form-control'],
-            'label' => 'Titre',
+            'label' => 'Title: ',
             'label_attr' => ['class' => 'form-label']
         ])
         ->add('body', TextareaType::class, [
             'attr' => ['class' => 'form-control'],
-            'label' => 'Contenu',
+            'label' => 'Body: ',
             'label_attr' => ['class' => 'form-label']
         ])
         ->add('save', SubmitType::class, [
             'attr' => ['class' => 'btn btn-warning mx-auto d-block'],
-            'label' => 'Questionner'
+            'label' => 'Ask'
         ]);
     }
 

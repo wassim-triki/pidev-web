@@ -13,7 +13,7 @@
 			<div class="main-photo">
 				<a href="#">
 					<div class="photo-overlay"></div>
-					<img src="images/coupon.jpeg" alt="">
+					<img src="{{asset('front_office/images/qrcode-image.jpg')}}" alt="">
 				</a>
 			</div>											
 			<div class="event-body">
@@ -35,7 +35,9 @@
 					</p>
 				</div>
 				<div class="group-btns">
-					<button class="interest-btn btn-hover w-100"onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id}) }}')"><i class="feather-pocket me-2"></i>USE</button>
+					<button class="interest-btn btn-hover w-100" onclick="useVoucher('{{ path('use_voucher', {'voucherId': voucher.id, 'voucherCode': voucher.code, 'voucherValue': voucher.value}) }}', {{ voucher.id }})">
+						<i class="feather-pocket me-2"></i>USE
+					</button>
 				</div>
 			</div>
 		</div>
@@ -56,4 +58,48 @@
     <script src="{{ asset('front_office/js/datepicker.min.js') }}"></script>
     <script src="{{ asset('front_office/js/i18n/datepicker.en.js') }}"></script>
     <script src="{{ asset('front_office/js/custom.js') }}"></script>
+	<script>
+		
+		function useVoucher(url, voucherId) {
+				fetch(url, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'X-CSRF-Token': '{{ csrf_token("use_voucher") }}' 
+					}
+				})
+				.then(response => {
+					if (response.ok) {
+						sendEmail()
+						window.location.href = '{{ path('confirm_voucher', {'id': 'VOUCHER_ID'}) }}'.replace('VOUCHER_ID', voucherId);
+					} else {
+						console.error('Failed to update voucher');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+			}
+			function sendEmail() {
+				fetch('{{ path('send_email') }}', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Requested-With': 'XMLHttpRequest',
+						'X-CSRF-Token': '{{ csrf_token("send_email") }}'
+					}
+				})
+				.then(response => {
+					if (!response.ok) {
+						console.error('Failed to send email');
+					}
+				})
+				.catch(error => {
+					console.error('Error sending email:', error);
+				});
+			}
+
+
+	</script>
 {% endblock %}
