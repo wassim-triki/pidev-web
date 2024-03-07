@@ -191,26 +191,28 @@ class VoucherController extends AbstractController
     public function filterVouchers(Request $request)
     {
         $user = $this->getUser();
-        if($user){
+        if ($user) {
             $filter = $request->query->get('filter');
             $entityManager = $this->managerRegistry->getManager();
-            $vouchers=[];
+            $vouchers = [];
+
+            // Fetch vouchers based on the user who won the voucher and the selected filter
+            $criteria = ['userWon' => $user]; // Assuming 'userWon' is the property representing the user who won the voucher
             if ($filter === 'all') {
-                $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['email' => $user->email]);
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy($criteria);
+            } elseif ($filter === 'used') {
+                $criteria['isValid'] = false; // Add additional criteria for 'isValid' state
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy($criteria);
+            } elseif ($filter === 'unused') {
+                $criteria['isValid'] = true; // Add additional criteria for 'isValid' state
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy($criteria);
             }
-            if ($filter === 'used') {
-                $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['email' => $user->email],['isValid' => false]);
-            }
-            if ($filter === 'unused'){
-                $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['email' => $user->email],['isValid' => true]);
-            }
-        }
 
-
-        // Render the voucher listing template with the filtered vouchers
-        return $this->render('front_office/crm/voucher/voucher_listing.html.twig', [
-            'vouchers' => $vouchers
-        ]);
+            // Return the vouchers as a response
+            return $this->render('front_office/crm/voucher/voucher_listing.html.twig', [
+                'vouchers' => $vouchers
+            ]);
+    }
     }
 
     #[Route('/search-vouchers-by-category', name: 'search_vouchers_by_category')]
