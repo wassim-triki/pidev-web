@@ -15,6 +15,9 @@
             <div class="row">
                 <div class="col-xl-8 col-lg-12 order-lg-2 order-xl-1">
                     <div class="card">
+                        <div class="d-flex card-header justify-content-between align-items-center">
+                            <h4 class="header-title">Reclamations Statistics</h4>
+                        </div>
                         <center><canvas id="myChart" style="width: 300px; height: 300px; ;"></canvas>
                             <canvas id="myChart2" style="width: 300px; height: 300px; ;"></canvas>
                         </center>
@@ -103,6 +106,22 @@
                         </div> <!-- end card-body-->
                     </div>
                 </div>
+                <div class="col-xl-4 col-lg-6 order-lg-1">
+                    <div class="card ">
+                        <div class="statistics card rounded-lg p-3 mb-0" >
+                            <div class="d-flex px-0 pt-0 card-header justify-content-between align-items-center">
+                                <h4 class="header-title">Questions statistics</h4>
+                            </div>
+                            <p>Total number of asked questions: {{ total_questions }}</p>
+                            <p>Total number of answered questions:  {{ answered_questions }} ({{
+                                total_questions > 0 ? (answered_questions / total_questions * 100)|number_format(2, '.', ',') : 0
+                                }}%)</p>
+                            <p>Number of today's questions: {{ today_questions }}</p>
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -170,6 +189,56 @@
                     options: {
                     responsive: false
                 }
+                    });
+                });
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const ctx = document.getElementById('myChart3').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Total Questions', 'Answered Questions'],
+                            datasets: [{
+                                label: 'Number of Questions',
+                                data: [{{ total_questions }}, {{ answered_questions }}],
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 0.6)', // Blue color
+                                    'rgba(255, 99, 132, 0.6)', // Red color
+                                ],
+                                borderColor: [
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Questions Overview'
+                                },
+                                legend: {
+                                    display: false,
+                                },
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Questions'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Category'
+                                    }
+                                }
+                            }
+                        }
                     });
                 });
             </script>
