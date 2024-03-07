@@ -20,19 +20,27 @@ class PostAdminController extends AbstractController
     }
 
 
-    #[Route('/posts', name: 'posts')]
+    #[Route('/posts_admin', name: 'posts_admin')]
     public function showpostByAdmin(JwtTokenService $postStatisticsService, PostRepository $postRepository): Response
     {
         $post = $postRepository->findAll();
-        $statistics = $postStatisticsService->getPostStatistics();
-        return $this->render('back_office/dashboard/dashboard.html.twig', [
-            'statistics' => $statistics,
+        return $this->render('back_office/post/dashboard_Post.html.twig', [
             'post' => $post
         ]);
     }
 
 
-    #[Route('/deletepost/{id}', name: 'deletepost')]
+    #[Route('/posts', name: 'posts')]
+    public function showpostStatByAdmin(JwtTokenService $postStatisticsService, PostRepository $postRepository): Response
+    {
+        $statistics = $postStatisticsService->getPostStatistics();
+        return $this->render('back_office/dashboard/dashboard.html.twig', [
+            'postStatistics' => $statistics
+        ]);
+    }
+
+
+    #[Route('/deletepost/{id}', name: 'deletepostAdmin')]
     public function deletepostadmin($id, PostRepository $postRepository, ManagerRegistry $managerRegistry): Response
     {
         $em = $managerRegistry->getManager();
@@ -40,7 +48,7 @@ class PostAdminController extends AbstractController
         $em->remove($dataid);
         $em->flush();
         $this->addFlash('echec', 'Post successfully deleted!');
-        return $this->redirectToRoute('posts');
+        return $this->redirectToRoute('posts_admin');
     }
 
     #[Route('/statistics', name: 'post_statistics')]

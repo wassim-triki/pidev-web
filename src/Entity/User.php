@@ -142,6 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->postcommentaires = new ArrayCollection();
         $this->questions = new ArrayCollection();
         $this->answers = new ArrayCollection();
+        $this->setAvertissementsCount(0);
         $this->vouchers = new ArrayCollection();
     }
 

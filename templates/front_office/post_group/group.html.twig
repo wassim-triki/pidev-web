@@ -3,6 +3,12 @@
 {% block title %}Hello PostGroupController!{% endblock %}
 
 {% block main %}
+{# Afficher les messages flash de succès #}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
 <main class="blog-mp">  
     <div class="main-section">
         <div class="container">
@@ -49,8 +55,8 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="{{ path('editpost', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce post?')">Edit</a></li>
-                                                <li><a class="dropdown-item" href="{{ path('deletepost', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post?')">Delete</a></li>
+                                                <li><a class="dropdown-item" href="{{ path('editpostgroup', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce post?')">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ path('deletepostgroup', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post?')">Delete</a></li>
                                             </ul>
                                         </div>
                                     {% endif %}

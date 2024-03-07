@@ -9,6 +9,7 @@ use App\Form\ChangePasswordType;
 use App\Form\DeleteAccountType;
 use App\Form\EmailChangeFormType;
 use App\Form\ProfilePictureType;
+use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Service\JwtTokenService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,10 +42,10 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/{username}', name: 'user_profile')]
-    public function userProfile(string $username, UserRepository $userRepository,Request $request): Response
+    public function userProfile(string $username, UserRepository $userRepository,PostRepository $postRepository,Request $request): Response
     {
         $user = $userRepository->findOneBy(['username' => $username]);
-
+        $listpost = $postRepository->findByUser($user);
         // Create the profile picture form
         $profilePictureForm = $this->createForm(ProfilePictureType::class);
 
@@ -57,12 +58,24 @@ class UserController extends AbstractController
 
 
 
+        if($user){
+            $result=$postRepository->GetLostAndFoundPostCount($user->getId());
+            $counts = $result[0];
+            $lostCount = $counts['lost_count'];
+            $foundCount = $counts['found_count'];
+
+        }
+
+
         $vouchers = $entityManager->getRepository(Voucher::class)->findAll();
 
         return $this->render('front_office/user/profile.html.twig', [
+            'a' => $listpost,
             'user' => $user,
             'isOwnProfile' => $isOwnProfile,
             'profilePictureForm' => $profilePictureForm->createView(),
+            'lostCount' =>$lostCount,
+            'foundCount' => $foundCount
         ]);
     }
 

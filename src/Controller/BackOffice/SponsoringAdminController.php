@@ -4,6 +4,7 @@ namespace App\Controller\BackOffice;
 
 use App\Entity\Sponsoring;
 use App\Form\FormSponsoringType;
+use App\Repository\AvertissementRepository;
 use App\Repository\SponsoringRepository;
 use App\Service\JwtTokenService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,7 +18,24 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SponsoringAdminController extends AbstractController
 {
-
+    #[Route('/posts', name: 'posts')]
+    public function showSponsorByAdmin(AvertissementRepository $repaverti, JwtTokenService $sponsorStatisticsService,  SponsoringRepository $postRepository): Response
+    {
+        $statistics = $sponsorStatisticsService->getSponsorStatistics();
+        $statisticsPost = $sponsorStatisticsService->getPostStatistics();
+        $statistiques = $repaverti->countAvertissementsByRaison();
+        $n1 = $repaverti->countraisoninappropriatecontent1();
+        $n2 = $repaverti->countraisoninappropriatecontent2();
+        $n3 = $repaverti->countraisoninappropriatecontent3();
+        return $this->render('back_office\dashboard\dashboard.html.twig', [
+            'statistics' => $statistics,
+            'postStatistics' => $statisticsPost,
+            'statistiques' => $statistiques,
+            'n1' => $n1,
+            'n2' => $n2,
+            'n3' => $n3,
+        ]);
+    }
 
     #[Route('/addformsponsor', name: 'addformsponsor')]
     public function addformsponsor(ManagerRegistry $managerRegistry, Request $req, SluggerInterface $slugger): Response

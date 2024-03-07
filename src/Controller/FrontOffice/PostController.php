@@ -2,7 +2,6 @@
 
 namespace App\Controller\FrontOffice;
 
-
 use App\Entity\Post;
 use App\Enum\PostTypeEnum;
 use App\Form\PostType;
@@ -37,7 +36,7 @@ class PostController extends AbstractController
     }
 
 
-    #[Route('/showpost', name: 'showpost')]
+    #[Route('/', name: 'showpost')]
     public function showpost(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response
     {
         $post = $postRepository->findAll();
@@ -51,47 +50,6 @@ class PostController extends AbstractController
         ]);
     }
 
-
-
-    #[Route('/search', name: 'search')]
-    public function search(Request $request, PostRepository $postRepository): Response
-    {
-        $query = $request->query->get('query');
-        $date = $request->query->get('date');
-
-        $qb = $postRepository->createQueryBuilder('e');
-
-        if ($query) {
-            $qb->where('e.titre LIKE :query')
-                ->setParameter('query', '%' . $query . '%');
-        }
-
-        if ($date) {
-            $qb->andWhere('e.date = :date')
-                ->setParameter('date', new \DateTime($date));
-        }
-
-        $results = $qb->getQuery()->getResult();
-
-        // Transform results to array to prepare for JSON response
-        $formattedResults = [];
-        foreach ($results as $result) {
-            // Customize the fields you want to include in the response
-            $formattedResults[] = [
-                'titre' => $result->getTitre(),
-                'description' => $result->getDescription(),
-                'date' => $result->getDate(),
-                'type' => $result->getType(),
-                'imageUrl' => $result->getImageUrl(),
-                'place' => $result->getPlace(),
-
-                // Add more fields as needed
-            ];
-        }
-
-        // Return JSON response
-        return new JsonResponse($formattedResults);
-    }
 
 
 
@@ -180,21 +138,49 @@ class PostController extends AbstractController
         return $this->render('test.html.twig', []);
     }
 
-    #[Route('/user/{username}/posts', name: 'showpostid')]
-    public function showpostid($username, PostRepository $postRepository, UserRepository $userRepository): Response
+
+    #[Route('/searchPost', name: 'searchPost')]
+    public function searchPost(Request $request, PostRepository $postRepository): Response
     {
-        $user = $userRepository->findOneBy(['username' => $username]);
-        $listpost = $postRepository->findByUser($user);
+        $query = $request->query->get('query');
+        $date = $request->query->get('date');
 
-        // Create the profile picture form
-        $profilePictureForm = $this->createForm(ProfilePictureType::class);
+        $qb = $postRepository->createQueryBuilder('e');
 
-        $isOwnProfile = $this->getUser() && $this->getUser()->getUsername() === $user->getUsername();
-        return $this->render('front_office/post/sowpostown.html.twig', [
-            'a' => $listpost,
-            'user' => $user,
-            'isOwnProfile' => $isOwnProfile,
-            'profilePictureForm' => $profilePictureForm->createView(),
-        ]);
+        if ($query) {
+            $qb->where('e.titre LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($date) {
+            $qb->andWhere('e.date = :date')
+                ->setParameter('date', new \DateTime($date));
+        }
+
+        $results = $qb->getQuery()->getResult();
+
+        // Transform results to array to prepare for JSON response
+        $formattedResults = [];
+        foreach ($results as $result) {
+            // Customize the fields you want to include in the response
+            $formattedResults[] = [
+                'titre' => $result->getTitre(),
+                'description' => $result->getDescription(),
+                'date' => $result->getDate(),
+                'type' => $result->getType(),
+                'imageUrl' => $result->getImageUrl(),
+                'place' => $result->getPlace(),
+
+                // Add more fields as needed
+            ];
+        }
+
+        // Return JSON response
+        return new JsonResponse($formattedResults);
+    }
+    #[Route('/contact', name: 'contact')]
+    public function contact(): Response
+    {
+        return $this->render('contactus.html.twig', []);
     }
 }

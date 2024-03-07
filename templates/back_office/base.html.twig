@@ -86,8 +86,8 @@
         <!-- Topbar Search Form -->
         <div class="app-search dropdown d-none d-lg-block">
           <form>
-            <div class="input-group">
-              <input type="search" class="form-control dropdown-toggle" placeholder="Search..." id="top-search">
+            <div class="input-group" id="">
+              <input type="search" class="form-control dropdown-toggle"  id="search-input" placeholder="Search..." id="">
               <span class="mdi mdi-magnify search-icon"></span>
               <button class="input-group-text btn btn-primary" type="submit">Search</button>
             </div>
@@ -161,35 +161,35 @@
           </div>
         </li>
 
-        <li class="dropdown">
-          <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-            <img src="{{ asset('back_office/images/flags/us.jpg" alt="user-image') }}" class="me-0 me-sm-1" height="12">
-            <span class="align-middle d-none d-lg-inline-block">English</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+{#        <li class="dropdown">#}
+{#          <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">#}
+{#            <img src="{{ asset('back_office/images/flags/us.jpg" alt="user-image') }}" class="me-0 me-sm-1" height="12">#}
+{#            <span class="align-middle d-none d-lg-inline-block">English</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>#}
+{#          </a>#}
+{#          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">#}
 
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <img src="{{ asset('back_office/images/flags/germany.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
-            </a>
+{#            <!-- item-->#}
+{#            <a href="javascript:void(0);" class="dropdown-item">#}
+{#              <img src="{{ asset('back_office/images/flags/germany.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>#}
+{#            </a>#}
 
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <img src="{{ asset('back_office/images/flags/italy.jpg" alt="user-image') }}" class="me-1" height="12"> <span class="align-middle">Italian</span>
-            </a>
+{#            <!-- item-->#}
+{#            <a href="javascript:void(0);" class="dropdown-item">#}
+{#              <img src="{{ asset('back_office/images/flags/italy.jpg" alt="user-image') }}" class="me-1" height="12"> <span class="align-middle">Italian</span>#}
+{#            </a>#}
 
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <img src="{{ asset('back_office/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
-            </a>
+{#            <!-- item-->#}
+{#            <a href="javascript:void(0);" class="dropdown-item">#}
+{#              <img src="{{ asset('back_office/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>#}
+{#            </a>#}
 
-            <!-- item-->
-            <a href="javascript:void(0);" class="dropdown-item">
-              <img src="{{ asset('back_office/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
-            </a>
+{#            <!-- item-->#}
+{#            <a href="javascript:void(0);" class="dropdown-item">#}
+{#              <img src="{{ asset('back_office/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>#}
+{#            </a>#}
 
-          </div>
-        </li>
+{#          </div>#}
+{#        </li>#}
 
         <li class="dropdown notification-list">
           <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -401,7 +401,7 @@
                                 {% if app.user.photo %}
                                   <img src="{{ asset('uploads/' ~ app.user.photo) }}" alt="user-image" width="32" class="rounded-circle">
                         {% else %}
-                                  <img src="{{ asset('images/default-user.png') }}" alt="user-image" width="32" class="rounded-circle">
+                                  <img src="{{ asset('front_office/images/default-user.png') }}" alt="user-image" width="32" class="rounded-circle">
                                 {% endif %}
                                 </span>
             <span class="d-lg-flex flex-column gap-1 d-none">
@@ -516,8 +516,8 @@
 {#          </div>#}
 {#        </li>#}
         <li class="side-nav-item">
-          <a  href="{{ path('admin_dashboard') }}"   class="side-nav-link">
-            <i class="uil-home-alt"></i>
+          <a  href="{{ path('posts') }}"   class="side-nav-link">
+            <i class="ri-bar-chart-2-line"></i>
 {#            <span class="badge bg-success float-end">5</span>#}
             <span> Dashboards </span>
           </a>
@@ -528,23 +528,15 @@
             <span> Users </span>
           </a>
         </li>
+        <li class="side-nav-item">
+          <a href="{{ path('posts_admin') }}" class="side-nav-link">
+            <i class="ri-image-line"></i>
+            <span> Posts </span>
+          </a>
+        </li>
 
-{#        <li class="side-nav-title">Apps</li>#}
-
-{#        <li class="side-nav-item">#}
-{#          <a href="apps-calendar.html" class="side-nav-link">#}
-{#            <i class="uil-calender"></i>#}
-{#            <span> Calendar </span>#}
-{#          </a>#}
-{#        </li>#}
-
-{#        <li class="side-nav-item">#}
-{#          <a href="apps-chat.html" class="side-nav-link">#}
-{#            <i class="uil-comments-alt"></i>#}
-{#            <span> Chat </span>#}
-{#          </a>#}
-{#        </li>#}
-
+        
+          
 {#        <li class="side-nav-item">#}
 {#          <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm" class="side-nav-link">#}
 {#            <i class="uil uil-tachometer-fast"></i>#}
@@ -649,10 +641,16 @@
 
        <li class="side-nav-item">
          <a href="{{ path('admin_questions_show') }}" class="side-nav-link">
-           <i class="ri-question-answer-line"></i>
+           <i class="ri-questionnaire-line"></i>
            <span> Q/A </span>
          </a>
      </li>
+     <li class="side-nav-item">
+      <a href="{{ path('listAvertissement') }}" class="side-nav-link">
+        <i class="ri-question-answer-line"></i>
+        <span> List Avertissement </span>
+      </a>
+  </li>
      <li class="side-nav-item">
          <a href="{{ path('admin-voucher-list') }}" class="side-nav-link">
            <i class="ri-question-answer-line"></i>
@@ -1096,20 +1094,20 @@
 {#          </div>#}
 {#        </li>#}
 
-{#        <li class="side-nav-item">#}
-{#          <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">#}
-{#            <i class="uil-document-layout-center"></i>#}
-{#            <span> Forms </span>#}
-{#            <span class="menu-arrow"></span>#}
-{#          </a>#}
-{#          <div class="collapse" id="sidebarForms">#}
-{#            <ul class="side-nav-second-level">#}
-{#              <li>#}
-{#                <a href="form-elements.html">Basic Elements</a>#}
-{#              </li>#}
-{#              <li>#}
-{#                <a href="form-advanced.html">Form Advanced</a>#}
-{#              </li>#}
+        <li class="side-nav-item">
+          <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">
+            <i class="uil-document-layout-center"></i>
+            <span> Sponsor </span>
+            <span class="menu-arrow"></span>
+          </a>
+          <div class="collapse" id="sidebarForms">
+            <ul class="side-nav-second-level">
+              <li>
+                <a href="{{ path('addformsponsor') }}">add Sponsor Group</a>
+              </li>
+              <li>
+                <a href="{{ path('showdbsponsoring') }}">Sponsor Group</a>
+              </li>
 {#              <li>#}
 {#                <a href="form-validation.html">Validation</a>#}
 {#              </li>#}
@@ -1122,9 +1120,21 @@
 {#              <li>#}
 {#                <a href="form-editors.html">Editors</a>#}
 {#              </li>#}
-{#            </ul>#}
-{#          </div>#}
-{#        </li>#}
+            </ul>
+          </div>
+        </li>
+        <li class="side-nav-item">
+          <a href="{{ path('showdbpostgroup') }}" class="side-nav-link">
+            <i class="ri-team-line"></i>
+            <span> Post Group </span>
+          </a>
+        </li>
+        <li class="side-nav-item">
+                <a href="{{ path('showdbcommentaire') }}" class="side-nav-link">
+                  <i class=" ri-question-answer-line"></i>
+                  <span> Commentaire Group </span>
+              </a>
+          </li>
 
 {#        <li class="side-nav-item">#}
 {#          <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">#}
