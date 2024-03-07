@@ -26,22 +26,6 @@
                            <div class="lr-right">
                               <h4>Sign Up to Goeveni</h4>
                               <div class="login-register-form">
-{#                                 <form>#}
-{#                                    <div class="form-group">#}
-{#                                       <input class="form-input h_50" type="text" placeholder="Full Name">#}
-{#                                    </div>#}
-{#                                    <div class="form-group">#}
-{#                                       <input class="form-input h_50" type="email" placeholder="Email Address">#}
-{#                                    </div>#}
-{#                                    <div class="form-group">#}
-{#                                       <input class="form-input h_50" type="password" placeholder="Password">#}
-{#                                    </div>#}
-{#                                    <div class="rgstr-dt-txt">#}
-{#                                       By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data Policy</a> and <a href="#">Cookie Policy</a>. You may receive Email notifications from us and can opt out at any time.#}
-{#                                    </div>#}
-{#                                    <button class="login-btn" type="submit">Register Now</button>#}
-{#                                    <div class="login-link">If you have an account? <a href="login.html">Login Now</a></div>#}
-{#                                 </form>#}
                                  {{ form_start(registrationForm, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate', 'enctype': 'multipart/form-data'}}) }}
 
                                  <div class="form-group">
@@ -111,6 +95,16 @@
                                           </div>
                                        {% endfor %}
 
+                                    </div>
+                                 </div>
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.captcha) }}
+                                    <div class="d-flex gap-0 flex-column justify-content-start font-weight-light  text-danger" >
+                                       {% for error in registrationForm.captcha.vars.errors %}
+                                          <div class="alert mt-2 mb-0 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
                                     </div>
                                  </div>
                                  <div class="rgstr-dt-txt">

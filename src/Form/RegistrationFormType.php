@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -55,6 +56,7 @@ class RegistrationFormType extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
             ])
+            ->add('captcha',ReCaptchaType::class)
             // Add the submit button here
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'login-btn'],
