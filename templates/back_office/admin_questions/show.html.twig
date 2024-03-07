@@ -88,8 +88,8 @@
         <h3>Statistiques</h3>
         <p>Nombre total des questions: {{ total_questions }}</p>
         <p>Nombre de questions répondues:  {{ answered_questions }} ({{
-             (answered_questions / total_questions * 100)|number_format(2, '.', ',') }}
-            %)</p>
+            total_questions > 0 ? (answered_questions / total_questions * 100)|number_format(2, '.', ',') : 0
+            }}%)</p>
         <p>Nombre de questions ajoutés aujourd'hui: {{ today_questions }}</p>
     </div>
  
