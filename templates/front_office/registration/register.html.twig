@@ -60,18 +60,31 @@
 
                                     </div>
                                  </div>
+                                 {# Password field #}
                                  <div class="form-group mt-2">
-
-                                    {{ form_widget(registrationForm.password, {'attr': {'class': 'form-input h_50', 'placeholder': 'Password'}}) }}
-                                    <div class="d-flex justify-content-start font-weight-light  text-danger" >
-                                       {% for error in registrationForm.password.vars.errors %}
+                                    {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-input h_50', 'placeholder': 'Password'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light text-danger">
+                                       {% for error in registrationForm.password.first.vars.errors %}
                                           <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
                                              {{ error.message }}
                                           </div>
                                        {% endfor %}
-
                                     </div>
                                  </div>
+
+                                 {# Confirm password field #}
+                                 <div class="form-group mt-2">
+                                    {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-input h_50', 'placeholder': 'Confirm Password'}}) }}
+                                    <div class="d-flex justify-content-start font-weight-light text-danger">
+                                       {% for error in registrationForm.password.second.vars.errors %}
+                                          <div class="alert mt-2 p-2 alert-danger small w-100 text-lg-start">
+                                             {{ error.message }}
+                                          </div>
+                                       {% endfor %}
+                                    </div>
+                                 </div>
+
+
                                  <div class="form-group mt-2">
                                     {{ form_widget(registrationForm.address, {'attr': {'class': 'form-input h_50', 'placeholder': 'Address'}}) }}
                                  </div>
