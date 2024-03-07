@@ -32,6 +32,8 @@ class HomeController extends AbstractController
         );
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
         $user = $this->getUser();
+        $lostCount = 0;
+        $foundCount = 0;
         if($user){
             $result=$postRepository->GetLostAndFoundPostCount($user->getId());
             $counts = $result[0];
