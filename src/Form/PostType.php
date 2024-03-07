@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Post;
+use App\Enum\CategoryEnum;
 use App\Enum\PostTypeEnum;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\AbstractType;
@@ -44,16 +45,30 @@ class PostType extends AbstractType
                             'image/gif',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image file',
-                    ])
+                    ]),
+
                 ],
             ])
             ->add('place')
+            ->add('category', ChoiceType::class, [
+                'choices' => CategoryEnum::cases(),
+                'choice_label' => function (?CategoryEnum $category) {
+                    return $category ? $category->value : '';
+                },
+                'choice_value' => function (?CategoryEnum $category) {
+                    return $category ? $category->value : '';
+                },
+                'label' => 'Select a Category',
+                'placeholder' => 'Choose a category', // Ensure this is set
+                'required' => true, // Make sure the field is required
+            ])
             ->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'main-btn btn-hover h-40 w-100 mt-37 mb-3'
                 ],
                 'label' => 'Save'
             ]);
+
             // In your form type class
 
 

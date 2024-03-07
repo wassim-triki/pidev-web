@@ -82,8 +82,16 @@ class PostRepository extends ServiceEntityRepository
         (SELECT COUNT(*) FROM POST WHERE user = :user AND type = "lost") AS lost_count, 
         (SELECT COUNT(*) FROM POST WHERE user = :user AND type = "found") AS found_count', $rsm);
         $query->setParameter('user', $user);
-
         return $query->getResult();
+    }
+
+    public function findByCategory(string $categoryValue): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.category = :category')
+            ->setParameter('category', $categoryValue)
+            ->getQuery()
+            ->getResult();
     }
 
 

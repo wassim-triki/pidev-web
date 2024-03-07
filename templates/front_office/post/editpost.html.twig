@@ -86,6 +86,12 @@
                                                 that guests know what to expect.</span>
                                         </div>
                                         <div class="form-group mt-4">
+                                            <label class="form-label">Categorie*</label>
+                                            {{ form_widget(f.category, {'attr': {'class': 'form-input', 'placeholder':
+                                            'choose categorie'}}) }}
+                                            <div style="color: red;">{{ form_errors(f.category) }}</div>
+                                        </div>
+                                        <div class="form-group mt-4">
                                             <label class="form-label">Location*</label>
                                             <div class="position-relative">
                                                 {{ form_widget(f.place, {'attr': {'class': 'form-input',

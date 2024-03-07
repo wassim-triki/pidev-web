@@ -71,8 +71,9 @@ class PostController extends AbstractController
             'Found' => PostTypeEnum::FOUND->value,
         ];
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('imageUrl')->getData();
+
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
@@ -83,6 +84,7 @@ class PostController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
+
                     $post->setImageUrl($newFilename);
                 } catch (FileException $e) {
                     // Handle error

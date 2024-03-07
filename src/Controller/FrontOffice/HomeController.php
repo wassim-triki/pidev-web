@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Market;
 use App\Entity\Voucher;
+use App\Enum\CategoryEnum;
 
 class HomeController extends AbstractController
 {
@@ -21,15 +22,17 @@ class HomeController extends AbstractController
         $this->managerRegistry = $managerRegistry;
     }
 
-    #[Route('/', name: 'app_home')]
-    public function index(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response
+    #[Route('/{category}', name: 'app_home', defaults: ['category' => null])]
+    public function index(Request $request, PostRepository $postRepository, PaginatorInterface $paginator, ?string $category = null): Response
     {
-        $post = $postRepository->findAll();
+        $query = $category ? $postRepository->findByCategory($category) : $postRepository->findAll();
+
         $post = $paginator->paginate(
-            $post, /* query NOT result */
+            $query,
             $request->query->getInt('page', 1),
             6
         );
+
         $markets = $this->managerRegistry->getRepository(Market::class)->findAll();
         $user = $this->getUser();
         $voucher = null;
@@ -37,11 +40,11 @@ class HomeController extends AbstractController
             $voucher = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user]);
         }
 
-
         return $this->render('front_office/home/index.html.twig', [
             'post' => $post,
             'markets' => $markets,
             'voucher' => $voucher,
+            'categories' => CategoryEnum::cases(),
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CategoryEnum;
 use App\Enum\PostTypeEnum;
 use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
@@ -35,15 +36,19 @@ class Post
     #[ORM\Column(length: 255, enumType: PostTypeEnum::class)]
     private ?PostTypeEnum $type = null;
 
-    #[Assert\NotBlank(message: "The image n'est pas vide")]
+    // #[Assert\NotBlank(message: "The image n'est pas vide")]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageUrl = null;
-
 
     #[Assert\NotBlank(message: "The place n'est pas vide")]
     #[Assert\Length(min: 5, minMessage: "le place doit avoir un longeur plus que 5 charactére")]
     #[ORM\Column(length: 255)]
     private ?string $place = null;
+
+    #[ORM\Column(length: 255, enumType: CategoryEnum::class)]
+    #[Assert\NotNull(message: "Please select a category.")]
+    private ?CategoryEnum $category = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?User $user = null;
@@ -133,6 +138,18 @@ class Post
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCategory(): ?CategoryEnum
+    {
+        return $this->category;
+    }
+
+    public function setCategory(CategoryEnum $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
