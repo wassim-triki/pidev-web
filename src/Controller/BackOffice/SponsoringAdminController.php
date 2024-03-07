@@ -28,7 +28,7 @@ class SponsoringAdminController extends AbstractController
         $n2 = $repaverti->countraisoninappropriatecontent2();
         $n3 = $repaverti->countraisoninappropriatecontent3();
         return $this->render('back_office\dashboard\dashboard.html.twig', [
-            'statistics' => $statistics,
+            'sponsorStatistics' => $statistics,
             'postStatistics' => $statisticsPost,
             'statistiques' => $statistiques,
             'n1' => $n1,

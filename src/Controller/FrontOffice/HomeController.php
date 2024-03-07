@@ -46,7 +46,7 @@ class HomeController extends AbstractController
             $voucher = $this->managerRegistry->getRepository(Voucher::class)->findBy(['userWon' => $user]);
         }
 
-
+        
         return $this->render('front_office/home/index.html.twig', [
             'post' => $post,
             'markets' => $markets,
