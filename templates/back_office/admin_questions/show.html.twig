@@ -15,20 +15,23 @@
                     <div class="card-header bg-light">
                         <b class="text-uppercase">{{ question.title }}</b>
                         <br>    
-                        <small class="text-muted">Questionné par <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> en {{ question.createdAt|date('Y-m-d H:i:s') }}</small>                    </div>
+                        <small class="text-muted">
+                            asked by <a href="{{ path('user_profile', {'username': question.userid.username}) }}">{{ question.userid.username }}</a> on {{ question.createdAt|date('Y-m-d H:i:s') }}
+                        </small>
+                    </div>
                     <div class="card-body">
                         <p>{{ question.body }}</p>
                         <!-- Show Answers button -->
                         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#answersModal{{question.id}}">
-                            <i class="fas fa-eye"></i> Voir réponse
+                            <i class="fas fa-eye"></i> View answer
                         </button>
                             <!-- Delete button -->
-                            <a href="{{ path('delete_question', {'id': question.id}) }}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i> Archiver
+                            <a href="{{ path('archive_question_admin', {'id': question.id}) }}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Archieve
                             </a>
                             <!-- Answer button -->
                             <a href="{{ path('admin_answer_new', {'id': question.id}) }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-reply"></i> Répondre
+                                <i class="fas fa-reply"></i> Answer
                             </a>
                     </div>
                        <div class="card-footer text-right">
@@ -39,7 +42,11 @@
                         {% endif %}
                     </div>
                     <div class="card-footer text-right">
-                       
+                        {% if question.answer %}
+                            <span class="text-success">Replied</span>
+                        {% else %}
+                            <span class="text-danger">Not Replied</span>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -48,25 +55,25 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="answersModalLabel{{question.id}}">Réponse</h5>
+                        <h5 class="modal-title" id="answersModalLabel{{question.id}}">Answer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
                         <!-- Answer will be inserted here -->
                         {% if question.answer %}
                             <p>{{ question.answer.body }}</p>
-                            <small class="text-muted">Répondu par Admin en {{ question.answer.createdAt|date('Y-m-d H:i:s') }}</small>
+                            <small class="text-muted">Replied by admin in {{ question.answer.createdAt|date('Y-m-d H:i:s') }}</small>
                         {% else %}
-                            <p>Pas de réponses encore</p>
+                            <p>No replies yet</p>
                         {% endif %}
                     </div>
                       <div class="modal-footer">
                         {% if question.answer %}
                         <a href="{{ path('admin_answer_delete', {'id': question.answer.id}) }}" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash"></i> Supprimer
+                            <i class="fas fa-trash"></i> Delete
                         </a>
                     {% endif %}
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
@@ -85,12 +92,67 @@
       
     </div>
     <div class="statistics card rounded-lg shadow-lg p-3" style="position: fixed; right: 0; top: 50%; transform: translateY(-50%);">
-        <h3>Statistiques</h3>
-        <p>Nombre total des questions: {{ total_questions }}</p>
-        <p>Nombre de questions répondues:  {{ answered_questions }} ({{
+        <h3>Statistics</h3>
+        <p>Total number of asked questions: {{ total_questions }}</p>
+        <p>Total number of answered questions:  {{ answered_questions }} ({{
             total_questions > 0 ? (answered_questions / total_questions * 100)|number_format(2, '.', ',') : 0
             }}%)</p>
-        <p>Nombre de questions ajoutés aujourd'hui: {{ today_questions }}</p>
+        <p>Number of today's questions: {{ today_questions }}</p>
+        <canvas id="myChart"></canvas>
     </div>
- 
+    {% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Questions', 'Answered Questions'],
+                datasets: [{
+                    label: 'Number of Questions',
+                    data: [{{ total_questions }}, {{ answered_questions }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)', // Blue color
+                        'rgba(255, 99, 132, 0.6)', // Red color
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Questions Overview'
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Questions'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Category'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+    {% endblock %}
 {% endblock %}

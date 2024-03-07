@@ -41,7 +41,7 @@ public function getAnsweredQuestionsCount(): int
 {
     return $this->createQueryBuilder('q')
         ->select('count(q.id)')
-        ->innerJoin('q.answer', 'a') // Replace 'answers' with the actual property/method that indicates a question has been answered
+        ->innerJoin('q.answer', 'a')
         ->getQuery()
         ->getSingleScalarResult();
 }
