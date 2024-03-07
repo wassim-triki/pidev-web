@@ -81,8 +81,8 @@ class PostRepository extends ServiceEntityRepository
         $rsm->addScalarResult('found_count', 'found_count');
 
         $query = $this->getEntityManager()->createNativeQuery('SELECT 
-    (SELECT COUNT(*) FROM POST WHERE user_id = :userId AND type = "Lost") AS lost_count, 
-    (SELECT COUNT(*) FROM POST WHERE user_id = :userId AND type = "Found") AS found_count', $rsm);
+    (SELECT COUNT(*) FROM post WHERE user_id = :userId AND type = "Lost") AS lost_count, 
+    (SELECT COUNT(*) FROM post WHERE user_id = :userId AND type = "Found") AS found_count', $rsm);
         $query->setParameter('userId', $userId);
 
         return $query->getResult();

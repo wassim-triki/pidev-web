@@ -658,31 +658,6 @@
 					$('#vouchers-row').html(response);
 				}
 			});
-
-            // Event listener for the keyup event on the search input field
-$('#voucherCategorySearch').on('keyup', function(event) {
-    // Check if the Enter key was pressed (key code 13)
-    if (event.keyCode === 13) {
-        // Call the search function when Enter key is pressed
-        searchVouchersByCategory();
-    }
-});
-
-		function triggerSearch() {
-        // Get the search input value
-        var searchInput = document.getElementById("voucherCategorySearch").value;
-
-        // Trigger the search function only if the search input is not empty
-        if (searchInput.trim() !== '') {
-            searchVouchersByCategory();
-        }
-    }
-
-    // Event listener for the keyup event on the search input field
-    $('#voucherCategorySearch').on('keyup', function() {
-        // Call the triggerSearch function when the user finishes typing
-        triggerSearch();
-    });
     	}
 	function submitProfilePictureForm() {
 		document.getElementById('profile-picture-form').submit();

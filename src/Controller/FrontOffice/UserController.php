@@ -56,6 +56,8 @@ class UserController extends AbstractController
         // Get the entity manager from the manager registry
         $entityManager = $this->managerRegistry->getManager();
 
+        $lostCount = 0;
+        $foundCount = 0;
 
 
         if($user){

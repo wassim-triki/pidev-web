@@ -90,16 +90,16 @@ class VoucherType extends AbstractType
                     ->getQuery();
     
         // Execute the query to get the user with reputation >= 1500
-        $userWithReputation = $query->getOneOrNullResult();
+        $userWithReputation = $query->getResult();
     
-        $formattedChoice = null; // Initialize with null, in case user is not found
-        if ($userWithReputation !== null) {
+        $formattedChoices = []; // Initialize with null, in case user is not found
+        foreach ($userWithReputation as $user) {
             // User found, create a formatted choice
-            $email = $userWithReputation->getEmail();
-            $formattedChoice = [$email => $userWithReputation];
+            $email = $user->getEmail();
+            $formattedChoices[$email] = $user;
         }
     
-        return $formattedChoice;
+        return $formattedChoices;
     }
 
     private function getCategory()

@@ -190,24 +190,20 @@ class VoucherController extends AbstractController
     #[Route('/filter-vouchers', name: 'filter_vouchers')]
     public function filterVouchers(Request $request)
     {
-        $filter = $request->query->get('filter');
-
-
-        // Get the entity manager from the manager registry
-        $entityManager = $this->managerRegistry->getManager();
-        $vouchers=[];
-
-
-
-        // Fetch vouchers based on the selected filter
-        if ($filter === 'all') {
-            $vouchers = $entityManager->getRepository(Voucher::class)->findAll();
-        }
-        if ($filter === 'used') {
-            $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => false]);
-        }
-        if ($filter === 'unused'){
-            $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['isValid' => true]);
+        $user = $this->getUser();
+        if($user){
+            $filter = $request->query->get('filter');
+            $entityManager = $this->managerRegistry->getManager();
+            $vouchers=[];
+            if ($filter === 'all') {
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['email' => $user->email]);
+            }
+            if ($filter === 'used') {
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['email' => $user->email],['isValid' => false]);
+            }
+            if ($filter === 'unused'){
+                $vouchers = $entityManager->getRepository(Voucher::class)->findBy(['email' => $user->email],['isValid' => true]);
+            }
         }
 
 
