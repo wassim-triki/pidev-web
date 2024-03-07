@@ -1,0 +1,42 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block main %}
+    <main class="contact-mp">	
+			<div class="main-section">
+				<div class="container">
+					<div class="row justify-content-md-center">
+						<div class="col-lg-6 col-md-8">							
+							<div class="contact-heading text-center">
+								<h2 class="mt-3 mb-3">Get In Touch With Our Team of Experts</h2>
+								<p class="mb-37">Do you have any question? Our experts will be happy to help.</p>
+							</div>
+                            {% for flashMessage in app.flashes('success') %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ flashMessage }}
+                                </div>
+                            {% endfor %}
+							<div class="contact-form">
+								{{ form_start(form) }}
+                                    <div class="form-group">                                    
+                                        {{ form_widget(form.name, { 'attr': {'class': 'form-input', 'placeholder': 'Your Name'} }) }}
+                                    </div>
+                                    <div class="form-group">                                    
+                                        {{ form_widget(form.email, { 'attr': {'class': 'form-input', 'placeholder': 'Your Email'} }) }}
+                                    </div>
+                                    <div class="form-group">                                    
+                                        {{ form_widget(form.subject, { 'attr': {'class': 'form-input', 'placeholder': 'Subject'} }) }}
+                                    </div>
+                                    <div class="form-group">                                                                            
+                                        {{ form_widget(form.message, { 'attr': {'class': 'form-input', 'placeholder': 'Your Message'} }) }}                                
+                                    </div>
+                                    {{ form_widget(form.save, {'attr': {'class': 'main-btn btn-hover h-40 w-50 mt-5', 'style':'margin-left:30%'}}) }}
+                                {{ form_end(form) }}
+
+							</div>
+						</div>						
+					</div>					
+				</div>
+			</div>
+		</main>
+
+{% endblock %}
