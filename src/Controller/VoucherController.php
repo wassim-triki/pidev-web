@@ -140,11 +140,6 @@ class VoucherController extends AbstractController
                 <p style="color:#ffff">User: ' . $voucher->getUserWon()->getEmail() .'</p>
                 <p style="color:#ffff">Shop Name: ' . $voucher->getMarketRelated()->getName() .'</p>
                 <p style="color:#ffff">Value: ' . $voucher->getValue() . 'DT</p>
-                <a href="http://127.0.0.1:8000/profile" style="text-decoration: none;">
-                    <button style="background-color: #051937; color: #fff; border-radius: 10%; padding: 10px 20px; cursor: pointer; border: none;">
-                        Go to Profile
-                    </button>
-                </a>
                 <br>
                 <img style="width:200px; height:200px;" src="' . $qr . '" alt="QR Code">
                 <br>
