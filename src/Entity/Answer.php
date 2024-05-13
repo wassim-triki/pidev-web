@@ -22,7 +22,6 @@ class Answer
 
     #[ORM\Column(type: "datetime_immutable", name: "createdAt")]
     private ?\DateTimeImmutable $created_at = null;
-
     public function getId(): ?int
     {
         return $this->id;
