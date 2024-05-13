@@ -23,26 +23,26 @@ class FormSponsoringType extends AbstractType
             ->add('date')
             ->add('contrat', ChoiceType::class, [
                 'choices' => [
-                '1ANS' => ContratEnum::ANS1->value,
-                '2ANS' => ContratEnum::ANS2->value,
-                '3ANS' => ContratEnum::ANS3->value,
+                    'ONE_YEARS' => ContratEnum::ANS1->value,
+                    'TWO_YEARS' => ContratEnum::ANS2->value,
+                    'THREE_YEARS' => ContratEnum::ANS3->value,
                 ],
                 'expanded' => false,
                 'multiple' => false,
                 'label_attr' => ['class' => 'form-label'],
                 'label' => 'Type:',
-                ])
+            ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                'ACTIVE' => TypeetatEnum::ACTIVE->value,
-                'DESACTIVE' => TypeetatEnum::DESACTIVE->value,
+                    'ACTIVE' => TypeetatEnum::ACTIVE->value,
+                    'DESACTIVE' => TypeetatEnum::DESACTIVE->value,
                 ],
                 'expanded' => false,
                 'multiple' => false,
                 'label_attr' => ['class' => 'form-label'],
                 'label' => 'Type:',
-                ])
-            
+            ])
+
             ->add('image', FileType::class, [
                 'mapped' => false,
                 'constraints' => [
