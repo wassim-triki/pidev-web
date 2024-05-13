@@ -4,27 +4,25 @@
   <div class="main-section">
     <div class="container">
       <div class="row">
-        <div
-          class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
-        >
+        <div class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
           <div class="center-section">
             <div class="main-search-bar">
               <h2>Shop in your city</h2>
               <form id="search-form" method="GET">
-                  <div class="main-search-inputs">
-                <div class="row g-3">
-                  <div class="col-12">
-                    <div class="form-group w-100">
-                      <label for="search">Search:</label>
-                      <input class="form-control w-100 form-control-navbar" id="searchInput" type="search"
-                        placeholder="Search" aria-label="Search" style="width: 300PX;">
+                <div class="main-search-inputs">
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <div class="form-group w-100">
+                        <label for="search">Search:</label>
+                        <input class="form-control w-100 form-control-navbar" id="searchInput" type="search"
+                          placeholder="Search" aria-label="Search" style="width: 300PX;">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12">
+
                     </div>
                   </div>
-                  <div class="col-lg-2 col-md-12 col-sm-12">
-
-                  </div>
                 </div>
-              </div>
               </form>
             </div>
 
@@ -32,78 +30,110 @@
               <div class="tab-pane fade show active" id="tab-top">
                 <div class="main-posts">
                   <div class="row" , id="prev">
-                      {% for i in post %}
-                      <div class="col-md-6">
-                        <div class="event-main-post">
-                          <div class="main-photo">
-                            <a href="event_detail_view.html">
-                              <div class="photo-overlay"></div>
-                              <img src="{{ asset('uploads/' ~ i.imageUrl) }}" alt={{ i.imageUrl }}
-                                style="height: 4.5cm;" />
-                            </a>
-                            <div class="option-ellipsis">
-                              <div class="dropdown">
-                                <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
-                                  data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
-                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
-                                  <a class="post-link-item" href="user_profile.html"><i
-                                      class="feather-user icon-mr1"></i>User
-                                    Profile</a>
-                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
-                                </div>
+                    {% for i in post %}
+                    <div class="col-md-6">
+                      <div class="event-main-post">
+                        <div class="post-header">
+                          <div class="row align-items-center"> <!-- Ensures vertical center alignment -->
+                            <div class="col-auto"> <!-- Uses only as much space as needed -->
+                              <div class="user-avatar">
+                                {% if i.user.photo is not null and i.user.photo starts with
+                                'http://res.cloudinary.com'%}
+                                <img class="user-photo" src="{{ i.user.photo }}" alt="User avatar"
+                                  style="width: 40px; height: 40px; border-radius: 50%;" />
+                                {% elseif i.user.photo is not null %}
+                                <img class="user-photo" src="{{ asset('uploads/' ~ i.user.photo) }}" alt="User avatar"
+                                  style="width: 40px; height: 40px; border-radius: 50%;" />
+                                {% else %}
+                                <!-- Fallback to the default user image -->
+                                <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}"
+                                  alt="Default User avatar" style="width: 40px; height: 40px; border-radius: 50%;" />
+                                {% endif %}
+
+                              </div>
+                            </div>
+                            <div class="col"> <!-- Takes remaining space -->
+                              <div class="user-details">
+                                <a class="event-title" style="color: orangered;"><strong>{{
+                                    i.user.username
+                                    }}</strong></a>
+                                <span class="event-time">{{ i.user.email }}</span>
                               </div>
                             </div>
                           </div>
-                          <div class="event-body">
-                            <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
-                            <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
-                            <span class="event-type">{{ i.description }}</span>
-                            <p class="ingo-counter">
-                              <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
-                              <span>{{ i.place }}</span>
-                            </p>
-                            <div class="group-btns">
-                              <button class="interest-btn btn-hover">
-                                <i class="feather-star me-2"></i>Interested
-                              </button>
-                              <button class="share-btn btn-hover" data-bs-toggle="modal" data-bs-target="#shareModal">
-                                <i class="feather-share-2"></i>
-                              </button>
+                        </div>
+
+                        <div class="main-photo">
+                          <a>
+                            <div class="photo-overlay"></div>
+                            {% if i.imageUrl starts with 'http://res.cloudinary.com' %}
+                            <img src="{{ i.imageUrl  }}" alt="{{ i.imageUrl }}" style="height: 4.5cm;" />
+                            {% else %}
+                            <img src="{{ asset('uploads/' ~ i.imageUrl)  }}" alt="{{ i.imageUrl }}"
+                              style="height: 4.5cm;" />
+                            {% endif %}
+                          </a>
+                          <div class="option-ellipsis">
+                            <div class="dropdown">
+                              <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                <a class="post-link-item"
+                                  href="{{ path('user_profile',{'username':i.user.username}) }}"><i
+                                    class="feather-user icon-mr1"></i>Profile</a>
+                                <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                  data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                              </div>
                             </div>
                           </div>
                         </div>
+                        <div class="event-body">
+                          <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
+                          <a class="event-title">{{ i.titre }}</a>
+                          <span class="event-type">{{ i.description }}</span>
+                          <p class="ingo-counter">
+                            <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
+                            <span>{{ i.place }}</span>
+                          </p>
+                          <div class="group-btns">
+                            <button class="interest-btn btn-hover">
+                              <i class="feather-star me-2"></i>Interested
+                            </button>
+                            <button class="share-btn btn-hover" data-bs-toggle="modal" data-bs-target="#shareModal">
+                              <i class="feather-share-2"></i>
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      {% endfor %}
-
-                      {{ knp_pagination_render(post) }}
-
                     </div>
-                    <div class="row">
-                      <div class="search-results" id="new" style="display: none;">
+                    {% endfor %}
+
+                    {{ knp_pagination_render(post) }}
+
+                  </div>
+                  <div class="row">
+                    <div class="search-results" id="new" style="display: none;">
                       {{ knp_pagination_render(post) }}
-                      </div>
                     </div>
-        </div>
-    </div>
-      <div class="tab-pane fade" id="tab-following">
-        <div class="full-width">
-            <div class="no-events">
-                <div class="no-event-icon">
-                    <img src="images/icon-calendar.png" alt="" />
+                  </div>
                 </div>
-                <span>No events found.</span>
+              </div>
+              <div class="tab-pane fade" id="tab-following">
+                <div class="full-width">
+                  <div class="no-events">
+                    <div class="no-event-icon">
+                      <img src="images/icon-calendar.png" alt="" />
+                    </div>
+                    <span>No events found.</span>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-        </div>
-      </div>
           </div>
         </div>
-        <div
-          class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12"
-        >
+        <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
           <div class="main-left-sidebar mt-5 mt-lg-5 mt-xl-0">
             {% if app.user %}
             <div class="user-data full-width">
@@ -112,8 +142,7 @@
                   <div class="usr-pic">
                     <img
                       src="{{ asset(app.user.photo?'uploads/' ~ app.user.photo:'front_office/images/default-user.png') }}"
-                      alt=""
-                    />
+                      alt="" />
                   </div>
                 </div>
                 <div class="user-main-details">
@@ -148,37 +177,30 @@
               </div>
               <div class="categories-items">
                 <div class="categories-container">
-                  <a class="category-item" href="#"
-                    ><img
-                      src="images/category-icons/grow-shop.png"
-                      alt="Music"
-                    />Shopping</a
-                  >
-                  <a class="category-item" href="#"
-                    ><img
-                      src="images/category-icons/bon-de-reduction.png"
-                      alt="Classics"
-                    />Voucher</a
-                  >
+                  <a class="category-item" href="#"><img src="images/category-icons/grow-shop.png"
+                      alt="Music" />Shopping</a>
+                  <a class="category-item" href="#"><img src="images/category-icons/bon-de-reduction.png"
+                      alt="Classics" />Voucher</a>
                 </div>
               </div>
             </div>
-            
-            {# begin voucher extracting from data base :  #}
+
+            {# begin voucher extracting from data base : #}
             <div class="user-data full-width">
               <div class="categories-left-heading">
                 <h3>Your Vouchers</h3>
               </div>
               {% if voucher is empty %}
-                <p>No vouchers found.</p>
+              <p>No vouchers found.</p>
               {% else %}
-                {% for voucher in voucher %}
+              {% for voucher in voucher %}
               <div class="sugguest-user">
                 <div class="sugguest-user-dt">
-                  <a href="#"
-                    ><img src="{{asset('front_office/images/category-icons/bon-de-reduction.png')}}" alt=""
-                  /></a>
-                  <a href="#"><h4>{{ voucher.code }}</h4></a>
+                  <a href="#"><img src="{{asset('front_office/images/category-icons/bon-de-reduction.png')}}"
+                      alt="" /></a>
+                  <a href="#">
+                    <h4>{{ voucher.code }}</h4>
+                  </a>
                 </div>
                 <button class="request-btn">
                   <i class="feather-slack"></i>
@@ -187,13 +209,11 @@
               {% endfor %}
               {% endif %}
             </div>
-            {# end voucher list  #}
+            {# end voucher list #}
           </div>
         </div>
         {# begin of right side of the site #}
-        <div
-          class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12"
-        >
+        <div class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
           <div class="right-side-items mt-0 mt-md-5 mt-lg-5 mt-xl-0">
             {# POST LOST & FOUND BEGIN #}
             <div class="post-event">
@@ -211,45 +231,45 @@
               <div class="explore-events-dt">
                 <div class="row g-2">
                   {% if markets is empty %}
-                    <p>No markets found.</p>
+                  <p>No markets found.</p>
                   {% else %}
-                    {% for market in markets %}
-                      <div class="col-md-6">
-                        <div class="event-main-post">
-                            <div class="main-photo">
-                                <a href="{{ path('market_details', {'id': market.id}) }}">
-                                    <div class="photo-overlay"></div>
-                                    <img src="{{ asset('uploads/' ~ market.getImage() )}}" alt="{{ market.name }}" />
-                                </a>
-                                <div class="option-ellipsis">
-                                    <div class="dropdown">
-                                        <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                class="fas fa-ellipsis-v"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
-                                            <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
-                                            <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
-                                            <a class="post-link-item" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
-                                        </div>
-                                    </div>
-                                </div>
+                  {% for market in markets %}
+                  <div class="col-md-6">
+                    <div class="event-main-post">
+                      <div class="main-photo">
+                        <a href="{{ path('market_details', {'id': market.id}) }}">
+                          <div class="photo-overlay"></div>
+                          <img src="{{ asset('uploads/' ~ market.getImage() )}}" alt="{{ market.name }}" />
+                        </a>
+                        <div class="option-ellipsis">
+                          <div class="dropdown">
+                            <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                              data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                              <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                              <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                              <a class="post-link-item" href="#" data-bs-toggle="modal" data-bs-target="#reportModal"><i
+                                  class="feather-flag icon-mr1"></i>Report</a>
                             </div>
-                            <div class="event-body">
-                                <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name }}</a>
-                                <span class="event-type">{{ market.address }}</span>
-                                <p class="ingo-counter">
-                                    <span>{{ market.region }}</span> <!-- Add relevant data here -->
-                                    <span>{{ market.zipCode }}</span> <!-- Add relevant data here -->
-                                </p>
-                                <!-- Add relevant buttons and functionalities here -->
-                            </div>
+                          </div>
                         </div>
+                      </div>
+                      <div class="event-body">
+                        <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name
+                          }}</a>
+                        <span class="event-type">{{ market.address }}</span>
+                        <p class="ingo-counter">
+                          <span>{{ market.region }}</span> <!-- Add relevant data here -->
+                          <span>{{ market.zipCode }}</span> <!-- Add relevant data here -->
+                        </p>
+                        <!-- Add relevant buttons and functionalities here -->
+                      </div>
                     </div>
+                  </div>
 
-                {% endfor %}
-              {% endif %}
+                  {% endfor %}
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -275,8 +295,8 @@
           type: "GET", // Change the request type to GET
           data: { query: query },
           success: function (data) {
-           // Access the data directly
-           console.log(data)
+            // Access the data directly
+            console.log(data)
             if (data.length > 0) {
               $('#prev').hide();
               $('#new').empty();
