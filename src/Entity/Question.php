@@ -9,30 +9,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: "integer", name: "id")]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'questions'), ORM\JoinColumn(name: "userId", nullable: false)]
     private ?User $User_id = null;
     
-    #[Assert\NotBlank(message: "Le titre ne doit pas etre vide!")]
-    #[Assert\Length(min:5,minMessage:"le titre doit avoir un longeur plus que 5 charactères!")]
-    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre ne doit pas etre vide!"), Assert\Length(min: 5, minMessage: "le titre doit avoir un longeur plus que 5 charactères!"), ORM\Column(type: "string", length: 255, name: "title")]
     private ?string $title = null;
     
-    #[Assert\NotBlank(message: "Implementez votre question")]
-    #[Assert\Length(min:10,minMessage:"votre question doit avoir un longueur plus de 10 charactères!")]
-    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Implementez votre question"), Assert\Length(min: 10, minMessage: "votre question doit avoir un longueur plus de 10 charactères!"), ORM\Column(type: "string", length: 255, name: "body")]
     private ?string $body = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "datetime_immutable", name: "createdAt")]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\OneToOne(mappedBy: 'question_id', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Answer::class, mappedBy: 'question_id', cascade: ['persist', 'remove'])]
     private ?Answer $answer = null;
+
 
     public function getId(): ?int
     {
