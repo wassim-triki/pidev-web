@@ -466,11 +466,16 @@
                         aria-expanded="false"
                 >
                     <div class="user-photo-container">
-                        {% if app.user.photo %}
-                            <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User Photo">
-                        {% else %}
-                            <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
-                        {% endif %}
+                        {% if app.user.photo is not null and app.user.photo starts with
+                                'http://res.cloudinary.com'%}
+                                <img class="user-photo" src="{{ app.user.photo }}" alt="User avatar" />
+                                {% elseif app.user.photo is not null %}
+                                <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User avatar" />
+                                {% else %}
+                                <!-- Fallback to the default user image -->
+                                <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}"
+                                  alt="Default User avatar" />
+                                {% endif %}
                     </div>
 
                     <i class="feather-chevron-down ms-2"></i>

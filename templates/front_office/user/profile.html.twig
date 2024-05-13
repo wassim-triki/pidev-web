@@ -37,8 +37,18 @@
                                     </div>
                                 {% endfor %}
                                 <div class="user-avatar-img">
-                                    <img class="user-photo" src="{{ asset(user.photo ? 'uploads/' ~ user.photo : 'front_office/images/default-user.png') }}" alt="{{ user.username }}">
-                                    {% if isOwnProfile %}
+                                {% if app.user.photo is not null and app.user.photo starts with
+                                'http://res.cloudinary.com'%}
+                                <img class="user-photo" src="{{ app.user.photo }}" alt="User avatar"
+                                  style="width: 120px; height: 120px; border-radius: 50%;" />
+                                {% elseif app.user.photo is not null %}
+                                <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User avatar"
+                                  style="width: 120px; height: 120px; border-radius: 50%;" />
+                                {% else %}
+                                <!-- Fallback to the default user image -->
+                                <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}"
+                                  alt="Default User avatar" style="width: 120px; height: 120px; border-radius: 50%;" />
+                                {% endif %}                                    {% if isOwnProfile %}
                                         <div class="avatar-img-btn">
                                             {{ form_start(profilePictureForm, {
                                                 'attr': {
@@ -156,13 +166,21 @@
                                                     <div class="col-xl-4 col-lg-12 col-md-6 col-12">
                                                         <div class="event-main-post">
                                                             <div class="main-photo">
-                                                                <a href="#">
+                                                                <a>
                                                                     <div class="photo-overlay"></div>
-                                                                    <img
-                                                                            src="{{ asset('uploads/' ~ i.imageUrl) }}"
-                                                                            alt={{ i.imageUrl }}
-                                                                            style="height: 4.5cm;"
-                                                                    />
+                                                                    {% if i.imageUrl starts with 'http://res.cloudinary.com' %}
+                                    <img
+                                    src="{{ i.imageUrl  }}"
+                                    alt="{{ i.imageUrl }}"
+                                    style="height: 4.5cm;"
+                                  />
+                                  {% else %}
+                                    <img
+                                    src="{{ asset('uploads/' ~ i.imageUrl)  }}"
+                                    alt="{{ i.imageUrl }}"
+                                    style="height: 4.5cm;"
+                                  />
+                                  {% endif %}
                                                                 </a>
                                                             </div>
                                                             <div class="event-body">
