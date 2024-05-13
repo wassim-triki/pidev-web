@@ -1,0 +1,329 @@
+{% extends 'front_office/base.html.twig' %} {% block title %}Home{% endblock
+%} {% block main %}
+<main>
+  <div class="main-section">
+    <div class="container">
+      <div class="row">
+        <div
+          class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
+        >
+          <div class="center-section">
+            <div class="main-search-bar">
+              <h2>Shop in your city</h2>
+              <form id="search-form" method="GET">
+                  <div class="main-search-inputs">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="form-group w-100">
+                      <label for="search">Search:</label>
+                      <input class="form-control w-100 form-control-navbar" id="searchInput" type="search"
+                        placeholder="Search" aria-label="Search" style="width: 300PX;">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-12 col-sm-12">
+
+                  </div>
+                </div>
+              </div>
+              </form>
+            </div>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tab-top">
+                <div class="main-posts">
+                  <div class="row" , id="prev">
+                      {% for i in post %}
+                      <div class="col-md-6">
+                        <div class="event-main-post">
+                          <div class="main-photo">
+                            <a href="event_detail_view.html">
+                              <div class="photo-overlay"></div>
+                              <img src="{{ asset('uploads/' ~ i.imageUrl) }}" alt={{ i.imageUrl }}
+                                style="height: 4.5cm;" />
+                            </a>
+                            <div class="option-ellipsis">
+                              <div class="dropdown">
+                                <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                  data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                  <a class="post-link-item" href="user_profile.html"><i
+                                      class="feather-user icon-mr1"></i>User
+                                    Profile</a>
+                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="event-body">
+                            <span class="event-time">{{ i.date|date("F j, Y, g:i a") }}</span>
+                            <a href="event_detail_view.html" class="event-title">{{ i.titre }}</a>
+                            <span class="event-type">{{ i.description }}</span>
+                            <p class="ingo-counter">
+                              <span style="color: orangered;"><strong>{{ i.type }}</strong></span>
+                              <span>{{ i.place }}</span>
+                            </p>
+                            <div class="group-btns">
+                              <button class="interest-btn btn-hover">
+                                <i class="feather-star me-2"></i>Interested
+                              </button>
+                              <button class="share-btn btn-hover" data-bs-toggle="modal" data-bs-target="#shareModal">
+                                <i class="feather-share-2"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+
+                      {{ knp_pagination_render(post) }}
+
+                    </div>
+                    <div class="row">
+                      <div class="search-results" id="new" style="display: none;">
+                      {{ knp_pagination_render(post) }}
+                      </div>
+                    </div>
+        </div>
+    </div>
+      <div class="tab-pane fade" id="tab-following">
+        <div class="full-width">
+            <div class="no-events">
+                <div class="no-event-icon">
+                    <img src="images/icon-calendar.png" alt="" />
+                </div>
+                <span>No events found.</span>
+            </div>
+        </div>
+        </div>
+      </div>
+          </div>
+        </div>
+        <div
+          class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12"
+        >
+          <div class="main-left-sidebar mt-5 mt-lg-5 mt-xl-0">
+            {% if app.user %}
+            <div class="user-data full-width">
+              <div class="user-profile">
+                <div class="username-dt dpbg-1">
+                  <div class="usr-pic">
+                    <img
+                      src="{{ asset(app.user.photo?'uploads/' ~ app.user.photo:'front_office/images/default-user.png') }}"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="user-main-details">
+                  <h4>{{ app.user.username }}</h4>
+                  {% if app.user.address %}
+                  <span><i class="feather-map-pin"></i>{{ app.user.address }}</span>
+                  {% endif %}
+                </div>
+                <ul class="followers-dts">
+                  <li>
+                    <div class="followers-dt-sm">
+                      <h4>Lost</h4>
+                      <span>{{ lostCount }}</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="followers-dt-sm">
+                      <h4>Found</h4>
+                      <span>{{ foundCount }}</span>
+                    </div>
+                  </li>
+                </ul>
+                <div class="profile-link">
+                  <a href="{{ path('user_profile',{'username':app.user.username}) }}">View Profile</a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="user-data full-width">
+              <div class="categories-left-heading">
+                <h3>Categories</h3>
+              </div>
+              <div class="categories-items">
+                <div class="categories-container">
+                  <a class="category-item" href="#"
+                    ><img
+                      src="images/category-icons/grow-shop.png"
+                      alt="Music"
+                    />Shopping</a
+                  >
+                  <a class="category-item" href="#"
+                    ><img
+                      src="images/category-icons/bon-de-reduction.png"
+                      alt="Classics"
+                    />Voucher</a
+                  >
+                </div>
+              </div>
+            </div>
+            
+            {# begin voucher extracting from data base :  #}
+            <div class="user-data full-width">
+              <div class="categories-left-heading">
+                <h3>Your Vouchers</h3>
+              </div>
+              {% if voucher is empty %}
+                <p>No vouchers found.</p>
+              {% else %}
+                {% for voucher in voucher %}
+              <div class="sugguest-user">
+                <div class="sugguest-user-dt">
+                  <a href="#"
+                    ><img src="{{asset('front_office/images/category-icons/bon-de-reduction.png')}}" alt=""
+                  /></a>
+                  <a href="#"><h4>{{ voucher.code }}</h4></a>
+                </div>
+                <button class="request-btn">
+                  <i class="feather-slack"></i>
+                </button>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+            {# end voucher list  #}
+          </div>
+        </div>
+        {# begin of right side of the site #}
+        <div
+          class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12"
+        >
+          <div class="right-side-items mt-0 mt-md-5 mt-lg-5 mt-xl-0">
+            {# POST LOST & FOUND BEGIN #}
+            <div class="post-event">
+              <h6>Want to Post found or lost objects</h6>
+              <p>
+                if you have found or lost somthing just post it here and people will interact with you
+              </p>
+              <a href="{{ path('addpost') }}" class="add-nw-event">Post It Now</a>
+            </div>
+            {# POST LOST & FOUND BEGIN #}
+
+            {# begin Explore event #}
+            <div class="explore-events">
+              <h4>Explore Shop</h4>
+              <div class="explore-events-dt">
+                <div class="row g-2">
+                  {% if markets is empty %}
+                    <p>No markets found.</p>
+                  {% else %}
+                    {% for market in markets %}
+                      <div class="col-md-6">
+                        <div class="event-main-post">
+                            <div class="main-photo">
+                                <a href="{{ path('market_details', {'id': market.id}) }}">
+                                    <div class="photo-overlay"></div>
+                                    <img src="{{ asset('uploads/' ~ market.getImage() )}}" alt="{{ market.name }}" />
+                                </a>
+                                <div class="option-ellipsis">
+                                    <div class="dropdown">
+                                        <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                class="fas fa-ellipsis-v"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                            <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                            <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                                            <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event-body">
+                                <a href="{{ path('market_details', {'id': market.id}) }}" class="event-title">{{ market.name }}</a>
+                                <span class="event-type">{{ market.address }}</span>
+                                <p class="ingo-counter">
+                                    <span>{{ market.region }}</span> <!-- Add relevant data here -->
+                                    <span>{{ market.zipCode }}</span> <!-- Add relevant data here -->
+                                </p>
+                                <!-- Add relevant buttons and functionalities here -->
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+              {% endif %}
+                </div>
+              </div>
+            </div>
+            {# end of explore events and agenda #}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+      var query = $(this).val();
+      if (query.length === 0) {
+        $('#prev').show();
+        $('#new').hide();
+        $('#new').empty();
+      } else {
+        $.ajax({
+          url: "/searchPost", // Change the URL to match your route
+          type: "GET", // Change the request type to GET
+          data: { query: query },
+          success: function (data) {
+           // Access the data directly
+           console.log(data)
+            if (data.length > 0) {
+              $('#prev').hide();
+              $('#new').empty();
+              $('#new').show();
+              $.each(data, function (i, obj) {
+                var card = '<div class="col-md-6">' +
+                  '<div class="event-main-post">' +
+                  '<div class="main-photo">' +
+                  '<a href="event_detail_view.html">' +
+                  '<div class="photo-overlay"></div>' +
+                  '<img src="/uploads/' + obj.imageUrl + '" alt="' + obj.titre + '" style="height: 4.5cm;" />' +
+                  '</a>' +
+                  '</div>' +
+                  '<div class="event-body">' +
+                  '<span class="event-time">' + new Date(obj.date.date).toLocaleString() + '</span>' +
+                  '<a href="event_detail_view.html" class="event-title">' + obj.titre + '</a>' +
+                  '<span class="event-type">' + obj.description + '</span>' +
+                  '<p class="ingo-counter">' +
+                  '<span style="color: orangered;"><strong>' + obj.type + '</strong></span>' +
+                  '<span>' + obj.place + '</span>' +
+                  '</p>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>';
+                $('#new').append(card);
+              });
+
+            } else {
+              $('#prev').show();
+              $('#new').hide();
+              $('#new').empty();
+            }
+          },
+          error: function () {
+            console.error("An error occurred while processing the AJAX request.");
+          }
+        });
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['dayGrid'],
+      events: '/api/events' // URL to fetch events
+    });
+    calendar.render();
+  });
+</script>
+{% endblock %}

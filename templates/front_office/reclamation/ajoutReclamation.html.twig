@@ -1,0 +1,87 @@
+
+
+
+
+{% extends 'front_office/base.html.twig' %}
+{% block title %}Add Reclamation{% endblock %}
+
+{% block main %}
+<style>
+    .error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #d9534f;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+</style>
+
+
+
+
+
+  
+    </style>
+<main class="contact-mp">	
+			<div class="main-section">
+				<div class="container ">
+					<div class="row justify-content-md-center ">
+						<div class="col-lg-6 col-md-8 card">							
+							<div class="contact-heading text-center ">
+								<h2 class="mt-3 mb-3">ADD RECLMATION</h2>
+								<p class="mb-37">Do you have any reclamation?</p>
+							</div>
+							<div class="contact-form">
+                                {{ form_start(f, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+								
+                                    <div class="form-group">
+                                        {{ form_label(f.subject, "Subject") }}
+                                        {{ form_widget(f.subject, {'attr': {'class': 'form-control common-input'}}) }}
+                                        {% if form_errors(f.subject) %}
+                                            <div class="error-message">{{ form_errors(f.subject) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.description, "Description") }}
+                                        {{ form_widget(f.description, {'attr': {'class': 'form-textarea common-input'}}) }}
+                                        {% if form_errors(f.description) %}
+                                            <div class="error-message">{{ form_errors(f.description) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.ReportedUsername, "ReportedUsername") }}
+                                        {{ form_widget(f.ReportedUsername, {'attr': {'class': 'form-control common-input'}}) }}
+                                        {% if form_errors(f.ReportedUsername) %}
+                                            <div class="error-message">{{ form_errors(f.ReportedUsername) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.TypeReclamation, "TypeReclamation") }}
+                                        {{ form_widget(f.TypeReclamation, {'attr': {'class': 'form-control common-input'}}) }}
+                                        {% if form_errors(f.TypeReclamation) %}
+                                            <div class="error-message">{{ form_errors(f.TypeReclamation) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(f.screenShot, "ScreenShot") }}
+                                        {{ form_widget(f.screenShot, {'attr': {'class': 'form-control common-input'}}) }}
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_row(f.save) }}
+                                    </div>
+                                
+                                {{ form_end(f) }}
+                                
+							</div>
+						</div>						
+					</div>					
+				</div>
+			</div>
+           
+          
+
+		</main>
+{% endblock %}

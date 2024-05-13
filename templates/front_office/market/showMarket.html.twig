@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeController!{% endblock
+    %} {% block main %}
+         <div class="main-search-bar">
+            <div class="center-section">
+              <h2>Shop in your city</h2>
+              <form id="search-form" method="GET">
+                  <div class="main-search-inputs main-form">
+                      <div class="row g-3">
+                          <div class="col-lg-5 col-md-12 col-sm-12">
+                              <input
+                                  class="search-form-input"
+                                  type="text"
+                                  name="name"
+                                  placeholder="Search Shop by name"
+                              />
+                          </div>
+                          <div class="col-lg-5 col-md-12 col-sm-12">
+                              <input
+                                  class="search-form-input"
+                                  type="text"
+                                  name="region"
+                                  placeholder="Search Shop by location"
+                              />
+                          </div>
+                          <div class="col-lg-2 col-md-12 col-sm-12">
+                              <button id="search-btn" class="search-btn" type="submit">
+                                  <i class="feather-search"></i><span>Search</span>
+                              </button>
+                          </div>
+                          <div class="col-lg-2 col-md-12 col-sm-12">
+                                <a href="{{ path('admin_dashboard') }}" id="search-btn" class="search-btn" style="width: 50%; height: 50%;">
+                                    <img src="{{ asset('images/fleche-petite-gauche.png') }}" alt="" style="width:10%">
+                                </a>
+                          </div>
+                          <div class="col-lg-2 col-md-12 col-sm-12" style="background-color: coral; width:10%">
+                                    <a href="{{ path('market_new') }}" style="width: 100%; height: 100%; margin-left:50%">
+                                        <i class="feather-save"></i>
+                                    </a> 
+                            </div>
+                      </div>
+                  </div>
+              </form>
+            </div>
+        <div class="tab-content">
+              <div class="tab-pane fade show active" id="tab-top">
+                <div class="main-posts">
+                  <div class="row">
+                    {% if markets is empty %}
+                      <p>No vouchers found.</p>
+                    {% else %}
+                      {% for market in markets %}
+                          <div class="col-md-6">
+                              <div class="event-main-post "style=
+                              "width:30%">
+                                  <div class="main-photo" >
+                                      <a href="">
+                                          <div class="photo-overlay"></div>
+                                          <img src=" {{ asset('uploads/' ~ market.getImage() )}}" alt="market" style=
+                                          "width:100%"/>
+                                      </a>
+                                      <div class="option-ellipsis">
+                                          <div class="dropdown">
+                                              <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button"
+                                                  data-bs-toggle="dropdown" aria-expanded="false"><i
+                                                      class="fas fa-ellipsis-v"></i></a>
+                                              <div class="dropdown-menu dropdown-menu-end">
+                                                  <a class="post-link-item" href="#"><i class="feather-eye-off icon-mr1"></i>Hide</a>
+                                                  <a class="post-link-item" href="#"><i class="feather-bookmark icon-mr1"></i>Save</a>
+                                                  <a class="post-link-item" href="#"><i class="feather-user icon-mr1"></i>User Profile</a>
+                                                  <a class="post-link-item" href="#" data-bs-toggle="modal"
+                                                      data-bs-target="#reportModal"><i class="feather-flag icon-mr1"></i>Report</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="event-body">
+                                      <a href="{{path('market_details', {'id': market.id})}}" class="event-title">{{ market.name }}</a>
+                                      <span class="event-type">{{ market.address }}</span>
+                                        <p class="ingo-counter">
+                                            <span> Region : {{ market.region }}</span>
+                                            <br>
+                                            <span>City: {{ market.city }}</span>
+                                            <br>
+                                            <span>zip code: {{ market.zipCode}}</span>
+                                        </p>
+                                  </div>
+                                  <div class="row" style="width: 100%;">
+
+                                
+                                </div>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  {% endif %}
+                
+            </div>
+        </div>
+
+                {% endblock %}

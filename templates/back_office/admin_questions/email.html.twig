@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .header {
+            background-color: #fd7e14;
+            color: #ffffff;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .content {
+            padding: 40px 30px;
+            color: #153643;
+            font-size: 16px;
+        }
+        .footer {
+            background-color: #ee4c50;
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="font-size: 24px; margin: 0;">Response to your question</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{ name.getUsername }},</p>
+            <p>Your question was: {{ question.getBody }}</p>
+            <p>The administrator's response is: {{ answer.getBody }}</p>
+        </div>
+        <div class="footer">
+            <p>® Al9ani, {{ "now"|date('Y') }}</p>
+        </div>
+    </div>
+</body>
+</html>

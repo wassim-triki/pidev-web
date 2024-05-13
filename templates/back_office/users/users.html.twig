@@ -1,0 +1,217 @@
+{% extends 'back_office/base.html.twig' %} {% block title %}Dashboard | Users{% endblock
+%}
+
+{% block styles %}
+
+{% endblock %}
+{% block main %}
+
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Users</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">Users</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-sm-5">
+                                    <a href="{{ path('admin_create_user') }}" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add User</a>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="text-sm-end">
+                                        <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog"></i></button>
+{#                                        <button type="button" class="btn btn-light mb-2 me-1">Import</button>#}
+{#                                        <button type="button" class="btn btn-light mb-2">Export</button>#}
+                                    </div>
+                                </div>
+                                <!-- end col-->
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Picture</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
+                                        <th>Gender</th>
+                                        <th>Roles</th>
+                                        <th>Enabled</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td>{{ user.id }}</td>
+                                            <td class="table-user">
+                                                <img src="{{ user.photo ? asset('uploads/' ~ user.photo) : asset('front_office/images/default-user.png') }}" alt="table-user" class="me-2 rounded-circle">
+                                            </td>
+                                            <td class="table-user">
+                                                {{ user.username }}
+                                            </td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.phone | default('N/A') }}</td>
+                                            <td>{{ user.address | default('N/A') }}</td>
+                                            <td>{{ user.gender ? user.gender.value : 'N/A' }}</td>
+                                            <td>{{ user.roles | join(', ') }}</td>
+                                            <td>
+                                                <input type="checkbox" id="switch{{ user.id }}" {{ user.isEnabled ? 'checked' : '' }} data-switch="success" data-bs-toggle="modal" data-bs-target="#toggleUserModal" data-user-id="{{ user.id }}" data-user-status="{{ user.isEnabled ? 'disable' : 'enable' }}" data-original-state="{{ user.isEnabled ? 'true' : 'false' }}"/>
+
+                                                <label for="switch{{ user.id }}" data-on-label="Yes" data-off-label="No"></label>
+                                            </td>
+
+                                            <td>
+                                                <span class="badge {{ user.isVerified ? 'badge-success-lighten' : 'badge-danger-lighten' }}">{{ user.isVerified ? 'Verified' : 'Not Verified' }}</span>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+{#                                                    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>#}
+                                                    <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-user-id="{{ user.id }}"> <i class="mdi mdi-delete"></i></a>
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- container -->
+        <!-- Delete User Modal -->
+        <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteUserModalLabel">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this user?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form id="deleteUserForm" action="" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Enable/Disable User Modal -->
+        <div class="modal fade" id="toggleUserModal" tabindex="-1" aria-labelledby="toggleUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="toggleUserModalLabel">Confirm Action</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to <span id="toggleAction"></span> this user's account?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form id="toggleUserForm" action="" method="POST">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-primary" id="toggleUserButton">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div> <!-- content -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end footer-links d-none d-md-block">
+                        <a href="javascript: void(0);">About</a>
+                        <a href="javascript: void(0);">Support</a>
+                        <a href="javascript: void(0);">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end Footer -->
+
+</div>
+    <script>
+        var deleteUserModal = document.getElementById('deleteUserModal');
+        deleteUserModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var userId = button.getAttribute('data-user-id');
+            var form = deleteUserModal.querySelector('#deleteUserForm');
+            form.action = '/admin/users/'+userId+'/delete';
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleUserModal = document.getElementById('toggleUserModal');
+            let currentSwitch = null; // Variable to store the current switch
+
+            toggleUserModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                currentSwitch = button; // Store the current switch
+                const userId = button.getAttribute('data-user-id');
+                const userStatus = button.getAttribute('data-user-status');
+                const form = document.getElementById('toggleUserForm');
+                const actionSpan = document.getElementById('toggleAction');
+                const toggleButton = document.getElementById('toggleUserButton');
+
+                form.action = `/admin/users/${userId}/toggle`; // Adjust the URL as needed
+                actionSpan.textContent = userStatus;
+                toggleButton.textContent = userStatus.charAt(0).toUpperCase() + userStatus.slice(1);
+            });
+
+            toggleUserModal.addEventListener('hidden.bs.modal', function () {
+                if (currentSwitch) {
+                    const originalState = currentSwitch.getAttribute('data-original-state') === 'true';
+                    currentSwitch.checked = originalState; // Revert the switch to its original state
+                    currentSwitch = null; // Reset the current switch variable
+                }
+            });
+        });
+
+
+    </script>
+
+{% endblock %}

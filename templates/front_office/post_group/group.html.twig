@@ -1,0 +1,200 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block title %}Hello PostGroupController!{% endblock %}
+
+{% block main %}
+{# Afficher les messages flash de succès #}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+<main class="blog-mp">  
+    <div class="main-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-md-3">                              
+                   
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="blog-post-comment">
+                        <div class="blog-comments">
+                            <div class="blog-comment-title">
+                                <h2>FOUND IT HERE</h2>
+                            </div>
+                            
+                            <div class="blog-main-img">
+                                <img src="{{ asset('uploads/' ~ sponsoringImage) }}" style="max-width: 960px; max-height: 330px;" alt="">
+                            </div>
+                            
+                            
+                            {{ form_start(f, {'attr': {'novalidate': 'novalidate', 'class': 'form-group'}}) }}
+                            <div class="blog-post-comment">
+                                <div class="blog-post-bg">
+                                    <div class="commntr-dp">
+                                        {% if app.user.photo is defined and app.user.photo %}
+                                            <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User Photo">
+                                        {% else %}
+                                            <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
+                                        {% endif %}
+                                    </div>
+                                    {{ form_widget(f.contenu) }}
+                                    {{ form_widget(f.public, {'attr': {'class': 'blog-post-btn col-sm-2'}}) }}
+                                    <div style="color: red;">{{ form_errors(f.contenu) }}</div>
+                                </div>
+                            </div>
+                            {{ form_end(f) }}
+
+                            {% for post in showpost %}
+
+
+                                <div class="blog-comntd-bg">
+                                    {% if app.user == post.user %}
+                                        <div class="dropdown edit-delete-dropdown" style="padding-left: 933px;">
+                                            <a class="ellipsis-btn dropdown-toggle-no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li><a class="dropdown-item" href="{{ path('editpostgroup', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce post?')">Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ path('deletepostgroup', {'idpost': post.id,'id':id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post?')">Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <div class="bcmnt-dt">
+                                       
+                                        <div class="blog-usr-dt">
+                                            {% if post.user.photo is defined and post.user.photo %}
+                                                <img class="user-photo" src="{{ asset('uploads/' ~ post.user.photo) }}" alt="User Photo">
+                                            {% else %}
+                                                <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
+                                            {% endif %}
+                                            <a href="user_profile.html"><h4>{{ post.user.getUsername() }}</h4></a>
+                                            <h6><span style="font-size: x-small; padding-left: 75px;">{{ post.date | date('Y-m-d') }}</span></h6>
+                                        </div>
+                                        <p>{{ post.contenu }}</p>
+                                        
+                                        
+                                        
+
+                                    </div>
+                                    {# -------------------------- Share ------------------------------------  #}
+                                    <div class="sharethis-inline-share-buttons"></div>
+                                    {# -------------------------- Share ------------------------------------  #}
+                                
+                                    <div class="blog-post-reply">
+                                        <div class="breply-dp1">
+                                            {% if app.user.photo %}
+                                                <img class="user-photo" src="{{ asset('uploads/' ~ app.user.photo) }}" alt="User Photo">
+                                            {% else %}
+                                                <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
+                                            {% endif %}
+                                        </div>
+                                        <form method="POST" action="{{ path('commentaire_add',{'idpost': post.id,'id':id}) }}">
+                                            <input class="breply-post" type="text" name="contenu" placeholder="Write a reply">
+                                            <button class="breply-post-btn" type="submit">Reply</button>
+                                        </form>
+                                    </div>
+                                    {% for commentaire in post.postcommentaires %}
+                                        <div class="blog-post-reply">
+                                            <div class="breply-dp1">
+                                                {% if commentaire.user.photo is defined and commentaire.user.photo %}
+                                                    <img class="user-photo" src="{{ asset('uploads/' ~ commentaire.user.photo) }}" alt="User Photo">
+                                                {% else %}
+                                                    <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}" alt="Default User">
+                                                {% endif %}
+                                            </div>
+                                            <p>{{ commentaire.getCommentaire() }}</p>
+                                            <!-- Bouton de suppression -->
+                                           {% if app.user == commentaire.user %}
+                                           <div class="comment-links"  >
+                                               <a class="btn btn-link  " href="{{ path('commentaire_edit',  {'id': id,'idpost': post.id, 'commentId': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir éditer ce commentaire?')">✏️</a>
+                                               <a class="btn btn-link" href="{{ path('commentaire_delete',  {'id': id,'idpost': post.id, 'commentId': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire?')">🗑️</a>
+                                           </div>
+                                           {% endif %}
+                                             
+                                            <div class="comment-actions"style="padding: 0px 0px 0px 750px;">
+                                                {% if commentaire.isLikedByUser(app.user) %}
+                                                    <button class="like-button breply-post-btn col-sm-9 " data-comment-id="{{ commentaire.id }}" onclick="dislikeComment(this.dataset.commentId)">👎 </button>
+                                                {% else %}
+                                                    <button class="like-button  breply-post-btn col-sm-9 "  data-comment-id="{{ commentaire.id }}" onclick="likeComment(this.dataset.commentId)">👍 </button>
+                                                {% endif %}
+                                                
+                                            </div>
+                                            <span class="like-count" data-comment-id="{{ commentaire.id }}">{{ commentaire.likes }}</span> Likes
+                                           
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>              
+        </div>
+    </div>
+</main>
+<style>
+    .comment-links {
+        margin-right: 500px; /* Adjust the value as needed */
+    }
+    /* Default style for the like button */
+    .like-button {
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    /* Style for the like button when active */
+    .like-button.active {
+      color: yellow; /* Change the color to yellow when active */
+    }
+    .heart-icon {
+            font-size: 20px;
+            color: rgb(200, 30, 30); /* Couleur du cœur vide */
+            transition: color 0.3s ease;
+        }
+        .heart-icon.filled {
+            color: rgb(216, 150, 150); /* Couleur du cœur plein */
+        }
+</style>
+
+<script>
+    // Gestionnaire d'événements pour le clic sur le bouton "J'aime"
+    document.querySelectorAll('.like-button').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var commentId = this.getAttribute('data-comment-id');
+
+            // Envoyer une requête AJAX au serveur pour "aimer" le commentaire
+            fetch('/like-comment/' + commentId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ isLiked: true }) // Envoyer le statut "isLiked" comme true
+            })
+            .then(function(response) {
+                // Mettre à jour l'affichage du nombre de likes si la requête est réussie
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Échec de la requête.');
+            })
+            .then(function(data) {
+                // Mettre à jour le nombre de likes affiché
+                var likeCountElement = document.querySelector('.like-count[data-comment-id="' + commentId + '"]');
+                likeCountElement.textContent = data.likes;
+                location.reload();
+            })
+            .catch(function(error) {
+                console.error('Erreur :', error);
+            });
+
+
+        });
+    });
+    
+   
+</script>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=64065d7b567fbf001a2d5d17&product=inline-share-buttons&source=platform" async="async"></script>
+
+{% endblock %}

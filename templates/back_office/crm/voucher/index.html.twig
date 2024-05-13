@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+	
+
+{% block main %}
+<main class="categories-mp">	
+    <div class="main-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">							
+                    <div class="categories-heading text-center">
+                        <h2 class="mt-3 mb-4">Our Vouchers</h2>
+                    </div>							
+                </div>
+                {% if voucher is empty %}
+                    <p>No vouchers found.</p>
+                {% else %}
+                    {% for voucher in voucher %} 
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <a href="explore.html" class="our-category-card">
+                        <div class="categry-item1">
+                            <div class="cate-icon">
+                                <img src="images/category-icons/bon-de-reduction.png" style="width:30px;height:30px;" alt="">
+                            </div>
+                            <span class="event-type">{{voucher.value}}DT</span>
+                            <span class="event-type">{{voucher.code}}</span>
+                            <span class="event-type">usage : {{voucher.isValid ? 'valid' : 'non valid'}}</span>
+                            <span class="event-type">usage number :{{voucher.usageLimit}}</span>
+                            <span class="event-type">{{ voucher.expiration ? voucher.expiration.format('Y-m-d ') : '' }}</span>
+                            <span class="event-type">{{voucher.userWon.getEmail()}}</span>
+                            <span class="event-type">{{voucher.marketRelated.getName()}}</span>
+                            <span class="event-type">{{voucher.category.getTitre()}}</span>
+
+
+
+                        </div>								
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+            </div>			
+        </div>
+    </div>
+</main>
+    {% endblock %}

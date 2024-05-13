@@ -1,0 +1,52 @@
+{% extends 'front_office/base.html.twig' %}
+
+{% block main %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card w-50 shadow-lg">
+        <div class="card-header bg-warning text-white">
+            <h5 class="mb-0">Edit your question</h5>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'class': 'p-3'}}) }}
+            {{ form_label(form.title, null, {'label_attr': {'class': 'h_50'}}) }}
+            {{ form_widget(form.title) }}
+            <div style="color: red;">{{ form_errors(form.title) }}</div>
+            {{ form_label(form.body, null, {'label_attr': {'class': 'h_50'}}) }}
+            {{ form_widget(form.body) }}
+            <div style="color: red;">{{ form_errors(form.body) }}</div>
+          
+           
+        </div>
+        {{form_end(form)}}
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your question has been edited successfully!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function showModal(event) {
+        event.preventDefault();
+        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+    }
+</script>
+{% endblock %}
