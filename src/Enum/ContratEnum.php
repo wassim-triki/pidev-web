@@ -4,7 +4,7 @@ namespace App\Enum;
 
 enum ContratEnum: string
 {
-    case ANS1 = '1 ANS';
-    case ANS2 = '2 ANS' ;
-    case ANS3 = '3 ANS';
+    case ANS1 = 'ONE_YEARS';
+    case ANS2 = 'TWO_YEARS';
+    case ANS3 = 'THREE_YEARS';
 }
