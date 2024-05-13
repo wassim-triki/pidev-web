@@ -50,7 +50,6 @@
                                 <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Picture</th>
                                         <th>Username</th>
                                         <th>Email</th>
@@ -66,9 +65,17 @@
                                     <tbody>
                                     {% for user in users %}
                                         <tr>
-                                            <td>{{ user.id }}</td>
                                             <td class="table-user">
-                                                <img src="{{ user.photo ? asset('uploads/' ~ user.photo) : asset('front_office/images/default-user.png') }}" alt="table-user" class="me-2 rounded-circle">
+                                                {% if user.photo is not null and user.photo starts with
+                                                    'http://res.cloudinary.com'%}
+                                                    <img src="{{ user.photo }}" alt="table-user" class="me-2 rounded-circle" />
+                                                {% elseif user.photo is not null %}
+                                                    <img class="user-photo" src="{{ asset('uploads/' ~ user.photo) }}" alt="table-user" class="me-2 rounded-circle" />
+                                                {% else %}
+                                                    <!-- Fallback to the default user image -->
+                                                    <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}"
+                                                         alt="table-user" class="me-2 rounded-circle" />
+                                                {% endif %}
                                             </td>
                                             <td class="table-user">
                                                 {{ user.username }}

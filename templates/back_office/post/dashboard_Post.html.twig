@@ -54,8 +54,19 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <center><img src="{{ asset('uploads/' ~ i.imageUrl) }}"
-                                                                        alt={{ i.imageUrl }} style="height: 4.5cm;" />
+                                                                <center>
+                                                                {% if i.imageUrl is not null and i.imageUrl starts with
+                                                                    'http://res.cloudinary.com'%}
+                                                                    <img src="{{ i.imageUrl }}" alt="imageUrl"
+                                                                         style="height: 4.5cm;" />
+                                                                {% elseif i.imageUrl is not null %}
+                                                                    <img class="user-photo" src="{{ asset('uploads/' ~ i.imageUrl) }}" alt="i.imageUrl"
+                                                                         style="height: 4.5cm;" />
+                                                                {% else %}
+                                                                    <!-- Fallback to the default user image -->
+                                                                    <img class="user-photo" src="{{ asset('front_office/images/default-user.png') }}"
+                                                                         alt="Default User avatar" style="height: 4.5cm;" />
+                                                                {% endif %}
                                                                 </center>
                                                             </div>
                                                             <div class="modal-footer">
